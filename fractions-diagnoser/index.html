@@ -1,0 +1,825 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>H-RIMON-MATH-03 · מאבחן שברים · כיתה ה׳</title>
+<style>
+:root{--bg:#f5f4f0;--card:#fff;--ink:#1c2230;--navy:#1f3b5c;--mute:#667085;--line:#d9d6cc;--blue:#3a78c2;--org:#e8862a;--good:#2f8f4e;--warn:#d98a1c;--bad:#c0392b;--r:14px}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Arial,sans-serif;-webkit-text-size-adjust:100%}
+body{min-height:100dvh;display:flex;flex-direction:column}
+header{background:var(--navy);color:#fff}
+.hw{max-width:520px;margin:0 auto;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+header h1{margin:0;font-size:18px;font-weight:750}
+header .sub{margin:2px 0 0;font-size:13px;opacity:.85}
+main{flex:1;max-width:520px;width:100%;margin:0 auto;padding:14px 12px 20px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px;margin:0 0 14px}
+.progress{display:flex;direction:ltr;gap:6px;margin:0 0 14px}
+.progress i{flex:1;height:6px;border-radius:99px;background:#dde1e8}
+.progress i.on{background:var(--navy)}
+.progress i.done{background:var(--good)}
+.qmeta{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0 0 10px}
+.qnum{font-weight:800;color:var(--org);font-size:15px}
+.help{border:0;background:var(--navy);color:#fff;border-radius:999px;padding:6px 12px;min-height:44px;font:700 16px system-ui,-apple-system,sans-serif;cursor:pointer}
+.prompt{font-size:18px;font-weight:700;color:var(--navy);margin:0 0 14px;line-height:1.4}
+.expr{direction:ltr;unicode-bidi:isolate;display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;font-size:28px;font-weight:800;margin:8px 0 18px;min-height:64px}
+.fr{display:inline-flex;flex-direction:column;align-items:center;line-height:1.05;font-weight:800}
+.fr>span:first-child{border-bottom:2.5px solid currentColor;padding:0 6px 2px}
+.fr>span:last-child{padding:2px 6px 0}
+.opts{display:grid;gap:10px}
+.opt{border:2px solid var(--line);background:#fff;border-radius:12px;padding:14px 12px;min-height:56px;font:700 18px system-ui,-apple-system,sans-serif;cursor:pointer;color:var(--ink);display:flex;align-items:center;justify-content:center;gap:8px;touch-action:manipulation}
+.opt:active{transform:scale(.98)}
+.opt.picked{border-color:var(--navy);background:#eef4fb;color:var(--navy)}
+.opt:disabled{cursor:default;opacity:.92}
+.btn{border:1px solid var(--ink);background:#fff;color:var(--ink);border-radius:12px;padding:12px 18px;min-height:52px;font:700 16px system-ui,-apple-system,sans-serif;cursor:pointer}
+.btn.pri{background:var(--good);border-color:var(--good);color:#fff}
+.btn.big{display:block;width:100%;font-size:18px;min-height:56px;margin-top:12px}
+.credit{text-align:center;font-size:12px;color:var(--mute);padding:8px 12px 18px}
+.screen[hidden]{display:none!important}
+.helpbox{background:#eef4fb;border-radius:12px;padding:12px 14px;margin:0 0 12px;color:var(--navy);font-size:15px}
+.helpbox[hidden]{display:none}
+.result .badge{display:inline-block;background:var(--navy);color:#fff;border-radius:999px;padding:4px 12px;font-weight:700;font-size:14px;margin:0 0 10px}
+.result h2{margin:0 0 8px;color:var(--navy);font-size:22px}
+.result p{margin:0 0 10px;font-size:16px}
+.tip{background:#fff7ee;border-radius:10px;padding:10px 12px;font-size:15px;margin:12px 0}
+.scoreline{color:var(--mute);font-size:14px;margin-top:8px}
+#sim-out{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;white-space:pre-wrap;direction:ltr;text-align:left;background:#111;color:#d6f5d6;border-radius:10px;padding:12px;max-height:70vh;overflow:auto}
+.start ul{margin:8px 0 0;padding-right:18px;color:var(--mute);font-size:14.5px}
+.start li{margin:4px 0}
+.priv{font-size:12.5px;color:var(--mute);margin-top:14px;text-align:center}
+</style>
+</head>
+<body>
+<header>
+  <div class="hw">
+    <div>
+      <h1>מאבחן שברים</h1>
+      <div class="sub">כיתה ה׳ · תרגול קצר עם משוב להורה</div>
+    </div>
+  </div>
+</header>
+<main>
+  <section id="screen-start" class="screen card start">
+    <p style="margin:0 0 8px;font-weight:700;color:var(--navy);font-size:18px">שש שאלות קצרות על שברים</p>
+    <p style="margin:0;color:var(--mute);font-size:15px">בסוף מופיע סיכום קצר להורה בלבד: מה נראה שעובד, ומה כדאי לתרגל בבית. באמצע אין ציון ואין «טעית».</p>
+    <ul>
+      <li>שאלה אחת בכל מסך</li>
+      <li>אין שמות ואין שמירת נתונים</li>
+      <li>אפשר לבקש עזרה בכל שאלה</li>
+    </ul>
+    <button class="btn pri big" id="btn-start" type="button">בואו נתחיל</button>
+    <p class="priv">אין עוגיות · אין אחסון · אין איסוף שמות</p>
+  </section>
+
+  <section id="screen-q" class="screen" hidden>
+    <div class="progress" id="progress" aria-hidden="true"></div>
+    <div class="card">
+      <div class="qmeta">
+        <span class="qnum" id="qnum">שאלה 1 מתוך 6</span>
+        <button class="help" id="btn-help" type="button">? עזרה</button>
+      </div>
+      <div class="helpbox" id="helpbox" hidden></div>
+      <p class="prompt" id="prompt"></p>
+      <div class="expr" id="expr" aria-label=""></div>
+      <div class="opts" id="opts"></div>
+    </div>
+  </section>
+
+  <section id="screen-result" class="screen card result" hidden>
+    <div class="badge" id="res-badge">סיכום</div>
+    <h2 id="res-title"></h2>
+    <p id="res-body"></p>
+    <div class="tip" id="res-tip"></div>
+    <p class="scoreline" id="res-score"></p>
+    <button class="btn pri big" id="btn-again" type="button">תרגול נוסף</button>
+  </section>
+
+  <section id="screen-sim" class="screen card" hidden>
+    <h2 style="margin:0 0 8px;color:var(--navy)">מצב סימולציה</h2>
+    <p style="margin:0 0 10px;color:var(--mute);font-size:14px">מריץ את כל הפרופילים מול אותה לוגיקה ומשווה אבחנה צפויה לאבחנה בפועל.</p>
+    <div id="sim-out">מריץ…</div>
+  </section>
+</main>
+<div class="credit">H-RIMON-MATH-03 · טיוטה · ה׳ רימון · לא לפרסום<br>נבנה ע״י אשכול-בוט</div>
+
+<script>
+(function(){
+"use strict";
+
+/* ---------- utils ---------- */
+function mulberry32(a){
+  return function(){
+    var t = a += 0x6D2B79F5;
+    t = Math.imul(t ^ t >>> 15, t | 1);
+    t ^= t + Math.imul(t ^ t >>> 7, t | 61);
+    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+  };
+}
+function shuffle(arr, rnd){
+  var a = arr.slice();
+  for (var i = a.length - 1; i > 0; i--){
+    var j = Math.floor(rnd() * (i + 1));
+    var tmp = a[i]; a[i] = a[j]; a[j] = tmp;
+  }
+  return a;
+}
+function fracHTML(n, d){
+  return '<span class="fr" aria-label="'+n+' חלקי '+d+'"><span>'+n+'</span><span>'+d+'</span></span>';
+}
+function keyOf(q){
+  if (q.type === "add") return "a:"+q.a+"/"+q.b+"+"+q.c+"/"+q.d;
+  if (q.type === "cmp") return "c:"+q.a+"/"+q.b+"v"+q.c+"/"+q.d;
+  return "e:"+q.a+"/"+q.b+"="+q.n;
+}
+
+/* ---------- question banks (trap distinguishable) ---------- */
+/* ADD: common-denom or different. Trap ADD_ALL = (a+c)/(b+d) */
+var BANK_ADD = [
+  {type:"add",a:1,b:4,c:2,d:4},
+  {type:"add",a:1,b:5,c:2,d:5},
+  {type:"add",a:2,b:6,c:1,d:6},
+  {type:"add",a:1,b:3,c:1,d:3},
+  {type:"add",a:3,b:8,c:2,d:8},
+  {type:"add",a:1,b:2,c:1,d:4},
+  {type:"add",a:1,b:3,c:1,d:6},
+  {type:"add",a:1,b:2,c:1,d:3},
+  {type:"add",a:2,b:5,c:1,d:5},
+  {type:"add",a:1,b:4,c:1,d:2},
+  {type:"add",a:2,b:3,c:1,d:6},
+  {type:"add",a:1,b:5,c:1,d:10},
+  {type:"add",a:3,b:4,c:1,d:8},
+  {type:"add",a:1,b:6,c:1,d:3},
+  {type:"add",a:2,b:7,c:3,d:7},
+  {type:"add",a:1,b:8,c:3,d:8},
+  {type:"add",a:2,b:9,c:1,d:9},
+  {type:"add",a:1,b:4,c:1,d:8},
+  {type:"add",a:3,b:5,c:1,d:5},
+  {type:"add",a:1,b:2,c:1,d:6}
+];
+
+/* CMP: same numerator, different denominators. Trap BIG_DEN = larger denominator */
+var BANK_CMP = [
+  {type:"cmp",a:1,b:3,c:1,d:5},
+  {type:"cmp",a:1,b:2,c:1,d:4},
+  {type:"cmp",a:1,b:4,c:1,d:6},
+  {type:"cmp",a:2,b:3,c:2,d:5},
+  {type:"cmp",a:2,b:5,c:2,d:7},
+  {type:"cmp",a:3,b:4,c:3,d:8},
+  {type:"cmp",a:1,b:5,c:1,d:8},
+  {type:"cmp",a:2,b:3,c:2,d:7},
+  {type:"cmp",a:3,b:5,c:3,d:7},
+  {type:"cmp",a:1,b:3,c:1,d:7},
+  {type:"cmp",a:2,b:4,c:2,d:9},
+  {type:"cmp",a:1,b:6,c:1,d:9},
+  {type:"cmp",a:3,b:8,c:3,d:5},
+  {type:"cmp",a:2,b:7,c:2,d:3},
+  {type:"cmp",a:1,b:8,c:1,d:3},
+  {type:"cmp",a:4,b:5,c:4,d:9},
+  {type:"cmp",a:2,b:9,c:2,d:5},
+  {type:"cmp",a:3,b:4,c:3,d:7},
+  {type:"cmp",a:1,b:2,c:1,d:7},
+  {type:"cmp",a:5,b:6,c:5,d:8}
+];
+
+/* EXPAND: a/b = ?/n where n is multiple of b. Trap EXPAND_ADD = a+(n-b) */
+var BANK_EXP = [
+  {type:"exp",a:2,b:3,n:6},
+  {type:"exp",a:1,b:2,n:6},
+  {type:"exp",a:3,b:4,n:8},
+  {type:"exp",a:1,b:3,n:9},
+  {type:"exp",a:2,b:5,n:10},
+  {type:"exp",a:1,b:4,n:8},
+  {type:"exp",a:3,b:5,n:10},
+  {type:"exp",a:2,b:3,n:9},
+  {type:"exp",a:1,b:5,n:10},
+  {type:"exp",a:4,b:5,n:10},
+  {type:"exp",a:1,b:3,n:6},
+  {type:"exp",a:2,b:7,n:14},
+  {type:"exp",a:3,b:4,n:12},
+  {type:"exp",a:1,b:6,n:12},
+  {type:"exp",a:2,b:4,n:8},
+  {type:"exp",a:5,b:6,n:12},
+  {type:"exp",a:1,b:2,n:8},
+  {type:"exp",a:3,b:7,n:14},
+  {type:"exp",a:2,b:5,n:15},
+  {type:"exp",a:4,b:6,n:12}
+];
+
+function gcd(x,y){x=Math.abs(x);y=Math.abs(y);while(y){var t=y;y=x%y;x=t;}return x||1;}
+function simplify(n,d){var g=gcd(n,d);return [n/g,d/g];}
+
+function correctAdd(q){
+  // a/b + c/d
+  var num = q.a*q.d + q.c*q.b;
+  var den = q.b*q.d;
+  return simplify(num, den);
+}
+function trapAddAll(q){ return [q.a+q.c, q.b+q.d]; }
+
+function correctCmp(q){
+  // same numerator: smaller denominator is larger fraction
+  var left = q.a/q.b, right = q.c/q.d;
+  if (Math.abs(left-right) < 1e-9) return "eq";
+  return left > right ? "L" : "R";
+}
+function trapBigDen(q){
+  // pick the one with larger denominator as "larger"
+  if (q.b === q.d) return correctCmp(q);
+  return q.b > q.d ? "L" : "R";
+}
+
+function correctExp(q){
+  // a/b = ?/n  =>  a * (n/b)
+  return q.a * (q.n / q.b);
+}
+function trapExpandAdd(q){
+  return q.a + (q.n - q.b);
+}
+
+function buildOptions(q, rnd){
+  var opts = [];
+  if (q.type === "add"){
+    var ok = correctAdd(q);
+    var trap = trapAddAll(q);
+    // Skip if trap coincides with correct (shouldn't happen in bank)
+    if (trap[0]===ok[0] && trap[1]===ok[1]) trap = [ok[0]+1, ok[1]+1];
+    opts.push({id:"correct", kind:"correct", label:fracHTML(ok[0],ok[1]), value:ok[0]+"/"+ok[1]});
+    opts.push({id:"ADD_ALL", kind:"trap", trap:"ADD_ALL", label:fracHTML(trap[0],trap[1]), value:trap[0]+"/"+trap[1]});
+    // distractors
+    var d1 = [ok[0], ok[1]+q.b]; if (d1[0]===trap[0]&&d1[1]===trap[1]) d1[1]+=1;
+    var d2 = [Math.max(1,ok[0]-1), ok[1]]; if (d2[0]===trap[0]&&d2[1]===trap[1]) d2[0]+=2;
+    if (d2[0]===ok[0]&&d2[1]===ok[1]) d2[0]+=1;
+    opts.push({id:"d1", kind:"other", label:fracHTML(d1[0],d1[1]), value:d1[0]+"/"+d1[1]});
+    opts.push({id:"d2", kind:"other", label:fracHTML(d2[0],d2[1]), value:d2[0]+"/"+d2[1]});
+  } else if (q.type === "cmp"){
+    var okc = correctCmp(q);
+    var trapc = trapBigDen(q);
+    opts.push({id:"L", kind: okc==="L"?"correct":(trapc==="L"?"trap":"other"), trap: trapc==="L"?"BIG_DEN":null,
+      label:fracHTML(q.a,q.b), value:"L"});
+    opts.push({id:"R", kind: okc==="R"?"correct":(trapc==="R"?"trap":"other"), trap: trapc==="R"?"BIG_DEN":null,
+      label:fracHTML(q.c,q.d), value:"R"});
+    opts.push({id:"eq", kind: okc==="eq"?"correct":"other", label:"שווים", value:"eq"});
+    // If trap equals correct (equal dens), add a harmless distractor already covered
+    // Ensure trap option exists when dens differ
+    if (q.b !== q.d){
+      opts.forEach(function(o){ if (o.value===trapc && o.kind!=="correct"){ o.kind="trap"; o.trap="BIG_DEN"; }});
+    }
+  } else {
+    var oke = correctExp(q);
+    var trape = trapExpandAdd(q);
+    if (trape === oke) trape = oke + 1;
+    opts.push({id:"correct", kind:"correct", label:String(oke), value:String(oke)});
+    opts.push({id:"EXPAND_ADD", kind:"trap", trap:"EXPAND_ADD", label:String(trape), value:String(trape)});
+    var e1 = oke + q.b; if (e1===trape) e1 += 1;
+    var e2 = Math.max(1, oke - 1); if (e2===trape || e2===oke) e2 = oke + 2;
+    opts.push({id:"d1", kind:"other", label:String(e1), value:String(e1)});
+    opts.push({id:"d2", kind:"other", label:String(e2), value:String(e2)});
+  }
+  // dedupe by value
+  var seen = {};
+  opts = opts.filter(function(o){
+    if (seen[o.value]) return false;
+    seen[o.value] = 1;
+    return true;
+  });
+  return shuffle(opts, rnd);
+}
+
+function promptFor(q){
+  if (q.type === "add") return "כמה זה ביחד?";
+  if (q.type === "cmp") return "איזה שבר גדול יותר?";
+  return "מה צריך להיות במקום סימן השאלה?";
+}
+function helpFor(q){
+  if (q.type === "add") return "בחיבור שברים מחברים רק כשהמכנים זהים. אם המכנים שונים — קודם משווים מכנים, ורק אז מחברים את המונים. לא מחברים מונה עם מונה ומכנה עם מכנה.";
+  if (q.type === "cmp") return "כשהמונים זהים, השבר עם המכנה הקטן יותר הוא הגדול יותר: החלקים גדולים יותר. למשל 1/3 גדול מ-1/5.";
+  return "בהרחבת שבר כופלים את המונה ואת המכנה באותו מספר. לא מחברים את ההפרש למכנה החדש.";
+}
+function exprHTML(q){
+  if (q.type === "add"){
+    return fracHTML(q.a,q.b) + '<span>+</span>' + fracHTML(q.c,q.d) + '<span>=</span><span>?</span>';
+  }
+  if (q.type === "cmp"){
+    return fracHTML(q.a,q.b) + '<span style="color:var(--mute);font-size:20px;font-weight:700">או</span>' + fracHTML(q.c,q.d);
+  }
+  return fracHTML(q.a,q.b) + '<span>=</span>' + fracHTML("?", q.n);
+}
+function exprLabel(q){
+  if (q.type === "add") return q.a+"/"+q.b+" + "+q.c+"/"+q.d;
+  if (q.type === "cmp") return q.a+"/"+q.b+" מול "+q.c+"/"+q.d;
+  return q.a+"/"+q.b+" = ?/"+q.n;
+}
+
+/* ---------- session / adaptive flow ---------- */
+var TRAPS = ["ADD_ALL","BIG_DEN","EXPAND_ADD"];
+var TYPE_OF_TRAP = {ADD_ALL:"add", BIG_DEN:"cmp", EXPAND_ADD:"exp"};
+var TYPE_LABEL = {add:"חיבור", cmp:"השוואה", exp:"הרחבה"};
+
+function makeSession(seed){
+  var rnd = mulberry32(seed >>> 0);
+  var used = {};
+  function pick(type, preferFar){
+    var bank = type==="add"?BANK_ADD: type==="cmp"?BANK_CMP:BANK_EXP;
+    var candidates = shuffle(bank, rnd).filter(function(q){ return !used[keyOf(q)]; });
+    if (!candidates.length){
+      // allow reuse only if exhausted
+      candidates = shuffle(bank, rnd);
+    }
+    var q;
+    if (preferFar && type==="cmp"){
+      // far-apart denominators
+      candidates.sort(function(x,y){ return Math.abs(y.b-y.d) - Math.abs(x.b-x.d); });
+      q = candidates[0];
+    } else {
+      q = candidates[0];
+    }
+    used[keyOf(q)] = 1;
+    var opts = buildOptions(q, rnd);
+    return {q:q, opts:opts, type:type};
+  }
+
+  var items = [];
+  // Q1-3 fixed types; prefer the canonical first examples when available
+  function pickFixed(type, preferKey){
+    var bank = type==="add"?BANK_ADD: type==="cmp"?BANK_CMP:BANK_EXP;
+    var hit = bank.find(function(q){ return keyOf(q)===preferKey && !used[keyOf(q)]; });
+    if (hit){ used[keyOf(hit)]=1; return {q:hit, opts:buildOptions(hit,rnd), type:type}; }
+    return pick(type, false);
+  }
+  items.push(pickFixed("add","a:1/4+2/4"));
+  items.push(pickFixed("cmp","c:1/3v1/5"));
+  items.push(pickFixed("exp","e:2/3=6"));
+
+  var answers = []; // filled as we go; for sim we decide in advance via responder
+
+  return {
+    seed: seed,
+    rnd: rnd,
+    used: used,
+    items: items, // will grow to 6
+    answers: answers,
+    pick: pick,
+    counts: {add:1, cmp:1, exp:1},
+    trapHits: {ADD_ALL:0, BIG_DEN:0, EXPAND_ADD:0},
+    trapChances: {ADD_ALL:0, BIG_DEN:0, EXPAND_ADD:0},
+    nonTrapErrors: 0,
+    correctCount: 0
+  };
+}
+
+function trapForType(type){
+  if (type==="add") return "ADD_ALL";
+  if (type==="cmp") return "BIG_DEN";
+  return "EXPAND_ADD";
+}
+
+function recordAnswer(sess, item, chosen){
+  var type = item.type;
+  var trapName = trapForType(type);
+  sess.trapChances[trapName] += 1;
+  var isCorrect = chosen.kind === "correct";
+  var hitTrap = chosen.kind === "trap" ? chosen.trap : null;
+  if (isCorrect) sess.correctCount += 1;
+  else if (hitTrap) sess.trapHits[hitTrap] += 1;
+  else sess.nonTrapErrors += 1;
+  sess.answers.push({
+    type: type,
+    correct: isCorrect,
+    trap: hitTrap,
+    value: chosen.value
+  });
+}
+
+function leastTestedType(sess){
+  var order = ["add","cmp","exp"];
+  order.sort(function(a,b){
+    if (sess.counts[a] !== sess.counts[b]) return sess.counts[a]-sess.counts[b];
+    return a < b ? -1 : 1;
+  });
+  return order[0];
+}
+
+function nextItem(sess){
+  var n = sess.answers.length; // how many answered so far
+  // After Q1-3 we already have 3 items; need to append Q4,Q5,Q6 as we go
+  if (sess.items.length > n) return sess.items[n];
+
+  var item;
+  if (n === 3){
+    // Q4 consistency
+    var hitTraps = TRAPS.filter(function(t){ return sess.trapHits[t] > 0; });
+    var anyWrong = sess.answers.some(function(a){ return !a.correct; });
+    if (hitTraps.length){
+      var t = hitTraps[0];
+      item = sess.pick(TYPE_OF_TRAP[t], false);
+    } else if (anyWrong){
+      // error matched no trap: same type as the wrong one
+      var w = sess.answers.find(function(a){ return !a.correct; });
+      item = sess.pick(w.type, false);
+    } else {
+      // all correct: comparison same numerator far-apart dens
+      item = sess.pick("cmp", true);
+    }
+  } else if (n === 4){
+    // Q5: least-tested type, always with a trap (all our qs have traps)
+    var lt = leastTestedType(sess);
+    item = sess.pick(lt, lt==="cmp");
+  } else if (n === 5){
+    // Q6
+    var once = TRAPS.filter(function(t){
+      return sess.trapHits[t] === 1 && sess.trapChances[t] === 2;
+    });
+    // "hit once in two chances"
+    var hitOnceInTwo = TRAPS.filter(function(t){
+      return sess.trapHits[t] === 1 && sess.trapChances[t] >= 2;
+    });
+    // also: hit once and had two chances already, OR hit once with only 1 chance so far — give another
+    var candidates = TRAPS.filter(function(t){
+      return sess.trapHits[t] === 1 && sess.trapChances[t] <= 2;
+    });
+    if (candidates.length){
+      item = sess.pick(TYPE_OF_TRAP[candidates[0]], false);
+    } else {
+      item = sess.pick(leastTestedType(sess), false);
+    }
+  } else {
+    return null;
+  }
+  sess.items.push(item);
+  sess.counts[item.type] += 1;
+  return item;
+}
+
+/* ---------- diagnosis ---------- */
+var DIAG = {
+  mastery: {
+    code: "mastery",
+    title: "נראה שיש שליטה טובה",
+    body: "שש התשובות היו מדויקות. נראה שיש הבנה טובה של חיבור שברים, של השוואה כשהמונה זהה, ושל הרחבת שברים.",
+    tip: "טיפ לבית: בקשו הסבר בקול למה התשובה נכונה — ההסבר מחזק יותר מתרגול נוסף."
+  },
+  guesser: {
+    code: "guesser",
+    title: "עדיין בלי כלל קבוע",
+    body: "יש כמה תשובות שלא מתאימות לדפוס אחד ברור. ייתכן שעדיין מחפשים כלל, ולא מיישמים אותו בכל פעם.",
+    tip: "טיפ לבית: שאלו «איך ידעת?» לפני שאומרים נכון או לא. אם אין הסבר — חזרו לציור פשוט של השבר."
+  },
+  two_errors: {
+    code: "two_errors",
+    title: "שני דפוסים לתרגול",
+    body: "נראים שני דפוסים שונים שכדאי לתרגל בנפרד.",
+    tip: "טיפ לבית: יום אחד לכל דפוס, עם ציור פשוט של חלקים, בלי לחץ."
+  },
+  ADD_ALL: {
+    code: "ADD_ALL",
+    title: "חיבור מונה ומכנה יחד",
+    body: "בחיבור שברים נראה שמחברים גם את המונים וגם את המכנים, למשל 1/4+2/4 הופך ל-3/8 במקום 3/4.",
+    tip: "טיפ לבית: ציירו שתי פיצות עם אותו מספר פלחים. המכנה נשאר, ורק המונה גדל."
+  },
+  BIG_DEN: {
+    code: "BIG_DEN",
+    title: "בלבול בין מכנה לגודל",
+    body: "בהשוואת שברים עם אותו מונה, נראה שבוחרים את השבר עם המכנה הגדול יותר כאילו הוא גדול יותר.",
+    tip: "טיפ לבית: שאלו מה גדול יותר — חצי עוגה או שמינית עוגה? ציירו את שניהם זה לצד זה."
+  },
+  EXPAND_ADD: {
+    code: "EXPAND_ADD",
+    title: "הרחבה בתוספת במקום כפל",
+    body: "בהרחבת שבר נראה שמוסיפים את ההפרש במקום להכפיל, למשל ב-2/3=?/6 מתקבל 5 במקום 4.",
+    tip: "טיפ לבית: בדקו יחד «בכמה הכפלנו את המכנה?» ואז הכפילו גם את המונה באותו מספר."
+  },
+  inconsistent: {
+    code: "inconsistent",
+    title: "הדפוס עדיין לא יציב",
+    body: "יש דפוס שמופיע רק בחלק מהשאלות. לפעמים הכלל עובד, ולפעמים פחות.",
+    tip: "טיפ לבית: עוד שני תרגילים מאותו סוג, לאט, עם ציור — רק כדי לראות אם הדפוס חוזר."
+  },
+  slips: {
+    code: "slips",
+    title: "כמעט הכול מדויק",
+    body: "חמש מתוך שש היו מדויקות. נראה שיש הבנה טובה, עם טעות נקודתית אחת.",
+    tip: "טיפ לבית: עברו יחד רק על השאלה שלא הייתה מדויקת, בלי לחץ. לרוב זה מספיק."
+  },
+  unclear: {
+    code: "unclear",
+    title: "עוד מוקדם לקבוע",
+    body: "מהתשובות אי אפשר עדיין לקבוע דפוס ברור. כדאי לנסות שוב בזמן רגוע.",
+    tip: "טיפ לבית: שבו על שלוש שאלות פשוטות עם ציור, ורק אחר כך חזרו לתרגול הקצר."
+  }
+};
+
+function diagnose(sess){
+  var hits = sess.trapHits;
+  var chances = sess.trapChances;
+  var non = sess.nonTrapErrors;
+  var correct = sess.correctCount;
+
+  if (correct === 6) return Object.assign({detail:null}, DIAG.mastery);
+
+  if (non >= 2) return Object.assign({detail:null}, DIAG.guesser);
+
+  var strong = TRAPS.filter(function(t){ return hits[t] >= 2; });
+  var weak = TRAPS.filter(function(t){ return hits[t] === 1; });
+  // Two different traps, hit ≥2 each, OR one twice and the other once
+  if (strong.length >= 2) {
+    var d = Object.assign({}, DIAG.two_errors);
+    d.body = "נראים שני דפוסים לתרגול: «"+DIAG[strong[0]].title+"» ו«"+DIAG[strong[1]].title+"».";
+    d.detail = strong.slice();
+    return d;
+  }
+  if (strong.length === 1 && weak.length >= 1) {
+    var d2 = Object.assign({}, DIAG.two_errors);
+    d2.body = "נראים שני דפוסים לתרגול: «"+DIAG[strong[0]].title+"» (חוזר) ו«"+DIAG[weak[0]].title+"».";
+    d2.detail = [strong[0], weak[0]];
+    return d2;
+  }
+
+  // One trap hit at every chance
+  for (var i=0;i<TRAPS.length;i++){
+    var t = TRAPS[i];
+    if (chances[t] > 0 && hits[t] === chances[t] && hits[t] >= 1){
+      // only this trap, and consistent
+      var others = TRAPS.filter(function(x){ return x!==t && hits[x]>0; });
+      if (!others.length){
+        return Object.assign({detail:t}, DIAG[t]);
+      }
+    }
+  }
+
+  // One trap hit only at some chances → לא עקבי
+  for (var j=0;j<TRAPS.length;j++){
+    var t2 = TRAPS[j];
+    if (hits[t2] >= 1 && chances[t2] > hits[t2]){
+      var others2 = TRAPS.filter(function(x){ return x!==t2 && hits[x]>0; });
+      if (!others2.length){
+        var inc = Object.assign({}, DIAG.inconsistent);
+        inc.body = "הדפוס «"+DIAG[t2].title+"» הופיע בחלק מהשאלות ("+hits[t2]+" מתוך "+chances[t2]+"). לפעמים הכלל עובד, ולפעמים פחות.";
+        inc.detail = t2;
+        return inc;
+      }
+    }
+  }
+
+  if (correct === 5) return Object.assign({detail:null}, DIAG.slips);
+
+  return Object.assign({detail:null}, DIAG.unclear);
+}
+
+/* ---------- simulated student responders ---------- */
+function responderFor(profile, seed){
+  var rnd = mulberry32((seed ^ 0xA5A5A5A5) >>> 0);
+  var slipLeft = 1;
+  var addFlags = null; // for A70
+  if (profile === "ADD_ALL_70"){
+    // ~70% errors on addition: generate 6 flags with ~70% E on add opportunities dynamically
+    addFlags = [];
+  }
+  return function(item, qIndex){
+    var opts = item.opts;
+    function find(pred){ return opts.find(pred); }
+    function correct(){ return find(function(o){ return o.kind==="correct"; }); }
+    function trap(name){ return find(function(o){ return o.trap===name; }) || find(function(o){ return o.kind!=="correct"; }); }
+    function otherWrong(){ return find(function(o){ return o.kind==="other"; }) || find(function(o){ return o.kind!=="correct"; }); }
+    function any(){ return opts[Math.floor(rnd()*opts.length)]; }
+
+    switch(profile){
+      case "ADD_ALL_100":
+        return item.type==="add" ? trap("ADD_ALL") : correct();
+      case "BIG_DEN_100":
+        return item.type==="cmp" ? trap("BIG_DEN") : correct();
+      case "EXPAND_ADD_100":
+        return item.type==="exp" ? trap("EXPAND_ADD") : correct();
+      case "mastery":
+        return correct();
+      case "ADD_ALL_70":
+        if (item.type==="add"){
+          // 70% trap
+          return rnd() < 0.70 ? trap("ADD_ALL") : correct();
+        }
+        return correct();
+      case "ADD_ALL_BIG_DEN":
+        if (item.type==="add") return trap("ADD_ALL");
+        if (item.type==="cmp") return trap("BIG_DEN");
+        return correct();
+      case "guesser":
+        return any();
+      case "slip_once":
+        if (slipLeft > 0 && qIndex === (seed % 6)){
+          slipLeft--;
+          return otherWrong();
+        }
+        return correct();
+      default:
+        return correct();
+    }
+  };
+}
+
+var EXPECTED = {
+  ADD_ALL_100: ["ADD_ALL"],
+  BIG_DEN_100: ["BIG_DEN"],
+  EXPAND_ADD_100: ["EXPAND_ADD"],
+  mastery: ["mastery"],
+  ADD_ALL_70: ["ADD_ALL", "inconsistent", "unclear", "guesser"], // soft: often ADD_ALL or inconsistent
+  ADD_ALL_BIG_DEN: ["two_errors"],
+  guesser: ["guesser", "unclear", "inconsistent", "ADD_ALL", "BIG_DEN", "EXPAND_ADD", "two_errors"], // known limit
+  slip_once: ["slips", "mastery", "unclear", "inconsistent"]
+};
+
+var EXPECTED_PRIMARY = {
+  ADD_ALL_100: "ADD_ALL",
+  BIG_DEN_100: "BIG_DEN",
+  EXPAND_ADD_100: "EXPAND_ADD",
+  mastery: "mastery",
+  ADD_ALL_70: "ADD_ALL", // accept inconsistent as partial
+  ADD_ALL_BIG_DEN: "two_errors",
+  guesser: "guesser",
+  slip_once: "slips"
+};
+
+function runOne(profile, seed){
+  var sess = makeSession(seed);
+  var respond = responderFor(profile, seed);
+  for (var i=0; i<6; i++){
+    var item = nextItem(sess);
+    var choice = respond(item, i);
+    if (!choice) choice = item.opts[0];
+    recordAnswer(sess, item, choice);
+  }
+  var dx = diagnose(sess);
+  return {
+    profile: profile,
+    seed: seed,
+    diagnosis: dx.code,
+    title: dx.title,
+    detail: dx.detail,
+    correct: sess.correctCount,
+    trapHits: Object.assign({}, sess.trapHits),
+    trapChances: Object.assign({}, sess.trapChances),
+    nonTrapErrors: sess.nonTrapErrors,
+    expected: EXPECTED_PRIMARY[profile],
+    match: (EXPECTED[profile] || []).indexOf(dx.code) >= 0
+  };
+}
+
+function runSimulation(){
+  var profiles = [
+    "ADD_ALL_100","BIG_DEN_100","EXPAND_ADD_100","mastery",
+    "ADD_ALL_70","ADD_ALL_BIG_DEN","guesser","slip_once"
+  ];
+  var labels = {
+    ADD_ALL_100: "ADD_ALL 100%",
+    BIG_DEN_100: "BIG_DEN 100%",
+    EXPAND_ADD_100: "EXPAND_ADD 100%",
+    mastery: "mastery",
+    ADD_ALL_70: "ADD_ALL 70%",
+    ADD_ALL_BIG_DEN: "ADD_ALL+BIG_DEN",
+    guesser: "random guesser",
+    slip_once: "knows-but-slips once"
+  };
+  var baseSeeds = [101, 202, 303, 404, 505]; // 5 seeds (>=3)
+  var rows = [];
+  var byProfile = {};
+  profiles.forEach(function(p){
+    byProfile[p] = {label: labels[p], expected: EXPECTED_PRIMARY[p], runs: [], matched: 0, total: 0};
+    baseSeeds.forEach(function(s, idx){
+      var seed = (s * 17 + idx * 97 + profiles.indexOf(p) * 131) >>> 0;
+      var r = runOne(p, seed);
+      byProfile[p].runs.push(r);
+      byProfile[p].total += 1;
+      if (r.match) byProfile[p].matched += 1;
+      rows.push(r);
+    });
+  });
+  var overallMatched = rows.filter(function(r){ return r.match; }).length;
+  var overallTotal = rows.length;
+  return {
+    generatedAt: new Date().toISOString(),
+    overall: {matched: overallMatched, total: overallTotal, accuracy: +(overallMatched/overallTotal).toFixed(3)},
+    byProfile: Object.keys(byProfile).map(function(p){
+      var b = byProfile[p];
+      return {
+        profile: p,
+        label: b.label,
+        expected: b.expected,
+        matched: b.matched,
+        total: b.total,
+        accuracy: +(b.matched/b.total).toFixed(3),
+        diagnoses: b.runs.map(function(r){ return r.diagnosis; }),
+        runs: b.runs
+      };
+    }),
+    knownLimit: "A guesser who randomly hits the same trap 3 times looks like a real error with 6 questions.",
+    rows: rows
+  };
+}
+
+/* ---------- UI ---------- */
+var ui = {
+  sess: null,
+  current: null,
+  locked: false
+};
+
+function $(id){ return document.getElementById(id); }
+
+function showScreen(name){
+  ["start","q","result","sim"].forEach(function(s){
+    $("screen-"+s).hidden = (s !== name);
+  });
+}
+
+function renderProgress(){
+  var el = $("progress");
+  el.innerHTML = "";
+  for (var i=0;i<6;i++){
+    var dot = document.createElement("i");
+    if (i < ui.sess.answers.length) dot.className = "done";
+    else if (i === ui.sess.answers.length) dot.className = "on";
+    el.appendChild(dot);
+  }
+}
+
+function showQuestion(){
+  var item = nextItem(ui.sess);
+  ui.current = item;
+  ui.locked = false;
+  renderProgress();
+  var n = ui.sess.answers.length + 1;
+  $("qnum").textContent = "שאלה " + n + " מתוך 6";
+  $("prompt").textContent = promptFor(item.q);
+  $("helpbox").hidden = true;
+  $("helpbox").textContent = helpFor(item.q);
+  var expr = $("expr");
+  expr.innerHTML = exprHTML(item.q);
+  expr.setAttribute("aria-label", exprLabel(item.q));
+  var opts = $("opts");
+  opts.innerHTML = "";
+  item.opts.forEach(function(o, idx){
+    var b = document.createElement("button");
+    b.type = "button";
+    b.className = "opt";
+    b.id = "opt-"+idx;
+    b.dataset.value = o.value;
+    b.innerHTML = o.label;
+    b.addEventListener("click", function(){ onChoose(o, b); });
+    opts.appendChild(b);
+  });
+  showScreen("q");
+}
+
+function onChoose(opt, btn){
+  if (ui.locked) return;
+  ui.locked = true;
+  var buttons = Array.prototype.slice.call(document.querySelectorAll(".opt"));
+  buttons.forEach(function(b){ b.disabled = true; });
+  btn.classList.add("picked");
+  recordAnswer(ui.sess, ui.current, opt);
+  setTimeout(function(){
+    if (ui.sess.answers.length >= 6) showResult();
+    else showQuestion();
+  }, 380);
+}
+
+function showResult(){
+  var dx = diagnose(ui.sess);
+  $("res-badge").textContent = "סיכום להורה";
+  $("res-title").textContent = dx.title;
+  $("res-body").textContent = dx.body;
+  $("res-tip").textContent = dx.tip;
+  $("res-score").textContent = "תשובות מדויקות: " + ui.sess.correctCount + " מתוך 6";
+  showScreen("result");
+}
+
+function startLive(){
+  ui.sess = makeSession((Date.now() ^ (Math.random()*1e9)) >>> 0);
+  showQuestion();
+}
+
+$("btn-start").addEventListener("click", startLive);
+$("btn-again").addEventListener("click", startLive);
+$("btn-help").addEventListener("click", function(){
+  var box = $("helpbox");
+  box.hidden = !box.hidden;
+});
+
+/* ---------- sim mode ---------- */
+function boot(){
+  var params = new URLSearchParams(location.search);
+  if (params.get("sim") === "1"){
+    showScreen("sim");
+    var report = runSimulation();
+    $("sim-out").textContent = JSON.stringify(report, null, 2);
+    // also expose for playwright
+    window.__SIM_REPORT__ = report;
+    document.body.dataset.simDone = "1";
+  }
+}
+boot();
+
+})();
+</script>
+</body>
+</html>
