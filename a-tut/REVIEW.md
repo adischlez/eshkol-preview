@@ -1,26 +1,26 @@
-# Expert panel · A-TUT-01 (א׳ תות · חשבון ושפה) · 28.10.2026 Asia/Jerusalem
+# Expert panel · A-TUT-01 (א׳ תות) · 28.10.2026 evening (Asia/Jerusalem)
 
-Artifacts reviewed: hub `a-tut/`, lang games (findall / fish / train), math shell (unchanged exercises), parent guides, layout_qa phone/tablet/desktop, letter-name audio samples.
+Pass: findall-only menu + slower TTS + י=יוּד. Artifacts: hub/lang/math, layout_qa se/iphone/ipad/desktop, Whisper ASR on all ln_*, sample_slow.mp3.
 
-## Panel
+## Panel (brief)
 
-| Expert | Verdict | Findings → fixes |
+| Expert | Verdict | Findings |
 |---|---|---|
-| Homeroom (א׳) | approve with changes | Letter topics ד/ח/ס/כ removed; three games match classroom letter-name practice. Math still worksheet-like — **open Q** (proposal for Adi). |
-| Pedagogue / literacy | approve with changes | Fish similar-distractors on «מומלץ»; train consecutive RTL run. Prompt clarified to «תפסו את הדג עם האות ששמעתם». Train toot + voice-read after fill. |
-| Child psychologist | approve | Feedback non-shaming («הדג ברח — נסו שוב», «נסו אות אחרת»). Mute + menu exit always available. ~10 fish rounds / ~8 train segments — short enough. |
-| Speech / early literacy | approve | Letter names @0.65 (fix2: Alef / stretched בית / Vav / Tav). Instr @0.85. catch_letter «תִּפְסוּ אֶת הָאוֹת,» + ln_*. Plene+nikud in voice maps. |
-| Spec-ed / differentiation | approve | Easy/rec (fish) and easy/hard (train). Tap ≥56px fish/cards. `prefers-reduced-motion` disables swim. Large serif letters. |
-| Child UX | approve | Hub חשבון/שפה fits one SE screen. layout_qa **0 fails** (se/iphone/ipad/desk). Credit «נבנה ע״י אשכול-בוט» on every screen. |
-| Parent rep | approve | Guide lists 3 games + tip for similar letters. Hub privacy line. |
-| Privacy / safety | approve | No localStorage / cookies / mic / analytics / child identifiers. noindex. |
+| Homeroom (א׳) | approve | Language = מצאו את האות only (Adi request). Math unchanged; games still open Q. |
+| Pedagogue / literacy | approve | Find-the-letter practices all 22 letter names; no letter-week drill. |
+| Child psychologist | approve | Non-shaming feedback, mute, menu exit. Shorter language surface = less choice overload. |
+| Speech / early literacy | approve with note | Tempos: letter names **0.55**, letter sounds 0.65 (unused — no snd_* in remaining games), instructions **0.75**. י spelling `הָאוֹת, יוּד.` → ASR «האות יוד». critical_fail []. Whisper flaky on samekh→«שמך», pe→«פי» (ear OK). |
+| Spec-ed | approve | Large taps, credit footer, reduced-motion CSS still present for dormant fish. |
+| Child UX | approve | layout_qa **0 issues** (overflow/credit/fish-train-hidden). Credit on hub/lang/math. |
+| Parent | approve | One language game — simpler to explain. |
+| Privacy | approve | No storage/cookies/mic/analytics/child IDs. noindex. |
 
 ## Applied this pass
-- Body game classes `g-fish`/`g-train` (avoid `.fish` matching body).
-- Fish prompt wording; softer miss copy.
-- Train toot (WebAudio) before letter-name read-back.
-- layout_qa: reducedMotion + force taps on animated fish.
+- Hub + lang menu: only «מצאו את האות»; fish/train removed from navigation (code left dormant).
+- Re-recorded all remaining lang+math narration via Deepdub dd-etts-3.4 Meditation Guide at slower tempos.
+- י → יוּד (verified Whisper).
+- Credit «נבנה ע״י אשכול-בוט» on every screen.
 
 ## Open questions for Adi
-1. **חשבון games** — choose from `MATH_GAMES_PROPOSAL.md` (5 one-liners); not built yet.
-2. Mic / speech recognition later? (explicitly out of scope for this preview).
+1. Math game picks from MATH_GAMES_PROPOSAL.md (unchanged).
+2. Publish permanent link? (preview only until approved).
