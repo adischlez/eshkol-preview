@@ -31,20 +31,35 @@ main{flex:1;max-width:520px;width:100%;margin:0 auto;padding:14px 12px 20px}
 .opts{display:grid;gap:10px}
 .opt{border:2px solid var(--line);background:#fff;border-radius:12px;padding:14px 12px;min-height:56px;font:700 18px system-ui,-apple-system,sans-serif;cursor:pointer;color:var(--ink);display:flex;align-items:center;justify-content:center;gap:8px;touch-action:manipulation}
 .opt:active{transform:scale(.98)}
-.opt.picked{border-color:var(--navy);background:#eef4fb;color:var(--navy)}
-.opt:disabled{cursor:default;opacity:.92}
+.opt.picked{border-color:var(--navy);background:#eef4fb;color:var(--navy);box-shadow:0 0 0 1px var(--navy)}
 .btn{border:1px solid var(--ink);background:#fff;color:var(--ink);border-radius:12px;padding:12px 18px;min-height:52px;font:700 16px system-ui,-apple-system,sans-serif;cursor:pointer}
 .btn.pri{background:var(--good);border-color:var(--good);color:#fff}
 .btn.big{display:block;width:100%;font-size:18px;min-height:56px;margin-top:12px}
+.btn:disabled{opacity:.45;cursor:default}
 .credit{text-align:center;font-size:12px;color:var(--mute);padding:8px 12px 18px}
 .screen[hidden]{display:none!important}
-.helpbox{background:#eef4fb;border-radius:12px;padding:12px 14px;margin:0 0 12px;color:var(--navy);font-size:15px}
-.helpbox[hidden]{display:none}
 .result .badge{display:inline-block;background:var(--navy);color:#fff;border-radius:999px;padding:4px 12px;font-weight:700;font-size:14px;margin:0 0 10px}
 .result h2{margin:0 0 8px;color:var(--navy);font-size:22px}
 .result p{margin:0 0 10px;font-size:16px}
 .tip{background:#fff7ee;border-radius:10px;padding:10px 12px;font-size:15px;margin:12px 0}
 .scoreline{color:var(--mute);font-size:14px;margin-top:8px}
+.eqnote{background:#eef4fb;border-radius:10px;padding:10px 12px;font-size:15px;margin:10px 0;color:var(--navy)}
+.break{margin:14px 0 0;border-top:1px dashed var(--line);padding-top:12px}
+.break h3{margin:0 0 8px;font-size:15px;color:var(--navy)}
+.break .row{display:flex;flex-direction:column;gap:2px;padding:8px 10px;border:1px solid var(--line);border-radius:10px;margin:0 0 8px;background:#fafaf7;font-size:14px}
+.break .row .q{font-weight:700;color:var(--navy)}
+.break .row .a{color:var(--ink)}
+.break .row .m{color:var(--mute);font-size:13px}
+/* help bottom sheet */
+.help-overlay{position:fixed;inset:0;z-index:40;background:rgba(28,34,48,.35);display:flex;align-items:flex-end;justify-content:center;padding:12px}
+.help-overlay[hidden]{display:none!important}
+.help-sheet{background:#fff;border-radius:16px 16px 12px 12px;padding:16px;width:100%;max-width:520px;max-height:70vh;overflow:auto;box-shadow:0 -8px 28px rgba(0,0,0,.18)}
+.help-sheet .htop{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 0 8px}
+.help-sheet .htop strong{color:var(--navy);font-size:16px}
+.help-sheet .hbody{color:var(--navy);font-size:15.5px;line-height:1.55}
+.help-close{border:0;background:#eef4fb;color:var(--navy);border-radius:999px;min-width:44px;min-height:44px;font:700 18px system-ui;cursor:pointer}
+.nextwrap{margin-top:14px}
+body.help-open{overflow:hidden}
 #sim-out{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;white-space:pre-wrap;direction:ltr;text-align:left;background:#111;color:#d6f5d6;border-radius:10px;padding:12px;max-height:70vh;overflow:auto}
 .start ul{margin:8px 0 0;padding-right:18px;color:var(--mute);font-size:14.5px}
 .start li{margin:4px 0}
@@ -56,14 +71,14 @@ main{flex:1;max-width:520px;width:100%;margin:0 auto;padding:14px 12px 20px}
   <div class="hw">
     <div>
       <h1>מאבחן שברים</h1>
-      <div class="sub">כיתה ה׳ · תרגול קצר עם משוב להורה</div>
+      <div class="sub">כיתה ה׳ · תירגול קצר עם משוב להורה</div>
     </div>
   </div>
 </header>
 <main>
   <section id="screen-start" class="screen card start">
     <p style="margin:0 0 8px;font-weight:700;color:var(--navy);font-size:18px">שש שאלות קצרות על שברים</p>
-    <p style="margin:0;color:var(--mute);font-size:15px">בסוף מופיע סיכום קצר להורה בלבד: מה נראה שעובד, ומה כדאי לתרגל בבית. באמצע אין ציון ואין «טעית».</p>
+    <p style="margin:0;color:var(--mute);font-size:15px">בסוף מופיע סיכום קצר להורה בלבד: מה נראה שעובד, ומה כדאי לתירגל בבית. באמצע אין ציון ואין «טעית».</p>
     <ul>
       <li>שאלה אחת בכל מסך</li>
       <li>אין שמות ואין שמירת נתונים</li>
@@ -80,10 +95,12 @@ main{flex:1;max-width:520px;width:100%;margin:0 auto;padding:14px 12px 20px}
         <span class="qnum" id="qnum">שאלה 1 מתוך 6</span>
         <button class="help" id="btn-help" type="button">? עזרה</button>
       </div>
-      <div class="helpbox" id="helpbox" hidden></div>
       <p class="prompt" id="prompt"></p>
       <div class="expr" id="expr" aria-label=""></div>
       <div class="opts" id="opts"></div>
+      <div class="nextwrap">
+        <button class="btn pri big" id="btn-next" type="button" disabled>הבא</button>
+      </div>
     </div>
   </section>
 
@@ -91,9 +108,11 @@ main{flex:1;max-width:520px;width:100%;margin:0 auto;padding:14px 12px 20px}
     <div class="badge" id="res-badge">סיכום</div>
     <h2 id="res-title"></h2>
     <p id="res-body"></p>
+    <div class="eqnote" id="res-eq" hidden></div>
     <div class="tip" id="res-tip"></div>
     <p class="scoreline" id="res-score"></p>
-    <button class="btn pri big" id="btn-again" type="button">תרגול נוסף</button>
+    <div class="break" id="res-break"></div>
+    <button class="btn pri big" id="btn-again" type="button">תירגול נוסף</button>
   </section>
 
   <section id="screen-sim" class="screen card" hidden>
@@ -102,6 +121,15 @@ main{flex:1;max-width:520px;width:100%;margin:0 auto;padding:14px 12px 20px}
     <div id="sim-out">מריץ…</div>
   </section>
 </main>
+<div class="help-overlay" id="help-overlay" hidden>
+  <div class="help-sheet" role="dialog" aria-modal="true" aria-labelledby="help-title">
+    <div class="htop">
+      <strong id="help-title">עזרה</strong>
+      <button type="button" class="help-close" id="btn-help-close" aria-label="סגירה">×</button>
+    </div>
+    <div class="hbody" id="help-body"></div>
+  </div>
+</div>
 <div class="credit">H-RIMON-MATH-03 · טיוטה · ה׳ רימון · לא לפרסום<br>נבנה ע״י אשכול-בוט</div>
 
 <script>
@@ -293,9 +321,9 @@ function promptFor(q){
   return "מה צריך להיות במקום סימן השאלה?";
 }
 function helpFor(q){
-  if (q.type === "add") return "בחיבור שברים מחברים רק כשהמכנים זהים. אם המכנים שונים — קודם משווים מכנים, ורק אז מחברים את המונים. לא מחברים מונה עם מונה ומכנה עם מכנה.";
-  if (q.type === "cmp") return "כשהמונים זהים, השבר עם המכנה הקטן יותר הוא הגדול יותר: החלקים גדולים יותר. למשל 1/3 גדול מ-1/5.";
-  return "בהרחבת שבר כופלים את המונה ואת המכנה באותו מספר. לא מחברים את ההפרש למכנה החדש.";
+  if (q.type === "add") return "דמיינו שתי פיצות שחולקו לאותו מספר פלחים. מחברים רק את הפלחים שאכלנו (המונים), ומספר הפלחים בכל פיצה (המכנה) נשאר כמו שהוא. לא מדביקים את שתי הפיצות לפיצה אחת עם יותר פלחים.";
+  if (q.type === "cmp") return "כשהמונים זהים, השבר עם המכנה הקטן יותר הוא הגדול יותר: החלקים גדולים יותר. למשל 1/3 גדול מ-1/5 — שליש עוגה גדול יותר מחמישית.";
+  return "בהרחבת שבר כופלים את המונה ואת המכנה באותו מספר, כמו לחלק כל פלח לעוד חלקים קטנים באותה מידה. לא מוסיפים את ההפרש למכנה החדש.";
 }
 function exprHTML(q){
   if (q.type === "add"){
@@ -365,7 +393,8 @@ function makeSession(seed){
     trapHits: {ADD_ALL:0, BIG_DEN:0, EXPAND_ADD:0},
     trapChances: {ADD_ALL:0, BIG_DEN:0, EXPAND_ADD:0},
     nonTrapErrors: 0,
-    correctCount: 0
+    correctCount: 0,
+    eqFalseEqual: 0
   };
 }
 
@@ -375,6 +404,13 @@ function trapForType(type){
   return "EXPAND_ADD";
 }
 
+function correctLabel(item){
+  var c = item.opts.find(function(o){ return o.kind==="correct"; });
+  return c ? stripTags(c.label) : "";
+}
+function stripTags(html){
+  return String(html||"").replace(/<[^>]+>/g," ").replace(/\s+/g," ").trim();
+}
 function recordAnswer(sess, item, chosen){
   var type = item.type;
   var trapName = trapForType(type);
@@ -384,11 +420,21 @@ function recordAnswer(sess, item, chosen){
   if (isCorrect) sess.correctCount += 1;
   else if (hitTrap) sess.trapHits[hitTrap] += 1;
   else sess.nonTrapErrors += 1;
+  var choseEqWrong = false;
+  if (type === "cmp" && chosen.value === "eq" && !isCorrect){
+    choseEqWrong = true;
+    sess.eqFalseEqual = (sess.eqFalseEqual || 0) + 1;
+  }
   sess.answers.push({
     type: type,
+    typeLabel: TYPE_LABEL[type],
+    expr: exprLabel(item.q),
     correct: isCorrect,
     trap: hitTrap,
-    value: chosen.value
+    value: chosen.value,
+    chosenLabel: stripTags(chosen.label),
+    correctLabel: correctLabel(item),
+    choseEqWrong: choseEqWrong
   });
 }
 
@@ -458,7 +504,7 @@ var DIAG = {
     code: "mastery",
     title: "נראה שיש שליטה טובה",
     body: "שש התשובות היו מדויקות. נראה שיש הבנה טובה של חיבור שברים, של השוואה כשהמונה זהה, ושל הרחבת שברים.",
-    tip: "טיפ לבית: בקשו הסבר בקול למה התשובה נכונה — ההסבר מחזק יותר מתרגול נוסף."
+    tip: "טיפ לבית: בקשו הסבר בקול למה התשובה נכונה — ההסבר מחזק יותר מתירגול נוסף."
   },
   guesser: {
     code: "guesser",
@@ -468,8 +514,8 @@ var DIAG = {
   },
   two_errors: {
     code: "two_errors",
-    title: "שני דפוסים לתרגול",
-    body: "נראים שני דפוסים שונים שכדאי לתרגל בנפרד.",
+    title: "שני דפוסים לתירגול",
+    body: "נראים שני דפוסים שונים שכדאי לתירגל בנפרד.",
     tip: "טיפ לבית: יום אחד לכל דפוס, עם ציור פשוט של חלקים, בלי לחץ."
   },
   ADD_ALL: {
@@ -493,7 +539,7 @@ var DIAG = {
   inconsistent: {
     code: "inconsistent",
     title: "הדפוס עדיין לא יציב",
-    body: "יש דפוס שמופיע רק בחלק מהשאלות. לפעמים הכלל עובד, ולפעמים פחות.",
+    body: "יש דפוס שמופיע כמה פעמים, אבל לא בכל ההזדמנויות. לפעמים הכלל עובד, ולפעמים פחות.",
     tip: "טיפ לבית: עוד שני תרגילים מאותו סוג, לאט, עם ציור — רק כדי לראות אם הדפוס חוזר."
   },
   slips: {
@@ -506,15 +552,20 @@ var DIAG = {
     code: "unclear",
     title: "עוד מוקדם לקבוע",
     body: "מהתשובות אי אפשר עדיין לקבוע דפוס ברור. כדאי לנסות שוב בזמן רגוע.",
-    tip: "טיפ לבית: שבו על שלוש שאלות פשוטות עם ציור, ורק אחר כך חזרו לתרגול הקצר."
+    tip: "טיפ לבית: שבו על שלוש שאלות פשוטות עם ציור, ורק אחר כך חזרו לתירגול הקצר."
   }
 };
+
+function totalTrapFalls(hits){
+  return TRAPS.reduce(function(s,t){ return s + (hits[t]||0); }, 0);
+}
 
 function diagnose(sess){
   var hits = sess.trapHits;
   var chances = sess.trapChances;
   var non = sess.nonTrapErrors;
   var correct = sess.correctCount;
+  var trapFalls = totalTrapFalls(hits);
 
   if (correct === 6) return Object.assign({detail:null}, DIAG.mastery);
 
@@ -522,17 +573,20 @@ function diagnose(sess){
 
   var strong = TRAPS.filter(function(t){ return hits[t] >= 2; });
   var weak = TRAPS.filter(function(t){ return hits[t] === 1; });
+
   // Two different traps, hit ≥2 each, OR one twice and the other once
   if (strong.length >= 2) {
     var d = Object.assign({}, DIAG.two_errors);
-    d.body = "נראים שני דפוסים לתרגול: «"+DIAG[strong[0]].title+"» ו«"+DIAG[strong[1]].title+"».";
+    d.body = "נראים שני דפוסים לתירגול: «"+DIAG[strong[0]].title+"» ו«"+DIAG[strong[1]].title+"».";
     d.detail = strong.slice();
     return d;
   }
   if (strong.length === 1 && weak.length >= 1) {
+    // hedge: one pattern fell only once
     var d2 = Object.assign({}, DIAG.two_errors);
-    d2.body = "נראים שני דפוסים לתרגול: «"+DIAG[strong[0]].title+"» (חוזר) ו«"+DIAG[weak[0]].title+"».";
+    d2.body = "ייתכן שיש כאן שני דפוסים: «"+DIAG[strong[0]].title+"» (חזר יותר מפעם אחת) ו«"+DIAG[weak[0]].title+"», שהופיע פעם אחת בלבד.";
     d2.detail = [strong[0], weak[0]];
+    d2.hedge = true;
     return d2;
   }
 
@@ -540,7 +594,6 @@ function diagnose(sess){
   for (var i=0;i<TRAPS.length;i++){
     var t = TRAPS[i];
     if (chances[t] > 0 && hits[t] === chances[t] && hits[t] >= 1){
-      // only this trap, and consistent
       var others = TRAPS.filter(function(x){ return x!==t && hits[x]>0; });
       if (!others.length){
         return Object.assign({detail:t}, DIAG[t]);
@@ -548,14 +601,23 @@ function diagnose(sess){
     }
   }
 
-  // One trap hit only at some chances → לא עקבי
+  // 5/6 with exactly one trap fall → slips (before inconsistent)
+  if (correct === 5 && trapFalls === 1 && non === 0){
+    return Object.assign({detail:null}, DIAG.slips);
+  }
+  // also 5/6 with exactly one non-trap error and no trap falls
+  if (correct === 5 && trapFalls === 0 && non === 1){
+    return Object.assign({detail:null}, DIAG.slips);
+  }
+
+  // לא עקבי: at least 2 falls, and they don't cover all opportunities
   for (var j=0;j<TRAPS.length;j++){
     var t2 = TRAPS[j];
-    if (hits[t2] >= 1 && chances[t2] > hits[t2]){
+    if (hits[t2] >= 2 && chances[t2] > hits[t2]){
       var others2 = TRAPS.filter(function(x){ return x!==t2 && hits[x]>0; });
       if (!others2.length){
         var inc = Object.assign({}, DIAG.inconsistent);
-        inc.body = "הדפוס «"+DIAG[t2].title+"» הופיע בחלק מהשאלות ("+hits[t2]+" מתוך "+chances[t2]+"). לפעמים הכלל עובד, ולפעמים פחות.";
+        inc.body = "הדפוס «"+DIAG[t2].title+"» הופיע "+hits[t2]+" פעמים מתוך "+chances[t2]+" הזדמנויות — כלומר לא בכל פעם. לפעמים הכלל עובד, ולפעמים פחות.";
         inc.detail = t2;
         return inc;
       }
@@ -571,11 +633,6 @@ function diagnose(sess){
 function responderFor(profile, seed){
   var rnd = mulberry32((seed ^ 0xA5A5A5A5) >>> 0);
   var slipLeft = 1;
-  var addFlags = null; // for A70
-  if (profile === "ADD_ALL_70"){
-    // ~70% errors on addition: generate 6 flags with ~70% E on add opportunities dynamically
-    addFlags = [];
-  }
   return function(item, qIndex){
     var opts = item.opts;
     function find(pred){ return opts.find(pred); }
@@ -595,7 +652,6 @@ function responderFor(profile, seed){
         return correct();
       case "ADD_ALL_70":
         if (item.type==="add"){
-          // 70% trap
           return rnd() < 0.70 ? trap("ADD_ALL") : correct();
         }
         return correct();
@@ -608,8 +664,20 @@ function responderFor(profile, seed){
       case "slip_once":
         if (slipLeft > 0 && qIndex === (seed % 6)){
           slipLeft--;
+          // prefer a trap fall when available so it counts as one trap fall
+          if (item.type==="cmp") return trap("BIG_DEN");
+          if (item.type==="exp") return trap("EXPAND_ADD");
+          if (item.type==="add") return trap("ADD_ALL");
           return otherWrong();
         }
+        return correct();
+      case "slip_q4_cmp":
+        // Q1-3 correct; Q4 is far-apart comparison after all-correct → slip with BIG_DEN once; then correct
+        if (qIndex === 3 && item.type === "cmp") return trap("BIG_DEN");
+        return correct();
+      case "slip_q3_exp":
+        // slip only on Q3 expansion trap; answer later expansion chances correctly
+        if (qIndex === 2 && item.type === "exp") return trap("EXPAND_ADD");
         return correct();
       default:
         return correct();
@@ -622,10 +690,12 @@ var EXPECTED = {
   BIG_DEN_100: ["BIG_DEN"],
   EXPAND_ADD_100: ["EXPAND_ADD"],
   mastery: ["mastery"],
-  ADD_ALL_70: ["ADD_ALL", "inconsistent", "unclear", "guesser"], // soft: often ADD_ALL or inconsistent
+  ADD_ALL_70: ["ADD_ALL", "inconsistent", "slips", "unclear"],
   ADD_ALL_BIG_DEN: ["two_errors"],
-  guesser: ["guesser", "unclear", "inconsistent", "ADD_ALL", "BIG_DEN", "EXPAND_ADD", "two_errors"], // known limit
-  slip_once: ["slips", "mastery", "unclear", "inconsistent"]
+  guesser: ["guesser", "unclear", "inconsistent", "ADD_ALL", "BIG_DEN", "EXPAND_ADD", "two_errors", "slips"],
+  slip_once: ["slips"],
+  slip_q4_cmp: ["slips"],
+  slip_q3_exp: ["slips"]
 };
 
 var EXPECTED_PRIMARY = {
@@ -633,10 +703,12 @@ var EXPECTED_PRIMARY = {
   BIG_DEN_100: "BIG_DEN",
   EXPAND_ADD_100: "EXPAND_ADD",
   mastery: "mastery",
-  ADD_ALL_70: "ADD_ALL", // accept inconsistent as partial
+  ADD_ALL_70: "ADD_ALL",
   ADD_ALL_BIG_DEN: "two_errors",
   guesser: "guesser",
-  slip_once: "slips"
+  slip_once: "slips",
+  slip_q4_cmp: "slips",
+  slip_q3_exp: "slips"
 };
 
 function runOne(profile, seed){
@@ -655,10 +727,12 @@ function runOne(profile, seed){
     diagnosis: dx.code,
     title: dx.title,
     detail: dx.detail,
+    hedge: !!dx.hedge,
     correct: sess.correctCount,
     trapHits: Object.assign({}, sess.trapHits),
     trapChances: Object.assign({}, sess.trapChances),
     nonTrapErrors: sess.nonTrapErrors,
+    eqFalseEqual: sess.eqFalseEqual || 0,
     expected: EXPECTED_PRIMARY[profile],
     match: (EXPECTED[profile] || []).indexOf(dx.code) >= 0
   };
@@ -667,7 +741,8 @@ function runOne(profile, seed){
 function runSimulation(){
   var profiles = [
     "ADD_ALL_100","BIG_DEN_100","EXPAND_ADD_100","mastery",
-    "ADD_ALL_70","ADD_ALL_BIG_DEN","guesser","slip_once"
+    "ADD_ALL_70","ADD_ALL_BIG_DEN","guesser","slip_once",
+    "slip_q4_cmp","slip_q3_exp"
   ];
   var labels = {
     ADD_ALL_100: "ADD_ALL 100%",
@@ -677,9 +752,11 @@ function runSimulation(){
     ADD_ALL_70: "ADD_ALL 70%",
     ADD_ALL_BIG_DEN: "ADD_ALL+BIG_DEN",
     guesser: "random guesser",
-    slip_once: "knows-but-slips once"
+    slip_once: "knows-but-slips once",
+    slip_q4_cmp: "slip on Q4 comparison",
+    slip_q3_exp: "slip on Q3 expansion"
   };
-  var baseSeeds = [101, 202, 303, 404, 505]; // 5 seeds (>=3)
+  var baseSeeds = [101, 202, 303, 404, 505];
   var rows = [];
   var byProfile = {};
   profiles.forEach(function(p){
@@ -720,7 +797,7 @@ function runSimulation(){
 var ui = {
   sess: null,
   current: null,
-  locked: false
+  selected: null
 };
 
 function $(id){ return document.getElementById(id); }
@@ -729,12 +806,14 @@ function showScreen(name){
   ["start","q","result","sim"].forEach(function(s){
     $("screen-"+s).hidden = (s !== name);
   });
+  closeHelp();
 }
 
 function renderProgress(){
   var el = $("progress");
   el.innerHTML = "";
-  for (var i=0;i<6;i++){
+  var total = 6;
+  for (var i=0;i<total;i++){
     var dot = document.createElement("i");
     if (i < ui.sess.answers.length) dot.className = "done";
     else if (i === ui.sess.answers.length) dot.className = "on";
@@ -745,13 +824,12 @@ function renderProgress(){
 function showQuestion(){
   var item = nextItem(ui.sess);
   ui.current = item;
-  ui.locked = false;
+  ui.selected = null;
   renderProgress();
   var n = ui.sess.answers.length + 1;
   $("qnum").textContent = "שאלה " + n + " מתוך 6";
   $("prompt").textContent = promptFor(item.q);
-  $("helpbox").hidden = true;
-  $("helpbox").textContent = helpFor(item.q);
+  $("help-body").textContent = helpFor(item.q);
   var expr = $("expr");
   expr.innerHTML = exprHTML(item.q);
   expr.setAttribute("aria-label", exprLabel(item.q));
@@ -764,23 +842,41 @@ function showQuestion(){
     b.id = "opt-"+idx;
     b.dataset.value = o.value;
     b.innerHTML = o.label;
-    b.addEventListener("click", function(){ onChoose(o, b); });
+    b.addEventListener("click", function(){ onSelect(o, b); });
     opts.appendChild(b);
   });
+  $("btn-next").disabled = true;
   showScreen("q");
 }
 
-function onChoose(opt, btn){
-  if (ui.locked) return;
-  ui.locked = true;
+function onSelect(opt, btn){
+  ui.selected = opt;
   var buttons = Array.prototype.slice.call(document.querySelectorAll(".opt"));
-  buttons.forEach(function(b){ b.disabled = true; });
+  buttons.forEach(function(b){ b.classList.remove("picked"); });
   btn.classList.add("picked");
-  recordAnswer(ui.sess, ui.current, opt);
-  setTimeout(function(){
-    if (ui.sess.answers.length >= 6) showResult();
-    else showQuestion();
-  }, 380);
+  $("btn-next").disabled = false;
+}
+
+function onNext(){
+  if (!ui.selected || !ui.current) return;
+  recordAnswer(ui.sess, ui.current, ui.selected);
+  if (ui.sess.answers.length >= 6) showResult();
+  else showQuestion();
+}
+
+function buildBreakdown(sess){
+  var wrap = $("res-break");
+  wrap.innerHTML = "<h3>פירוט השאלות</h3>";
+  (sess.answers||[]).forEach(function(a, i){
+    var row = document.createElement('div');
+    row.className = 'row';
+    var mark = a.correct ? 'מדויק' : 'לא מדויק';
+    row.innerHTML =
+      '<div class="q">שאלה '+(i+1)+' · '+a.typeLabel+' · <span dir="ltr">'+a.expr+'</span></div>'+
+      '<div class="a">נבחר: <span dir="ltr">'+a.chosenLabel+'</span></div>'+
+      '<div class="m">'+mark+(a.correct ? '' : ' · מדויק היה: <span dir="ltr">'+a.correctLabel+'</span>')+'</div>';
+    wrap.appendChild(row);
+  });
 }
 
 function showResult(){
@@ -790,6 +886,15 @@ function showResult(){
   $("res-body").textContent = dx.body;
   $("res-tip").textContent = dx.tip;
   $("res-score").textContent = "תשובות מדויקות: " + ui.sess.correctCount + " מתוך 6";
+  var eq = $("res-eq");
+  if (ui.sess.eqFalseEqual > 0){
+    eq.hidden = false;
+    eq.textContent = "בשאלה אחת לפחות נבחר «שווים» לשברים שאינם שווים — כדאי לוודא בבית שההשוואה נעשית לפי גודל החלקים, לא רק לפי המספרים שנראים דומים.";
+  } else {
+    eq.hidden = true;
+    eq.textContent = "";
+  }
+  buildBreakdown(ui.sess);
   showScreen("result");
 }
 
@@ -798,11 +903,23 @@ function startLive(){
   showQuestion();
 }
 
+function openHelp(){
+  $("help-overlay").hidden = false;
+  document.body.classList.add("help-open");
+}
+function closeHelp(){
+  var ov = $("help-overlay");
+  if (ov) ov.hidden = true;
+  document.body.classList.remove("help-open");
+}
+
 $("btn-start").addEventListener("click", startLive);
 $("btn-again").addEventListener("click", startLive);
-$("btn-help").addEventListener("click", function(){
-  var box = $("helpbox");
-  box.hidden = !box.hidden;
+$("btn-next").addEventListener("click", onNext);
+$("btn-help").addEventListener("click", openHelp);
+$("btn-help-close").addEventListener("click", closeHelp);
+$("help-overlay").addEventListener("click", function(e){
+  if (e.target === $("help-overlay")) closeHelp();
 });
 
 /* ---------- sim mode ---------- */
@@ -812,7 +929,6 @@ function boot(){
     showScreen("sim");
     var report = runSimulation();
     $("sim-out").textContent = JSON.stringify(report, null, 2);
-    // also expose for playwright
     window.__SIM_REPORT__ = report;
     document.body.dataset.simDone = "1";
   }
