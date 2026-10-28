@@ -37,3 +37,8 @@ Pass: findall-only menu + slower TTS + י=יוּד. Artifacts: hub/lang/math, la
 - Correct tap: WebAudio success arpeggio + `navigator.vibrate([12,40,18])` (Android) / iOS switch-checkbox haptic fallback.
 - Wrong tap: soft error tone + longer vibrate pattern; narrate **tapped** letter name (`ln_*` @0.55) then `try_again` («נַסּוּ שׁוּב.» Deepdub @0.75, ASR «נסו שוב.»); `inputLocked` while speaking.
 - QA assert: `#btnQuick` → `#sc-ex` + 22 `.azcell` + prompt; deep-link `?topic=findall`; math quick + all 4 topics start. Chromium iPhone UA. WebKit MiniBrowser blocked on host (missing libevent) — Chromium+Safari UA used instead.
+
+
+## Pass · hub letters-only (same evening)
+
+Hub `a-tut/index.html` now redirects straight to `lang/?topic=findall`. Math section removed from hub navigation; `a-tut/math/` kept on disk (dormant). Credit retained on hub fallback + lang screens.
