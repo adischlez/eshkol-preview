@@ -91,14 +91,14 @@ main{max-width:980px;margin:0 auto;padding:8px}
 }
 /* train */
 .traintrack{width:100%;max-width:560px;margin:0 auto 8px;padding:8px 4px 4px;background:linear-gradient(180deg,#eef2f6,#e4e9ef);border-radius:14px;border:1px solid var(--line);overflow:hidden}
-.trainrow{display:flex;flex-direction:row-reverse;align-items:stretch;justify-content:center;gap:4px;min-height:72px}
+.trainrow{display:flex;flex-direction:row;direction:rtl;align-items:stretch;justify-content:center;gap:4px;min-height:72px}
 .wagon{flex:1;min-width:44px;max-width:72px;min-height:64px;border:2px solid var(--navy);border-radius:10px;background:#fff;display:flex;align-items:center;justify-content:center;font:800 28px/1 "Times New Roman",serif;color:var(--navy);position:relative}
 .wagon.empty{border-style:dashed;background:#fffdf6;color:var(--mute);box-shadow:inset 0 0 0 2px var(--hl)}
 .wagon.empty.on{box-shadow:0 0 0 3px var(--org);border-color:var(--org)}
 .wagon.ok{background:#eef8f1;border-color:var(--good)}
 .wagon .wh{position:absolute;bottom:-7px;width:10px;height:10px;border-radius:50%;background:var(--navy);left:8px}
 .wagon .wh2{position:absolute;bottom:-7px;width:10px;height:10px;border-radius:50%;background:var(--navy);right:8px}
-.engine{flex:0 0 48px;min-height:64px;border-radius:10px 14px 10px 10px;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;font-size:22px}
+.engine{flex:0 0 48px;min-height:64px;border-radius:14px 10px 10px 10px;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;font-size:22px;transform:scaleX(-1)}
 .cardrow{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:8px 0 4px}
 .tcard{min-width:56px;min-height:56px;border:2px solid var(--ink);border-radius:12px;background:#fff;font:800 28px "Times New Roman",serif;color:var(--ink);cursor:pointer;touch-action:manipulation;padding:6px 12px}
 .tcard.sel{box-shadow:0 0 0 3px var(--org);border-color:var(--org)}
@@ -419,7 +419,8 @@ function trainNext(){
   trainCards=shuffle([...missing,...decoys]).slice(0,Math.min(4,missing.length+decoys.length));
   const prog=$("#trainProg");if(prog)prog.textContent="קטע "+trainRound;
   const row=$("#trainRow");
-  row.innerHTML=`<div class="engine" aria-hidden="true">🚂</div>`+trainSeg.map((ch,i)=>{
+  row.setAttribute("dir","rtl");row.setAttribute("data-order","rtl-asc");
+  row.innerHTML=`<div class="engine" aria-hidden="true" title="קטר">🚂</div>`+trainSeg.map((ch,i)=>{
     const gap=idxs.includes(i);
     return `<div class="wagon ${gap?"empty":""}" data-i="${i}" data-ch="${gap?"":ch}" aria-label="${gap?"קרון ריק":ch}">${gap?"?":ch}<span class="wh"></span><span class="wh2"></span></div>`;
   }).join("");
