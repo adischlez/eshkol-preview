@@ -24,3 +24,9 @@ Date: 2026-10-28 · Grade א׳ · Preview only
 ## Open questions for Adi
 1. Microphone input for letter names — wait for decision (not built).
 2. Should «תרגול זריז» include מצאו את האות as the last station, or skip it? (currently included as last of 6.)
+
+## Voice update 2026-10-28 (letter names)
+- Tempo letter clips (`ln_*`, `name_*`): **0.65** (instr stays 0.85)
+- Classroom names: הֵיי (not הא), צַדִּיק (not צדק), פֵּיי, וָב (TTS respelling → vav not wou), כַּף
+- Phrase shape: `הָאוֹת, {name}` (comma pause)
+- Samples: `/workspace/eshkol/share/v7/{hey,tsadik,vav,all_letters}.mp3`

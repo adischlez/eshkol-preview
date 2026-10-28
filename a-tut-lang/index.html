@@ -241,7 +241,7 @@ function fallbackSay(key,done){if(!window.speechSynthesis){done&&done();return}
     t_d:"האות דלת",t_h:"האות חית",t_s:"האות סמך",t_k:"האות כף",t_sounds:"צלילים ואותיות",
     help_letter:"הקשיבו לצליל. לחצו על האות הנכונה.",help_initial:"אמרו את שם התמונה בקול.",help_k:"מסתכלים על הדגש: כּ עם נקודה בפנים, כ בלי נקודה.",
     t_findall:"מצאו את האות",q_findall:"איזו אות שמעתם? לחצו עליה.",help_findall:"תשמעו את שם האות. לחצו עליה בלוח.",find_done:"כל הכבוד! מצאתם את כל האותיות!",find_again:"עוד סיבוב",
-    ln_alef:"אלף",ln_bet:"בית",ln_gimel:"גימל",ln_dalet:"דלת",ln_he:"הי",ln_vav:"וו",ln_zayin:"זין",ln_chet:"חית",ln_tet:"טית",ln_yod:"יוד",ln_kaf:"כף",ln_lamed:"למד",ln_mem:"מם",ln_nun:"נון",ln_samekh:"סמך",ln_ayin:"עין",ln_pe:"פא",ln_tsadi:"צדי",ln_qof:"קוף",ln_resh:"ריש",ln_shin:"שין",ln_tav:"תו"};
+    ln_alef:"אלף",ln_bet:"בית",ln_gimel:"גימל",ln_dalet:"דלת",ln_he:"היי",ln_vav:"וו",ln_zayin:"זיין",ln_chet:"חית",ln_tet:"טית",ln_yod:"יוד",ln_kaf:"כף",ln_lamed:"למד",ln_mem:"מם",ln_nun:"נון",ln_samekh:"סמך",ln_ayin:"עין",ln_pe:"פי",ln_tsadi:"צדיק",ln_qof:"קוף",ln_resh:"ריש",ln_shin:"שין",ln_tav:"תו"};
   const t=map[key];if(!t){done&&done();return}const u=new SpeechSynthesisUtterance(t);u.lang="he-IL";u.rate=.9;u.onend=()=>done&&done();u.onerror=()=>done&&done();speechSynthesis.speak(u)}
 function sayOk(){speakKeys(pick(["ok","ok2","ok3"]))}function sayBad(){speakKeys(pick(["try","almost"]))}
 function show(id){document.querySelectorAll(".screen").forEach(s=>s.classList.remove("on"));$("#"+id).classList.add("on");document.body.classList.toggle("ex",id==="sc-ex");const h=document.querySelector("header");document.documentElement.style.setProperty("--vvt",(h?h.offsetHeight:0)+"px")}
