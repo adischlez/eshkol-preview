@@ -81,7 +81,48 @@ main{max-width:980px;margin:0 auto;padding:8px}
   .bigletter{font-size:64px}.cbtn{min-height:52px;font-size:28px}
   .btn{min-width:120px;font-size:15px}
 }
-@media(max-width:400px){.btn.pri.qk,.qk{min-height:56px;font-size:16px;padding:8px 12px}.qk small{font-size:12px}.tgrid{gap:6px}.tgrid .btn,.tgrid .tbtn{min-height:44px;padding:8px 10px;font-size:14.5px}#start h2,.card h2{font-size:16.5px;margin:0 0 6px}.ecq{margin:8px 0 4px}.priv{font-size:11px;margin:6px 0 0}.card{padding:8px}.foot{font-size:9.5px;padding:2px 8px}}
+@media(max-width:400px){
+  body{padding-bottom:8px}
+  .btn.pri.qk,.qk{min-height:48px;font-size:15px;padding:6px 10px;gap:0;margin:0 0 2px}
+  .qk small{font-size:11px}
+  .tgrid{gap:4px;margin-top:4px}
+  .tgrid .btn,.tgrid .tbtn{min-height:40px;padding:6px 8px;font-size:13.5px;border-radius:10px}
+  .tgrid .btn .subline,.tgrid .tbtn .subline{font-size:11px;margin-top:0;line-height:1.2}
+  #start h2,.card h2{font-size:15.5px;margin:0 0 4px}
+  .ecq{margin:6px 0 2px;font-size:14px}
+  .priv{font-size:10.5px;margin:4px 0 0}
+  .card{padding:6px 8px;margin:0 0 6px}
+  main{padding:6px}
+  .foot{font-size:9px;padding:0 8px;margin:2px auto 0}
+  header p{display:none}
+  .hw{padding:6px 10px}
+  header h1{font-size:15.5px}
+}
+
+/* מצאו את האות — 22-letter board, phone-fit */
+.azbar{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0 0 8px;flex-wrap:wrap}
+.azprog{font:700 15px system-ui;color:var(--navy)}
+.azrep{border:1px solid var(--navy);background:#fff;color:var(--navy);border-radius:999px;min-height:40px;min-width:40px;padding:4px 12px;font:700 14px system-ui;cursor:pointer;display:inline-flex;align-items:center;gap:4px}
+.azgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;width:100%;max-width:420px;margin:0 auto}
+.azcell{border:1.5px solid var(--ink);background:#fff;border-radius:12px;min-height:48px;min-width:0;font:800 26px "Times New Roman",serif;color:var(--ink);cursor:pointer;padding:4px;touch-action:manipulation;line-height:1}
+.azcell.done{background:#eef8f1;border-color:#9fd4b2;color:#7a8a7e;opacity:.55;cursor:default}
+.azcell.bad{animation:nudge .35s;background:#fff6e8;border-color:var(--warn)}
+.azcell.hint{box-shadow:0 0 0 3px var(--org);border-color:var(--org)}
+.azcell:disabled:not(.done){opacity:.7}
+.azceleb{text-align:center;padding:12px 8px}
+.azceleb .stars{font-size:36px;margin:4px 0}
+.azceleb h3{margin:4px 0 10px;color:var(--good);font-size:20px}
+body.az #exPrompt{font-size:16px;margin:0 0 6px}
+body.az .stage{min-height:0;margin:0 0 6px}
+body.az #exCard{padding:8px}
+@media(max-width:400px){
+  .azgrid{gap:5px}
+  .azcell{min-height:44px;font-size:22px;border-radius:10px}
+}
+@media(min-width:600px){
+  .azgrid{grid-template-columns:repeat(6,1fr);max-width:520px;gap:8px}
+  .azcell{min-height:56px;font-size:30px}
+}
 </style>
 </head>
 <body>
@@ -153,12 +194,21 @@ const DISTRACTOR_PICS=[
 /* For sound/hearing tasks: never put כ and ח together as options */
 const HEAR_POOL=["ד","ס","כּ","ב","מ","ר","ת","א","ש"]; /* no soft כ, no ח */
 const VISUAL_POOL=["ד","ח","ס","כּ","כ","ב","מ","ר"]; /* may include soft כ and ח for shape tasks */
+const ALEF=[
+  {ch:"א",key:"ln_alef"},{ch:"ב",key:"ln_bet"},{ch:"ג",key:"ln_gimel"},{ch:"ד",key:"ln_dalet"},
+  {ch:"ה",key:"ln_he"},{ch:"ו",key:"ln_vav"},{ch:"ז",key:"ln_zayin"},{ch:"ח",key:"ln_chet"},
+  {ch:"ט",key:"ln_tet"},{ch:"י",key:"ln_yod"},{ch:"כ",key:"ln_kaf"},{ch:"ל",key:"ln_lamed"},
+  {ch:"מ",key:"ln_mem"},{ch:"נ",key:"ln_nun"},{ch:"ס",key:"ln_samekh"},{ch:"ע",key:"ln_ayin"},
+  {ch:"פ",key:"ln_pe"},{ch:"צ",key:"ln_tsadi"},{ch:"ק",key:"ln_qof"},{ch:"ר",key:"ln_resh"},
+  {ch:"ש",key:"ln_shin"},{ch:"ת",key:"ln_tav"}
+];
 const TOPICS=[
   {k:"d",t:"האות ד׳",em:"ד",help:"הקשיבו לצליל דַּ. לחצו על האות או על התמונה שמתחילה בד׳.",speak:"t_d",letter:"d"},
   {k:"h",t:"האות ח׳",em:"ח",help:"הקשיבו לצליל חַ. לחצו על האות או על התמונה שמתחילה בח׳.",speak:"t_h",letter:"h"},
   {k:"s",t:"האות ס׳",em:"ס",help:"הקשיבו לצליל סַ. לחצו על האות או על התמונה שמתחילה בס׳.",speak:"t_s",letter:"s"},
   {k:"k",t:"האות כ / כּ",em:"כּ",help:"מסתכלים על הצורה בלבד: כּ עם נקודה בפנים, כ בלי נקודה. כ רכה ו־ח נשמעות דומה — לכן לא מבקשים להבחין ביניהן רק באוזן.",speak:"t_k",letter:"k"},
-  {k:"sounds",t:"צלילים ואותיות",em:"א",help:"אמרו את שם התמונה בקול. איזו אות שומעים בהתחלה?",speak:"t_sounds",letter:null}
+  {k:"sounds",t:"צלילים ואותיות",em:"א",help:"אמרו את שם התמונה בקול. איזו אות שומעים בהתחלה?",speak:"t_sounds",letter:null},
+  {k:"findall",t:"מצאו את האות",em:"א",help:"תשמעו את שם האות. לחצו עליה בלוח. אפשר ללחוץ שוב על הרמקול כדי לשמוע שוב. בלי מיקרופון.",speak:"t_findall",letter:null}
 ];
 function rnd(a,b){return a+Math.floor(Math.random()*(b-a+1))}
 function shuffle(a){const x=a.slice();for(let i=x.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[x[i],x[j]]=[x[j],x[i]]}return x}
@@ -174,7 +224,7 @@ function hearChoicesFor(ch){
   if(ch==="כּ") return letterChoices("כּ",4,HEAR_POOL); // hard kaf vs others, no soft כ, no ח
   return letterChoices(ch,4,HEAR_POOL.concat(["ח"]).filter(c=>c!=="כ")); // others ok with ח, no soft כ
 }
-let muted=false,currentAudio=null,topicIdx=0,exercise=null,answered=false;
+let muted=false,currentAudio=null,topicIdx=0,exercise=null,answered=false;let azQueue=[],azDone=new Set(),azTarget=null,azTries=0,azActive=false;
 const $=s=>document.querySelector(s);
 function stopSpeak(){if(currentAudio){try{currentAudio.pause();currentAudio.src=""}catch(e){}currentAudio=null}if(window.speechSynthesis)speechSynthesis.cancel()}
 function speakKeys(keys){if(muted)return;stopSpeak();const list=(Array.isArray(keys)?keys:[keys]).filter(Boolean);playSeq(list,0)}
@@ -189,19 +239,93 @@ function fallbackSay(key,done){if(!window.speechSynthesis){done&&done();return}
     w_sefer:"ספר",w_sus:"סוס",w_sal:"סל",w_kelev:"כלב",w_kadur:"כדור",w_kokhav:"כוכב",
     w_yad:"יד",w_bayit:"בית",w_perach:"פרח",w_shemesh:"שמש",
     t_d:"האות דלת",t_h:"האות חית",t_s:"האות סמך",t_k:"האות כף",t_sounds:"צלילים ואותיות",
-    help_letter:"הקשיבו לצליל. לחצו על האות הנכונה.",help_initial:"אמרו את שם התמונה בקול.",help_k:"מסתכלים על הדגש: כּ עם נקודה בפנים, כ בלי נקודה."};
+    help_letter:"הקשיבו לצליל. לחצו על האות הנכונה.",help_initial:"אמרו את שם התמונה בקול.",help_k:"מסתכלים על הדגש: כּ עם נקודה בפנים, כ בלי נקודה.",
+    t_findall:"מצאו את האות",q_findall:"איזו אות שמעתם? לחצו עליה.",help_findall:"תשמעו את שם האות. לחצו עליה בלוח.",find_done:"כל הכבוד! מצאתם את כל האותיות!",find_again:"עוד סיבוב",
+    ln_alef:"אלף",ln_bet:"בית",ln_gimel:"גימל",ln_dalet:"דלת",ln_he:"הי",ln_vav:"וו",ln_zayin:"זין",ln_chet:"חית",ln_tet:"טית",ln_yod:"יוד",ln_kaf:"כף",ln_lamed:"למד",ln_mem:"מם",ln_nun:"נון",ln_samekh:"סמך",ln_ayin:"עין",ln_pe:"פא",ln_tsadi:"צדי",ln_qof:"קוף",ln_resh:"ריש",ln_shin:"שין",ln_tav:"תו"};
   const t=map[key];if(!t){done&&done();return}const u=new SpeechSynthesisUtterance(t);u.lang="he-IL";u.rate=.9;u.onend=()=>done&&done();u.onerror=()=>done&&done();speechSynthesis.speak(u)}
 function sayOk(){speakKeys(pick(["ok","ok2","ok3"]))}function sayBad(){speakKeys(pick(["try","almost"]))}
 function show(id){document.querySelectorAll(".screen").forEach(s=>s.classList.remove("on"));$("#"+id).classList.add("on");document.body.classList.toggle("ex",id==="sc-ex");const h=document.querySelector("header");document.documentElement.style.setProperty("--vvt",(h?h.offsetHeight:0)+"px")}
 let MODE="single";
 function buildMenu(){
-  $("#topicList").innerHTML=TOPICS.map((t,i)=>`<button class="btn tbtn" type="button" data-i="${i}">${i+1}. ${t.t}<span class="subline">עם הקראה בקול</span></button>`).join("");
+  $("#topicList").innerHTML=TOPICS.map((t,i)=>`<button class="btn tbtn" type="button" data-i="${i}">${i+1}. ${t.t}<span class="subline">${t.k==="findall"?"22 אותיות · א–ת · בלי סופיות":"עם הקראה בקול"}</span></button>`).join("");
   $("#topicList").onclick=e=>{const b=e.target.closest("[data-i]");if(!b)return;MODE="single";topicIdx=+b.dataset.i;startTopic()};
   $("#btnQuick").onclick=()=>{MODE="quick";topicIdx=0;startTopic()};
 }
-function startTopic(){answered=false;show("sc-ex");$("#exTopic").textContent=TOPICS[topicIdx].t;$("#exActions").hidden=true;$("#exFb").className="fb";refreshNextLabel();newExercise()}
+function startTopic(){answered=false;show("sc-ex");$("#exTopic").textContent=TOPICS[topicIdx].t;$("#exActions").hidden=true;$("#exFb").className="fb";refreshNextLabel();const isAz=TOPICS[topicIdx].k==="findall";document.body.classList.toggle("az",isAz);if(isAz)startFindAll();else newExercise()}
 function refreshNextLabel(){const last=MODE==="quick"&&topicIdx>=TOPICS.length-1;$("#btnNext").textContent=last?"סיום ←":"לנושא הבא ←"}
-function newExercise(){answered=false;stopSpeak();$("#exActions").hidden=true;$("#exFb").className="fb";$("#exFb").textContent="";const t=TOPICS[topicIdx];if(t.k==="sounds")exercise=makeSoundsMix();else if(t.k==="k")exercise=makeKaf();else exercise=makeLetter(t.letter);renderEx();setTimeout(()=>speakKeys(exercise.speak),150)}
+function newExercise(){answered=false;stopSpeak();$("#exActions").hidden=true;$("#exFb").className="fb";$("#exFb").textContent="";const t=TOPICS[topicIdx];if(t.k==="findall"){startFindAll();return}if(t.k==="sounds")exercise=makeSoundsMix();else if(t.k==="k")exercise=makeKaf();else exercise=makeLetter(t.letter);renderEx();setTimeout(()=>speakKeys(exercise.speak),150)}
+
+function startFindAll(){
+  azActive=true;azDone=new Set();azTries=0;azQueue=shuffle(ALEF.map(x=>x.ch));azTarget=null;
+  exercise={prompt:"איזו אות שמעתם? לחצו עליה",speak:["t_findall","q_findall"],kind:"az",stageHtml:""};
+  renderAz();
+  setTimeout(()=>{speakKeys(["t_findall","q_findall"]);setTimeout(azNext,900)},150);
+}
+function azNext(){
+  azTries=0;
+  if(azQueue.length===0){azFinish();return}
+  azTarget=azQueue[0];
+  const item=ALEF.find(x=>x.ch===azTarget);
+  exercise.speak=[item.key];
+  updateAzProgress();
+  clearAzHints();
+  speakKeys([item.key]);
+}
+function updateAzProgress(){
+  const n=azDone.size;
+  const el=$("#azProg");if(el)el.textContent=n+" מתוך 22";
+}
+function clearAzHints(){
+  document.querySelectorAll(".azcell.hint,.azcell.bad").forEach(b=>{b.classList.remove("hint","bad")});
+}
+function renderAz(){
+  $("#exPrompt").textContent=exercise.prompt;
+  $("#exStage").innerHTML=`<div class="azbar"><span class="azprog" id="azProg">0 מתוך 22</span><button class="azrep" id="azReplay" type="button" aria-label="השמעה שוב">🔊 שוב</button></div>`;
+  const box=$("#exChoices");
+  box.className="azgrid";
+  box.innerHTML=ALEF.map(L=>`<button class="azcell" type="button" data-ch="${L.ch}" aria-label="${L.ch}">${L.ch}</button>`).join("");
+  box.onclick=onAzChoice;
+  const rp=$("#azReplay");if(rp)rp.onclick=()=>{if(azTarget){const item=ALEF.find(x=>x.ch===azTarget);if(item)speakKeys([item.key])}};
+  $("#exActions").hidden=true;
+  $("#exFb").className="fb";$("#exFb").textContent="";
+  updateAzProgress();
+}
+function onAzChoice(e){
+  const b=e.target.closest(".azcell");if(!b||!azActive||!azTarget)return;
+  if(b.classList.contains("done"))return;
+  const ch=b.dataset.ch;
+  if(ch===azTarget){
+    b.classList.add("done");b.disabled=true;azDone.add(ch);azQueue=azQueue.filter(c=>c!==ch);
+    $("#exFb").className="fb on ok";$("#exFb").textContent="נכון! 🌟";
+    sayOk();updateAzProgress();
+    setTimeout(()=>{if(!azActive)return;$("#exFb").className="fb";$("#exFb").textContent="";azNext()},700);
+  } else {
+    azTries+=1;b.classList.add("bad");
+    $("#exFb").className="fb on bad";$("#exFb").textContent=azTries>=2?"הקשיבו שוב 🙂":"נסו שוב 🙂";
+    sayBad();
+    const item=ALEF.find(x=>x.ch===azTarget);
+    setTimeout(()=>{
+      b.classList.remove("bad");
+      if(azTries>=2&&azTarget){
+        const correct=document.querySelector('.azcell[data-ch="'+azTarget+'"]');
+        if(correct)correct.classList.add("hint");
+      }
+      if(item)speakKeys([item.key]);
+      if(!azDone.has(azTarget)){$("#exFb").className="fb";$("#exFb").textContent=""}
+    },650);
+  }
+}
+function azFinish(){
+  azActive=false;azTarget=null;
+  $("#exPrompt").textContent="כל הכבוד!";
+  $("#exStage").innerHTML=`<div class="azceleb"><div class="stars">🌟🌟🌟</div><h3>מצאתם את כל האותיות!</h3></div>`;
+  $("#exChoices").innerHTML="";$("#exChoices").className="";
+  $("#exFb").className="fb on ok";$("#exFb").textContent="22 מתוך 22";
+  $("#exActions").hidden=false;
+  $("#btnMore").textContent="עוד סיבוב";
+  $("#btnNext").textContent=MODE==="quick"?(topicIdx>=TOPICS.length-1?"סיום ←":"לנושא הבא ←"):"לנושא הבא ←";
+  speakKeys(["find_done"]);
+}
 
 function makeLetter(lk){
   const L=LETTERS[lk];
@@ -296,12 +420,12 @@ function onChoice(e){
   if(ok){answered=true;b.classList.add("ok");document.querySelectorAll("#exChoices .cbtn,#exChoices .pic").forEach(x=>x.disabled=true);$("#exFb").className="fb on ok";$("#exFb").textContent="כל הכבוד! 🌟";refreshNextLabel();$("#exActions").hidden=false;sayOk()}
   else{b.classList.add("bad");b.disabled=true;$("#exFb").className="fb on bad";$("#exFb").textContent="נסו שוב 🙂";sayBad();setTimeout(()=>{if(!answered){$("#exFb").className="fb";$("#exFb").textContent=""}},1000)}
 }
-$("#btnMenu").onclick=()=>{stopSpeak();$("#helpPanel").classList.remove("on");show("sc-menu")};
-$("#btnMore").onclick=()=>newExercise();
+$("#btnMenu").onclick=()=>{azActive=false;stopSpeak();$("#helpPanel").classList.remove("on");document.body.classList.remove("az");show("sc-menu");$("#btnMore").textContent="עוד תרגיל"};
+$("#btnMore").onclick=()=>{if(TOPICS[topicIdx].k==="findall"){$("#btnMore").textContent="עוד תרגיל";startFindAll()}else newExercise()};
 $("#btnNext").onclick=()=>{if(MODE==="quick"){if(topicIdx>=TOPICS.length-1){show("sc-menu");return}topicIdx+=1}else{topicIdx=(topicIdx+1)%TOPICS.length}startTopic()};
-$("#btnSpeak").onclick=()=>{if(exercise)speakKeys(exercise.speak);else speakKeys(["welcome"])};
+$("#btnSpeak").onclick=()=>{if(azActive&&azTarget){const item=ALEF.find(x=>x.ch===azTarget);if(item)speakKeys([item.key]);return}if(exercise)speakKeys(exercise.speak);else speakKeys(["welcome"])};
 $("#btnMute").onclick=function(){muted=!muted;this.setAttribute("aria-pressed",muted?"true":"false");this.textContent=muted?"🔇":"🔈";if(muted)stopSpeak()};
-$("#btnHelp").onclick=()=>{const t=TOPICS[topicIdx];$("#helpTitle").textContent="עזרה";$("#helpH2").textContent=t.t;$("#helpBody").textContent=t.help;$("#helpPanel").classList.add("on");speakKeys([t.k==="k"?"help_k":(t.k==="sounds"?"help_initial":"help_letter")])};
+$("#btnHelp").onclick=()=>{const t=TOPICS[topicIdx];$("#helpTitle").textContent="עזרה";$("#helpH2").textContent=t.t;$("#helpBody").textContent=t.help;$("#helpPanel").classList.add("on");speakKeys([t.k==="findall"?"help_findall":t.k==="k"?"help_k":(t.k==="sounds"?"help_initial":"help_letter")])};
 $("#helpClose").onclick=()=>{$("#helpPanel").classList.remove("on");stopSpeak()};
 buildMenu();
 })();
