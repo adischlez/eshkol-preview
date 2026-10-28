@@ -116,7 +116,7 @@ main{flex:1;min-height:0;max-width:980px;width:100%;margin:0 auto;padding:8px 10
   </div>
   <div class="xin"><h2 id="helpH2"></h2><div class="idea" id="helpBody"></div></div>
 </div>
-<div class="foot">A-TUT-LANG-01 · תצוגה מקדימה · לא לשימוש ציבורי</div>
+<div class="foot">A-TUT-LANG-01 · טיוטה · א׳ תות · לא לפרסום</div>
 <script>
 (function(){
 "use strict";
@@ -170,12 +170,12 @@ function fallbackSay(key,done){if(!window.speechSynthesis){done&&done();return}
     q_which_letter:"איזו אות זאת?",q_find_letter:"לחצו על האות",q_initial:"במה פותחת המילה? לחצו על האות",
     q_sound:"איזה צליל שומעים? לחצו על האות",q_match_pic:"איזו תמונה מתחילה בצליל של האות?",
     q_look:"הסתכלו על האות. לחצו על הצורה הנכונה",
-    snd_d:"דַ",snd_h:"חַ",snd_s:"סַ",snd_k_hard:"כַּ",
+    snd_d:"דַ. דַ כמו דג",snd_h:"חַ. חַ כמו חלב",snd_s:"סַ. סַ כמו ספר",snd_k_hard:"כַּ. כַּ כמו כדור",snd_k_soft:"כַ. כַ בלי דגש",
     w_dag:"דג",w_delet:"דלת",w_dvash:"דבש",w_chalav:"חלב",w_chol:"חול",w_chatul:"חתול",
     w_sefer:"ספר",w_sus:"סוס",w_sal:"סל",w_kelev:"כלב",w_kadur:"כדור",w_kokhav:"כוכב",
     w_yad:"יד",w_bayit:"בית",w_perach:"פרח",w_shemesh:"שמש",
     t_d:"האות דלת",t_h:"האות חית",t_s:"האות סמך",t_k:"האות כף",t_sounds:"צלילים ואותיות",
-    help_letter:"הקשיבו לצליל. לחצו על האות הנכונה.",help_initial:"אמרו את שם התמונה בקול.",help_k:"מסתכלים על הדגש באות כף."};
+    help_letter:"הקשיבו לצליל. לחצו על האות הנכונה.",help_initial:"אמרו את שם התמונה בקול.",help_k:"מסתכלים על הדגש: כּ עם נקודה בפנים, כ בלי נקודה."};
   const t=map[key];if(!t){done&&done();return}const u=new SpeechSynthesisUtterance(t);u.lang="he-IL";u.rate=.9;u.onend=()=>done&&done();u.onerror=()=>done&&done();speechSynthesis.speak(u)}
 function sayOk(){speakKeys(pick(["ok","ok2","ok3"]))}function sayBad(){speakKeys(pick(["try","almost"]))}
 function show(id){document.querySelectorAll(".screen").forEach(s=>s.classList.remove("on"));$("#"+id).classList.add("on")}
