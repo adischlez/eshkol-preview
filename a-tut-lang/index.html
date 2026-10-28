@@ -6,112 +6,122 @@
 <meta name="robots" content="noindex,nofollow">
 <title>A-TUT-LANG-01 · שפה · א׳ תות</title>
 <style>
-:root{--bg:#f5f4f0;--card:#fff;--ink:#1c2230;--navy:#1f3b5c;--mute:#667085;--line:#d9d6cc;--blue:#3a78c2;--org:#e8862a;--good:#2f8f4e;--warn:#d98a1c;--bad:#d9534f;--hl:#fff4dc;--r:14px}
+/* Graphic language = mipui-worksheet (grade-ה׳); age-6: bigger taps, audio */
+:root{--bg:#f5f4f0;--card:#fff;--ink:#1c2230;--navy:#1f3b5c;--mute:#667085;--line:#d9d6cc;--blue:#3a78c2;--org:#e8862a;--good:#2f8f4e;--warn:#d98a1c;--bad:#d9534f;--hl:#fff4dc;--r:14px;--vvt:0px;--tkh:40px}
 *{box-sizing:border-box}
-html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font:15px/1.4 system-ui,-apple-system,"Segoe UI",Arial,sans-serif;-webkit-text-size-adjust:100%;overflow:hidden}
-body{display:flex;flex-direction:column;max-height:100dvh}
-header{background:var(--navy);color:#fff;flex:none;z-index:20}
-.hw{max-width:980px;margin:0 auto;padding:8px 12px;display:flex;align-items:center;gap:8px}
-header h1{margin:0;font-size:16px;font-weight:750;flex:1;min-width:0;line-height:1.2}
-header h1 small{display:block;font-weight:500;opacity:.85;font-size:11px;margin-top:1px}
-.iconb{border:0;background:rgba(255,255,255,.18);color:#fff;border-radius:10px;width:40px;height:40px;font-size:18px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex:none;padding:0}
-.iconb[aria-pressed=true]{background:#fff;color:var(--navy)}
-main{flex:1;min-height:0;max-width:980px;width:100%;margin:0 auto;padding:8px 10px;display:flex;flex-direction:column;overflow:hidden}
-.screen{display:none;flex:1;min-height:0;flex-direction:column;overflow:hidden}
-.screen.on{display:flex}
-.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:10px 12px;display:flex;flex-direction:column;min-height:0;flex:1;overflow:hidden}
-.card h2{margin:0 0 4px;font-size:17px;color:var(--ink);font-weight:750}
-.sub{color:var(--mute);font-size:12.5px;margin:0 0 8px}
-.topics{display:grid;gap:7px;grid-template-columns:1fr;overflow:auto;min-height:0;-webkit-overflow-scrolling:touch}
-.tbtn{border:1px solid var(--ink);background:#fff;border-radius:12px;padding:10px 12px;text-align:right;cursor:pointer;font:700 15px system-ui,-apple-system,sans-serif;color:var(--ink);min-height:48px;display:flex;align-items:center;gap:10px}
-.tbtn .n{font-size:20px;font-weight:800;color:var(--org);width:28px;flex:none;font-family:"Times New Roman",serif;text-align:center}
-.tbtn .meta{flex:1;min-width:0}.tbtn .meta small{display:block;font-weight:500;color:var(--mute);font-size:11.5px;margin-top:1px}
-.exwrap{display:flex;flex-direction:column;flex:1;min-height:0;gap:6px}
-.toprow{display:flex;align-items:center;gap:8px;flex:none}
-.toprow .ttl{flex:1;font-weight:750;color:var(--navy);font-size:14.5px;min-width:0}
-.info{display:inline-flex;align-items:center;gap:5px;border:0;background:var(--navy);color:#fff;border-radius:999px;padding:4px 10px 4px 5px;min-height:32px;font:700 12px system-ui;cursor:pointer;flex:none}
-.info .ic{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:#fff;color:var(--navy);font:italic 800 14px Georgia,serif}
-.prompt{font-size:16px;font-weight:750;color:var(--navy);margin:0;text-align:center;flex:none;line-height:1.25}
-.stage{flex:1 1 auto;min-height:0;display:flex;align-items:center;justify-content:center;overflow:hidden}
-.stage-inner{width:100%;max-height:100%;text-align:center}
-.bigletter{font:800 72px/1 "Times New Roman",serif;color:var(--navy);margin:0}
-.picem{font-size:48px;line-height:1}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Arial,sans-serif;-webkit-text-size-adjust:100%}
+body{padding-bottom:28px;min-height:100dvh}
+header{background:var(--navy);color:#fff;position:sticky;top:0;z-index:20}
+.hw{max-width:980px;margin:0 auto;padding:12px 16px}
+.hrow{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:space-between}
+header h1{margin:0;font-size:20px;font-weight:750;flex:1;min-width:0;line-height:1.2}
+header h1 small{display:block;font-weight:500;opacity:.85;font-size:13px;margin-top:2px}
+header p{margin:4px 0 0;font-size:13.5px;opacity:.9}
+.iconb{border:1px solid rgba(255,255,255,.55);background:transparent;color:#fff;border-radius:8px;min-width:44px;min-height:36px;font-size:16px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;padding:4px 8px}
+.iconb[aria-pressed=true]{background:#fff;color:var(--navy);border-color:#fff}
+.hbts{display:flex;gap:6px;flex:none}
+main{max-width:980px;margin:0 auto;padding:12px 14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px;margin:0 0 14px}
+.card h2{margin:0 0 4px;font-size:19px;font-weight:750}
+.sub{color:var(--mute);font-size:14.5px;margin:0 0 12px}
+.ch{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.ch .n{font-size:26px;font-weight:800;color:var(--org);line-height:1}
+.ch h2{margin:0;font-size:19px;flex:1}
+.topics{display:grid;gap:10px;grid-template-columns:1fr}
+.tbtn{border:1px solid var(--ink);background:#fff;border-radius:12px;padding:12px 14px;text-align:right;cursor:pointer;font:700 16px system-ui,-apple-system,sans-serif;color:var(--ink);min-height:56px;display:flex;align-items:center;gap:12px;width:100%}
+.tbtn .n{font-size:28px;font-weight:800;color:var(--org);width:32px;flex:none;font-family:"Times New Roman",serif;text-align:center;line-height:1}
+.tbtn .meta{flex:1;min-width:0}.tbtn .meta small{display:block;font-weight:500;color:var(--mute);font-size:13px;margin-top:2px}
+.rem{background:#fff7ee;border-radius:10px;padding:8px 12px;font-size:14.5px;margin:0 0 10px}
+.rem.tk{position:sticky;top:var(--vvt);z-index:6;font-size:14px;font-weight:600;background:#fff3e2;margin:0 0 10px;padding:8px 12px;box-shadow:0 2px 5px rgba(31,59,92,.16);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.rem.tk .ttl{flex:1;min-width:0;color:var(--navy)}
+.info{display:inline-flex;align-items:center;gap:6px;border:0;background:var(--navy);color:#fff;border-radius:999px;padding:6px 14px 6px 8px;min-height:44px;font:700 14px system-ui,-apple-system,sans-serif;cursor:pointer;flex:none}
+.info .ic{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:#fff;color:var(--navy);font:italic 800 17px Georgia,serif}
+.prompt{font-size:18px;font-weight:750;color:var(--navy);margin:0 0 10px;text-align:center;line-height:1.3}
+.stage{min-height:100px;display:flex;align-items:center;justify-content:center;margin:0 0 10px}
+.stage-inner{width:100%;text-align:center}
+.bigletter{font:800 80px/1 "Times New Roman",serif;color:var(--navy);margin:0}
+.picem{font-size:52px;line-height:1}
 .picw{font-size:22px;font-weight:800;margin-top:4px}
-.note{font-size:12px;color:var(--mute);margin-top:4px}
-.choices{display:grid;grid-template-columns:1fr 1fr;gap:7px;flex:none}
-.picgrid{display:grid;grid-template-columns:1fr 1fr;gap:7px;flex:none}
-.cbtn{border:1.5px solid var(--ink);background:#fff;border-radius:12px;min-height:52px;font:800 30px "Times New Roman",serif;color:var(--ink);cursor:pointer;padding:6px 4px;touch-action:manipulation}
-.pic{border:1.5px solid var(--ink);background:#fff;border-radius:12px;padding:8px 4px;cursor:pointer;min-height:72px;font:700 13px system-ui;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
-.pic .em{font-size:32px;line-height:1}.pic .w{font-size:14px;font-weight:700}
+.note{font-size:13px;color:var(--mute);margin-top:4px}
+.choices{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.picgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.cbtn{border:1.5px solid var(--ink);background:#fff;border-radius:12px;min-height:56px;font:800 32px "Times New Roman",serif;color:var(--ink);cursor:pointer;padding:8px 6px;touch-action:manipulation}
+.pic{border:1.5px solid var(--ink);background:#fff;border-radius:12px;padding:10px 6px;cursor:pointer;min-height:80px;font:700 14px system-ui;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
+.pic .em{font-size:34px;line-height:1}.pic .w{font-size:15px;font-weight:700}
 .cbtn:disabled,.pic:disabled{opacity:.55;cursor:default}
 .cbtn.ok,.pic.ok{background:#eef8f1;border-color:var(--good);color:var(--good)}
 .cbtn.bad,.pic.bad{background:#fff6e8;border-color:var(--warn);color:var(--warn);animation:nudge .35s}
 @keyframes nudge{0%,100%{transform:none}30%{transform:translateX(-4px)}70%{transform:translateX(4px)}}
-.fb{flex:none;border-radius:8px;padding:5px 8px;font-weight:700;text-align:center;font-size:13px;display:none}
+.fb{border-radius:8px;padding:8px 10px;font-weight:700;text-align:center;font-size:15px;display:none;margin:8px 0}
 .fb.on{display:block}
 .fb.ok{background:#eef8f1;color:#1f6b38}
 .fb.bad{background:#fff6e8;color:#8a5200}
-.endbtns{display:flex;flex-wrap:nowrap;gap:7px;flex:none}
+.endbtns{display:flex;flex-wrap:wrap;gap:10px;margin-top:4px}
 .endbtns[hidden]{display:none!important}
-.btn{border:1px solid var(--ink);background:#fff;color:var(--ink);border-radius:12px;padding:8px 12px;min-height:42px;font:700 14px system-ui,-apple-system,sans-serif;cursor:pointer;flex:1;min-width:0}
+.btn{border:1px solid var(--ink);background:#fff;color:var(--ink);border-radius:12px;padding:10px 18px;min-height:48px;font:700 16px system-ui,-apple-system,sans-serif;cursor:pointer;flex:1;min-width:140px}
 .btn.pri{background:var(--good);border-color:var(--good);color:#fff}
-.priv{font-size:11px;color:var(--mute);text-align:center;margin:6px 0 0;flex:none}
-.foot{flex:none;background:rgba(245,244,240,.97);border-top:1px solid var(--line);padding:4px 10px;font-size:10px;color:var(--mute);text-align:center}
-.explain{position:fixed;inset:0;z-index:50;background:var(--bg);overflow-y:auto;display:none}
+.btn.sm{min-width:0;min-height:44px;font-size:15px;padding:8px 12px}
+.priv{font-size:12px;color:var(--mute);text-align:center;margin:10px 0 0;line-height:1.35}
+.foot{max-width:980px;margin:8px auto 0;padding:6px 14px;font-size:11px;color:var(--mute);text-align:center}
+.explain{position:fixed;inset:0;z-index:50;background:var(--bg);overflow-y:auto;-webkit-overflow-scrolling:touch;display:none}
 .explain.on{display:block}
 .xbar{position:sticky;top:0;background:rgba(245,244,240,.96);border-bottom:1px solid var(--line);padding:8px 12px;z-index:2;display:flex;gap:8px;align-items:center}
-.xin{max-width:820px;margin:0 auto;padding:12px 14px 24px}
-.xin h2{font-size:18px;color:var(--navy);margin:0 0 8px}
-.idea{background:#eef4fb;border-radius:10px;padding:10px 12px;font-size:14.5px;font-weight:600;color:var(--navy)}
+.xin{max-width:820px;margin:0 auto;padding:14px 16px 28px}
+.xin h2{font-size:20px;color:var(--navy);margin:0 0 10px}
+.idea{background:#eef4fb;border-radius:10px;padding:12px 14px;font-size:16px;font-weight:600;color:var(--navy)}
+.screen{display:none}.screen.on{display:block}
 @media(min-width:600px){
-  header h1{font-size:18px}.cbtn{min-height:60px;font-size:36px}.bigletter{font-size:96px}
-  .picem{font-size:64px}.topics{grid-template-columns:1fr 1fr}.pic{min-height:90px}
+  .topics{grid-template-columns:1fr 1fr}
+  .bigletter{font-size:96px}.cbtn{min-height:64px;font-size:36px}
+  header h1{font-size:21px}.pic{min-height:96px}
 }
-@media(max-height:700px){
-  .bigletter{font-size:52px}.cbtn{min-height:44px;font-size:26px}.picem{font-size:36px}
-  .pic{min-height:60px}.pic .em{font-size:26px}.picw{font-size:18px}.prompt{font-size:14.5px}
-  .card{padding:8px 10px}.btn{min-height:38px;font-size:13px}
+@media(max-width:390px){
+  .bigletter{font-size:64px}.cbtn{min-height:52px;font-size:28px}
+  .btn{min-width:120px;font-size:15px}
 }
 </style>
 </head>
 <body>
 <header><div class="hw">
-  <button class="iconb" id="btnMenu" type="button" title="תפריט" aria-label="חזרה לתפריט">☰</button>
-  <h1>שפה · א׳ תות <small>בית ספר אשכולות · אותיות וצלילים</small></h1>
-  <button class="iconb" id="btnSpeak" type="button" title="השמעה" aria-label="השמעה">🔊</button>
-  <button class="iconb" id="btnMute" type="button" title="השתקה" aria-label="השתקה" aria-pressed="false">🔈</button>
+  <div class="hrow">
+    <h1>שפה · א׳ תות <small>בית ספר אשכולות · אותיות וצלילים · A-TUT-LANG-01</small></h1>
+    <div class="hbts">
+      <button class="iconb" id="btnMenu" type="button" title="תפריט" aria-label="חזרה לתפריט">☰</button>
+      <button class="iconb" id="btnSpeak" type="button" title="השמעה" aria-label="השמעה">🔊</button>
+      <button class="iconb" id="btnMute" type="button" title="השתקה" aria-label="השתקה" aria-pressed="false">🔈</button>
+    </div>
+  </div>
+  <p>לוחצים על אות או על תמונה · המכשיר מקריא בקול · בלי מיקרופון</p>
 </div></header>
 <main>
   <section class="screen on" id="sc-menu">
     <div class="card">
-      <h2>מה תרצו לתרגל?</h2>
-      <p class="sub">לוחצים על אות או על תמונה. המכשיר מקריא בקול. בלי מיקרופון.</p>
+      <div class="ch"><span class="n">א</span><h2>מה תרצו לתרגל?</h2></div>
+      <p class="sub">מומלץ: נושא אחד · כ־10 דקות. עם הקראה בקול.</p>
       <div class="topics" id="topicList"></div>
       <p class="priv">🔒 אין שמירת נתונים · אין עוגיות · הכל על המכשיר שלכם</p>
     </div>
   </section>
   <section class="screen" id="sc-ex">
-    <div class="card">
-      <div class="exwrap">
-        <div class="toprow">
-          <div class="ttl" id="exTopic"></div>
-          <button class="info" id="btnHelp" type="button"><span class="ic">?</span>עזרה</button>
-        </div>
-        <p class="prompt" id="exPrompt"></p>
-        <div class="stage"><div class="stage-inner" id="exStage"></div></div>
-        <div id="exChoices"></div>
-        <div class="fb" id="exFb"></div>
-        <div class="endbtns" id="exActions" hidden>
-          <button class="btn pri" id="btnMore" type="button">עוד תרגיל</button>
-          <button class="btn" id="btnNext" type="button">לנושא הבא ←</button>
-        </div>
+    <div class="rem tk" id="taskLine">
+      <span class="ttl" id="exTopic"></span>
+      <button class="info" id="btnHelp" type="button"><span class="ic">?</span>עזרה</button>
+    </div>
+    <div class="card" id="exCard">
+      <p class="prompt" id="exPrompt"></p>
+      <div class="stage"><div class="stage-inner" id="exStage"></div></div>
+      <div id="exChoices"></div>
+      <div class="fb" id="exFb"></div>
+      <div class="endbtns" id="exActions" hidden>
+        <button class="btn pri" id="btnMore" type="button">עוד תרגיל</button>
+        <button class="btn" id="btnNext" type="button">לנושא הבא ←</button>
       </div>
     </div>
   </section>
 </main>
 <div class="explain" id="helpPanel" role="dialog" aria-modal="true">
   <div class="xbar">
-    <button class="btn" id="helpClose" type="button">חזרה ←</button>
+    <button class="btn sm" id="helpClose" type="button">→ חזור</button>
     <strong id="helpTitle" style="flex:1;color:var(--navy)">עזרה</strong>
   </div>
   <div class="xin"><h2 id="helpH2"></h2><div class="idea" id="helpBody"></div></div>
@@ -178,7 +188,7 @@ function fallbackSay(key,done){if(!window.speechSynthesis){done&&done();return}
     help_letter:"הקשיבו לצליל. לחצו על האות הנכונה.",help_initial:"אמרו את שם התמונה בקול.",help_k:"מסתכלים על הדגש: כּ עם נקודה בפנים, כ בלי נקודה."};
   const t=map[key];if(!t){done&&done();return}const u=new SpeechSynthesisUtterance(t);u.lang="he-IL";u.rate=.9;u.onend=()=>done&&done();u.onerror=()=>done&&done();speechSynthesis.speak(u)}
 function sayOk(){speakKeys(pick(["ok","ok2","ok3"]))}function sayBad(){speakKeys(pick(["try","almost"]))}
-function show(id){document.querySelectorAll(".screen").forEach(s=>s.classList.remove("on"));$("#"+id).classList.add("on")}
+function show(id){document.querySelectorAll(".screen").forEach(s=>s.classList.remove("on"));$("#"+id).classList.add("on");const h=document.querySelector("header");document.documentElement.style.setProperty("--vvt",(h?h.offsetHeight:0)+"px")}
 function buildMenu(){$("#topicList").innerHTML=TOPICS.map((t,i)=>`<button class="tbtn" type="button" data-i="${i}"><span class="n">${t.em}</span><span class="meta">${t.t}<small>עם הקראה בקול</small></span></button>`).join("");$("#topicList").onclick=e=>{const b=e.target.closest(".tbtn");if(!b)return;topicIdx=+b.dataset.i;startTopic()}}
 function startTopic(){answered=false;show("sc-ex");$("#exTopic").textContent=TOPICS[topicIdx].t;$("#exActions").hidden=true;$("#exFb").className="fb";newExercise()}
 function newExercise(){answered=false;stopSpeak();$("#exActions").hidden=true;$("#exFb").className="fb";$("#exFb").textContent="";const t=TOPICS[topicIdx];if(t.k==="sounds")exercise=makeSoundsMix();else if(t.k==="k")exercise=makeKaf();else exercise=makeLetter(t.letter);renderEx();setTimeout(()=>speakKeys(exercise.speak),150)}

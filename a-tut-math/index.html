@@ -6,122 +6,168 @@
 <meta name="robots" content="noindex,nofollow">
 <title>A-TUT-MATH-01 · חשבון · א׳ תות</title>
 <style>
-:root{--bg:#f5f4f0;--card:#fff;--ink:#1c2230;--navy:#1f3b5c;--mute:#667085;--line:#d9d6cc;--blue:#3a78c2;--org:#e8862a;--good:#2f8f4e;--warn:#d98a1c;--bad:#d9534f;--hl:#fff4dc;--r:14px}
+/* Graphic language copied from mipui-worksheet (grade-ה׳) + age-6 adaptations */
+:root{--bg:#f5f4f0;--card:#fff;--ink:#1c2230;--navy:#1f3b5c;--mute:#667085;--line:#d9d6cc;--blue:#3a78c2;--org:#e8862a;--good:#2f8f4e;--warn:#d98a1c;--bad:#d9534f;--hl:#fff4dc;--r:14px;--vvt:0px;--tkh:40px}
 *{box-sizing:border-box}
-html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font:15px/1.4 system-ui,-apple-system,"Segoe UI",Arial,sans-serif;-webkit-text-size-adjust:100%;overflow:hidden}
-body{display:flex;flex-direction:column;max-height:100dvh}
-header{background:var(--navy);color:#fff;flex:none;z-index:20}
-.hw{max-width:980px;margin:0 auto;padding:8px 12px;display:flex;align-items:center;gap:8px}
-header h1{margin:0;font-size:16px;font-weight:750;flex:1;min-width:0;line-height:1.2}
-header h1 small{display:block;font-weight:500;opacity:.85;font-size:11px;margin-top:1px}
-.iconb{border:0;background:rgba(255,255,255,.18);color:#fff;border-radius:10px;width:40px;height:40px;font-size:18px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex:none;padding:0}
-.iconb[aria-pressed=true]{background:#fff;color:var(--navy)}
-main{flex:1;min-height:0;max-width:980px;width:100%;margin:0 auto;padding:8px 10px;display:flex;flex-direction:column;overflow:hidden}
-.screen{display:none;flex:1;min-height:0;flex-direction:column;overflow:hidden}
-.screen.on{display:flex}
-.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:10px 12px;display:flex;flex-direction:column;min-height:0;flex:1;overflow:hidden}
-.card h2{margin:0 0 4px;font-size:17px;color:var(--ink);font-weight:750}
-.sub{color:var(--mute);font-size:12.5px;margin:0 0 8px}
-.topics{display:grid;gap:7px;grid-template-columns:1fr;overflow:auto;min-height:0;-webkit-overflow-scrolling:touch}
-.tbtn{border:1px solid var(--ink);background:#fff;border-radius:12px;padding:10px 12px;text-align:right;cursor:pointer;font:700 15px system-ui,-apple-system,sans-serif;color:var(--ink);min-height:48px;display:flex;align-items:center;gap:10px}
-.tbtn .n{font-size:18px;font-weight:800;color:var(--org);width:22px;flex:none}
-.tbtn .meta{flex:1;min-width:0}.tbtn .meta small{display:block;font-weight:500;color:var(--mute);font-size:11.5px;margin-top:1px}
-.exwrap{display:flex;flex-direction:column;flex:1;min-height:0;gap:6px}
-.toprow{display:flex;align-items:center;gap:8px;flex:none}
-.toprow .ttl{flex:1;font-weight:750;color:var(--navy);font-size:14.5px;min-width:0}
-.info{display:inline-flex;align-items:center;gap:5px;border:0;background:var(--navy);color:#fff;border-radius:999px;padding:4px 10px 4px 5px;min-height:32px;font:700 12px system-ui;cursor:pointer;flex:none}
-.info .ic{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:#fff;color:var(--navy);font:italic 800 14px Georgia,serif}
-.prompt{font-size:17px;font-weight:750;color:var(--navy);margin:0;text-align:center;flex:none;line-height:1.25}
-.stage{flex:1 1 auto;min-height:0;display:flex;align-items:center;justify-content:center;overflow:hidden}
-.stage-inner{width:100%;max-height:100%;text-align:center}
-.choices{display:grid;grid-template-columns:1fr 1fr;gap:7px;flex:none}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Arial,sans-serif;-webkit-text-size-adjust:100%}
+body{padding-bottom:28px;min-height:100dvh}
+header{background:var(--navy);color:#fff;position:sticky;top:0;z-index:20}
+.hw{max-width:980px;margin:0 auto;padding:12px 16px}
+.hrow{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:space-between}
+header h1{margin:0;font-size:20px;font-weight:750;flex:1;min-width:0;line-height:1.2}
+header h1 small{display:block;font-weight:500;opacity:.85;font-size:13px;margin-top:2px}
+header p{margin:4px 0 0;font-size:13.5px;opacity:.9}
+.iconb{border:1px solid rgba(255,255,255,.55);background:transparent;color:#fff;border-radius:8px;min-width:44px;min-height:36px;font-size:16px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;padding:4px 8px}
+.iconb[aria-pressed=true]{background:#fff;color:var(--navy);border-color:#fff}
+.hbts{display:flex;gap:6px;flex:none}
+main{max-width:980px;margin:0 auto;padding:12px 14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px;margin:0 0 14px}
+.card h2{margin:0 0 4px;font-size:19px;font-weight:750}
+.sub{color:var(--mute);font-size:14.5px;margin:0 0 12px}
+.ch{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.ch .n{font-size:26px;font-weight:800;color:var(--org);line-height:1}
+.ch h2{margin:0;font-size:19px;flex:1}
+.topics{display:grid;gap:10px;grid-template-columns:1fr}
+.tbtn{border:1px solid var(--ink);background:#fff;border-radius:12px;padding:12px 14px;text-align:right;cursor:pointer;font:700 16px system-ui,-apple-system,sans-serif;color:var(--ink);min-height:56px;display:flex;align-items:center;gap:12px;width:100%}
+.tbtn .n{font-size:26px;font-weight:800;color:var(--org);width:28px;flex:none;line-height:1}
+.tbtn .meta{flex:1;min-width:0}.tbtn .meta small{display:block;font-weight:500;color:var(--mute);font-size:13px;margin-top:2px}
+.tbtn .tag{flex:none;background:#eef8f1;color:var(--good);font:700 11px system-ui;border-radius:999px;padding:3px 8px}
+.rem{background:#fff7ee;border-radius:10px;padding:8px 12px;font-size:14.5px;margin:0 0 10px}
+.rem.tk{position:sticky;top:var(--vvt);z-index:6;font-size:14px;font-weight:600;background:#fff3e2;margin:0 0 10px;padding:8px 12px;box-shadow:0 2px 5px rgba(31,59,92,.16);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.rem.tk .ttl{flex:1;min-width:0;color:var(--navy)}
+.info{display:inline-flex;align-items:center;gap:6px;border:0;background:var(--navy);color:#fff;border-radius:999px;padding:6px 14px 6px 8px;min-height:44px;font:700 14px system-ui,-apple-system,sans-serif;cursor:pointer;flex:none}
+.info .ic{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:#fff;color:var(--navy);font:italic 800 17px Georgia,serif}
+.prompt{font-size:18px;font-weight:750;color:var(--navy);margin:0 0 10px;text-align:center;line-height:1.3}
+.stage{min-height:120px;display:flex;align-items:center;justify-content:center;margin:0 0 10px}
+.stage-inner{width:100%;text-align:center}
+.choices{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .choices.row3{grid-template-columns:1fr 1fr 1fr}
-.choices.row4{grid-template-columns:repeat(4,1fr)}
-.cbtn{border:1.5px solid var(--ink);background:#fff;border-radius:12px;min-height:48px;font:800 22px system-ui,-apple-system,sans-serif;color:var(--ink);cursor:pointer;padding:6px 4px;touch-action:manipulation}
+.cbtn{border:1.5px solid var(--ink);background:#fff;border-radius:12px;min-height:52px;font:800 22px system-ui,-apple-system,sans-serif;color:var(--ink);cursor:pointer;padding:8px 6px;touch-action:manipulation}
 .cbtn:disabled{opacity:.55;cursor:default}
 .cbtn.ok{background:#eef8f1;border-color:var(--good);color:var(--good)}
 .cbtn.bad{background:#fff6e8;border-color:var(--warn);color:var(--warn);animation:nudge .35s}
 @keyframes nudge{0%,100%{transform:none}30%{transform:translateX(-4px)}70%{transform:translateX(4px)}}
-.nline-wrap{position:relative;padding:6px 4px 0;direction:ltr}
-.nline-wrap .bar{height:3px;background:var(--ink);position:absolute;top:12px;left:16px;right:16px}
+.nline-wrap{position:relative;padding:8px 4px 0;direction:ltr}
+.nline-wrap .bar{height:3px;background:var(--ink);position:absolute;top:14px;left:16px;right:16px}
 .nline{direction:ltr;display:flex;justify-content:center;gap:0;overflow:hidden}
-.nline .tick{flex:0 0 auto;width:36px;text-align:center}
-.nline .tick::before{content:"";display:block;width:2px;height:12px;background:var(--ink);margin:0 auto 3px}
-.nline .num{font:800 14px system-ui;color:var(--ink)}
-.nline .gap{font:800 18px system-ui;color:var(--org);width:34px;height:30px;border:2px dashed var(--org);border-radius:8px;display:inline-flex;align-items:center;justify-content:center;background:var(--hl)}
-.bignum{font:800 56px/1 system-ui;color:var(--navy)}
-.tenframe{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;max-width:200px;margin:0 auto;direction:ltr;border:2.5px solid var(--navy);border-radius:10px;padding:6px;background:#fff}
-.dot{aspect-ratio:1;border-radius:50%;background:#e8edf5;border:1.5px solid #c5d0e0}
-.dot.on{background:var(--blue);border-color:var(--navy)}
-.tenlab{font-size:12px;color:var(--mute);font-weight:600;margin-top:4px}
-.polybox svg{width:min(140px,38vw);height:auto;display:block;margin:0 auto}
-.fb{flex:none;border-radius:8px;padding:5px 8px;font-weight:700;text-align:center;font-size:13px;display:none;min-height:0}
+.nline .tick{flex:0 0 auto;width:40px;text-align:center}
+.nline .tick::before{content:"";display:block;width:2px;height:14px;background:var(--ink);margin:0 auto 4px}
+.nline .num{font:800 15px system-ui;color:var(--ink)}
+.nline .gap{font:800 18px system-ui;color:var(--org);width:36px;height:32px;border:2px dashed var(--org);border-radius:8px;display:inline-flex;align-items:center;justify-content:center;background:var(--hl)}
+.bignum{font:800 64px/1 system-ui;color:var(--navy)}
+.polybox svg{width:min(160px,42vw);height:auto;display:block;margin:0 auto}
+.fb{border-radius:8px;padding:8px 10px;font-weight:700;text-align:center;font-size:15px;display:none;margin:8px 0}
 .fb.on{display:block}
 .fb.ok{background:#eef8f1;color:#1f6b38}
 .fb.bad{background:#fff6e8;color:#8a5200}
-.endbtns{display:flex;flex-wrap:nowrap;gap:7px;flex:none}
+.endbtns{display:flex;flex-wrap:wrap;gap:10px;margin-top:4px}
 .endbtns[hidden]{display:none!important}
-.btn{border:1px solid var(--ink);background:#fff;color:var(--ink);border-radius:12px;padding:8px 12px;min-height:42px;font:700 14px system-ui,-apple-system,sans-serif;cursor:pointer;flex:1;min-width:0}
+.btn{border:1px solid var(--ink);background:#fff;color:var(--ink);border-radius:12px;padding:10px 18px;min-height:48px;font:700 16px system-ui,-apple-system,sans-serif;cursor:pointer;flex:1;min-width:140px}
 .btn.pri{background:var(--good);border-color:var(--good);color:#fff}
 .btn:disabled{opacity:.35;cursor:default}
-.priv{font-size:11px;color:var(--mute);text-align:center;margin:6px 0 0;flex:none}
-.foot{flex:none;background:rgba(245,244,240,.97);border-top:1px solid var(--line);padding:4px 10px;font-size:10px;color:var(--mute);text-align:center}
-.explain{position:fixed;inset:0;z-index:50;background:var(--bg);overflow-y:auto;display:none}
+.btn.sm{min-width:0;min-height:44px;font-size:15px;padding:8px 12px}
+.priv{font-size:12px;color:var(--mute);text-align:center;margin:10px 0 0;line-height:1.35}
+.foot{max-width:980px;margin:8px auto 0;padding:6px 14px;font-size:11px;color:var(--mute);text-align:center}
+.explain{position:fixed;inset:0;z-index:50;background:var(--bg);overflow-y:auto;-webkit-overflow-scrolling:touch;display:none}
 .explain.on{display:block}
 .xbar{position:sticky;top:0;background:rgba(245,244,240,.96);border-bottom:1px solid var(--line);padding:8px 12px;z-index:2;display:flex;gap:8px;align-items:center}
-.xin{max-width:820px;margin:0 auto;padding:12px 14px 24px}
-.xin h2{font-size:18px;color:var(--navy);margin:0 0 8px}
-.idea{background:#eef4fb;border-radius:10px;padding:10px 12px;font-size:14.5px;font-weight:600;color:var(--navy)}
+.xin{max-width:820px;margin:0 auto;padding:14px 16px 28px}
+.xin h2{font-size:20px;color:var(--navy);margin:0 0 10px}
+.idea{background:#eef4fb;border-radius:10px;padding:12px 14px;font-size:16px;font-weight:600;color:var(--navy)}
+.screen{display:none}.screen.on{display:block}
+
+/* —— Place-value / sticks (מבנה המספר) —— */
+.modes{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 10px;justify-content:center}
+.modes .btn.segb{flex:1;min-width:110px;max-width:200px;min-height:44px;font-size:14px;padding:6px 10px}
+.modes .btn.segb[aria-pressed="true"]{background:var(--navy);border-color:var(--navy);color:#fff}
+.modes .btn.segb .rec{display:block;font-size:10px;font-weight:700;color:var(--good);margin-top:1px}
+.modes .btn.segb[aria-pressed="true"] .rec{color:#b8f0c8}
+.target-row{display:flex;align-items:center;justify-content:center;gap:10px;margin:0 0 8px;flex-wrap:wrap}
+.target-row .tg{font:800 48px/1 system-ui;color:var(--navy);direction:ltr}
+.target-row .eqlive{font:700 18px system-ui;color:var(--mute);background:#eef4fb;border-radius:999px;padding:6px 12px}
+.pvmat{direction:ltr;display:grid;grid-template-columns:1fr 1fr;gap:10px;max-width:420px;margin:0 auto 10px}
+.pvcol{border:2.5px solid var(--navy);border-radius:12px;background:#fff;min-height:120px;padding:8px;display:flex;flex-direction:column}
+.pvcol.tens{background:#eef4fb}
+.pvcol.ones{background:#fff7ee}
+.pvlab{font:700 13px system-ui;color:var(--navy);text-align:center;margin-bottom:6px;direction:rtl}
+.pvlab .cnt{display:inline-block;background:var(--navy);color:#fff;border-radius:999px;min-width:22px;padding:0 6px;margin-inline-start:4px;font-size:12px}
+.pvbin{flex:1;display:flex;flex-wrap:wrap;gap:6px;align-content:flex-start;justify-content:center;min-height:70px}
+.bundle{width:36px;height:56px;border-radius:8px;background:linear-gradient(90deg,#c98410 0 4px,#f0a531 4px 8px,#c98410 8px 12px,#f0a531 12px 16px,#c98410 16px 20px,#f0a531 20px 24px,#c98410 24px 28px,#f0a531 28px 32px,#c98410 32px 36px);border:2px solid #8a5a0a;box-shadow:inset 0 0 0 2px rgba(255,255,255,.25);position:relative;flex:none}
+.bundle::after{content:"";position:absolute;left:-2px;right:-2px;top:50%;height:8px;background:#1f3b5c;border-radius:3px;transform:translateY(-50%)}
+.stick{width:8px;height:48px;border-radius:4px;background:linear-gradient(180deg,#e8b86a,#c98410);border:1px solid #8a5a0a;flex:none}
+.tray{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:8px 0}
+.tray .btn.add{min-width:120px;min-height:48px;font-size:15px;display:inline-flex;align-items:center;justify-content:center;gap:8px}
+.tray .ico-b{width:18px;height:28px;border-radius:4px;background:#f0a531;border:1.5px solid #8a5a0a;display:inline-block;position:relative}
+.tray .ico-b::after{content:"";position:absolute;left:-2px;right:-2px;top:50%;height:5px;background:var(--navy);transform:translateY(-50%)}
+.tray .ico-s{width:6px;height:24px;border-radius:3px;background:#c98410;border:1px solid #8a5a0a;display:inline-block}
+.digitrow{direction:ltr;display:flex;gap:12px;justify-content:center;align-items:flex-end;margin:8px 0;flex-wrap:wrap}
+.digitbox{display:flex;flex-direction:column;align-items:center;gap:4px}
+.digitbox label{font:700 13px system-ui;color:var(--navy);direction:rtl}
+input.dg{width:64px;height:56px;font:800 28px system-ui;text-align:center;border:2.5px solid var(--blue);border-radius:10px;background:#fff;color:var(--ink);padding:0;-moz-appearance:textfield;direction:ltr;font-size:28px}
+input.dg::-webkit-outer-spin-button,input.dg::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+input.dg:focus{outline:3px solid rgba(58,120,194,.35);outline-offset:1px}
+input.dg.ok{border-color:var(--good);background:#eef8f1;color:var(--good)}
+input.dg.bad{border-color:var(--warn);background:#fff6e8;animation:nudge .35s}
+.deceq{direction:ltr;display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;font:700 22px system-ui;margin:8px 0;color:var(--navy)}
+.deceq .plus{color:var(--mute)}
+.bundle-pop{animation:popb .5s ease-out}
+@keyframes popb{0%{transform:scale(.4);opacity:.3}60%{transform:scale(1.15)}100%{transform:none;opacity:1}}
+.model-readonly .tray,.model-readonly .btn.add{display:none}
 @media(min-width:600px){
-  header h1{font-size:18px}.cbtn{min-height:56px;font-size:26px}.bignum{font-size:72px}
-  .polybox svg{width:180px}.tenframe{max-width:260px}.prompt{font-size:19px}
   .topics{grid-template-columns:1fr 1fr}
+  .bignum{font-size:80px}.cbtn{min-height:56px;font-size:26px}
+  .pvmat{max-width:480px;gap:14px}.pvcol{min-height:140px}
+  header h1{font-size:21px}
 }
-@media(max-height:700px){
-  .bignum{font-size:44px}.cbtn{min-height:44px;font-size:20px}.polybox svg{width:min(110px,32vw)}
-  .tenframe{max-width:160px;gap:3px;padding:4px}.nline .tick{width:30px}.prompt{font-size:15px}
-  .card{padding:8px 10px}.btn{min-height:38px;font-size:13px}
+@media(max-width:390px){
+  .modes .btn.segb{min-width:96px;font-size:13px;padding:6px 6px}
+  .target-row .tg{font-size:40px}
+  input.dg{width:56px;height:52px;font-size:24px}
+  .btn{min-width:120px;font-size:15px}
 }
 </style>
 </head>
 <body>
 <header><div class="hw">
-  <button class="iconb" id="btnMenu" type="button" title="תפריט" aria-label="חזרה לתפריט">☰</button>
-  <h1>חשבון · א׳ תות <small>בית ספר אשכולות</small></h1>
-  <button class="iconb" id="btnSpeak" type="button" title="השמעה" aria-label="השמעה">🔊</button>
-  <button class="iconb" id="btnMute" type="button" title="השתקה" aria-label="השתקה" aria-pressed="false">🔈</button>
+  <div class="hrow">
+    <h1>חשבון · א׳ תות <small>בית ספר אשכולות · A-TUT-MATH-01</small></h1>
+    <div class="hbts">
+      <button class="iconb" id="btnMenu" type="button" title="תפריט" aria-label="חזרה לתפריט">☰</button>
+      <button class="iconb" id="btnSpeak" type="button" title="השמעה" aria-label="השמעה">🔊</button>
+      <button class="iconb" id="btnMute" type="button" title="השתקה" aria-label="השתקה" aria-pressed="false">🔈</button>
+    </div>
+  </div>
+  <p>נושא אחד בכל פעם · לוחצים ושומעים · בלי להקליד (חוץ ממבנה המספר)</p>
 </div></header>
 <main>
   <section class="screen on" id="sc-menu">
     <div class="card">
-      <h2>מה תרצו לתרגל?</h2>
-      <p class="sub">נושא אחד בכל פעם. לוחצים ושומעים. בלי להקליד.</p>
+      <div class="ch"><span class="n">1–4</span><h2>מה תרצו לתרגל?</h2></div>
+      <p class="sub">מומלץ: נושא אחד · כ־10 דקות. מבנה המספר – עם מקלות וצרורות, כמו במתמטיקה בידיים.</p>
       <div class="topics" id="topicList"></div>
       <p class="priv">🔒 אין שמירת נתונים · אין עוגיות · הכל על המכשיר שלכם</p>
     </div>
   </section>
   <section class="screen" id="sc-ex">
-    <div class="card">
-      <div class="exwrap">
-        <div class="toprow">
-          <div class="ttl" id="exTopic"></div>
-          <button class="info" id="btnHelp" type="button"><span class="ic">?</span>עזרה</button>
-        </div>
-        <p class="prompt" id="exPrompt"></p>
-        <div class="stage"><div class="stage-inner" id="exStage"></div></div>
-        <div class="choices" id="exChoices"></div>
-        <div class="fb" id="exFb"></div>
-        <div class="endbtns" id="exActions" hidden>
-          <button class="btn pri" id="btnMore" type="button">עוד תרגיל</button>
-          <button class="btn" id="btnNext" type="button">לנושא הבא ←</button>
-        </div>
+    <div class="rem tk" id="taskLine">
+      <span class="ttl" id="exTopic"></span>
+      <button class="info" id="btnHelp" type="button"><span class="ic">?</span>עזרה</button>
+    </div>
+    <div class="card" id="exCard">
+      <p class="prompt" id="exPrompt"></p>
+      <div class="stage"><div class="stage-inner" id="exStage"></div></div>
+      <div class="choices" id="exChoices"></div>
+<div class="fb" id="exFb"></div>
+      <div class="endbtns" id="exActions" hidden>
+        <button class="btn pri" id="btnMore" type="button">עוד תרגיל</button>
+        <button class="btn" id="btnNext" type="button">לנושא הבא ←</button>
       </div>
     </div>
   </section>
 </main>
 <div class="explain" id="helpPanel" role="dialog" aria-modal="true">
   <div class="xbar">
-    <button class="btn" id="helpClose" type="button">חזרה ←</button>
+    <button class="btn sm" id="helpClose" type="button">→ חזור</button>
     <strong id="helpTitle" style="flex:1;color:var(--navy)">עזרה</strong>
   </div>
   <div class="xin"><h2 id="helpH2"></h2><div class="idea" id="helpBody"></div></div>
@@ -132,10 +178,10 @@ main{flex:1;min-height:0;max-width:980px;width:100%;margin:0 auto;padding:8px 10
 "use strict";
 const AUDIO="audio/";
 const TOPICS=[
-  {k:"line",t:"ישר המספרים",help:"הסתכלו על הישר. איזה מספר חסר בין המספרים?",speak:"t_line",helpKey:"help_line"},
-  {k:"prev",t:"המספר הקודם והבא",help:"המספר הקודם הוא אחד פחות. המספר הבא הוא אחד יותר.",speak:"t_prev",helpKey:"help_prev"},
-  {k:"struct",t:"מבנה המספרים",help:"חשבו איך לחבר שני מספרים קטנים כדי לקבל את המספר הגדול.",speak:"t_struct",helpKey:"help_struct"},
-  {k:"poly",t:"סוגי מצולעים",help:"ספרו את הצלעות ואת הקדקדים. משולש – שלוש, ריבוע – ארבע שוות, מלבן – ארבע.",speak:"t_poly",helpKey:"help_poly"}
+  {k:"line",t:"ישר המספרים",help:"הסתכלו על הישר. איזה מספר חסר בין המספרים?",speak:"t_line",helpKey:"help_line",sub:"למצוא מספר חסר"},
+  {k:"prev",t:"המספר הקודם והבא",help:"המספר הקודם הוא אחד פחות. המספר הבא הוא אחד יותר.",speak:"t_prev",helpKey:"help_prev",sub:"אחד פחות · אחד יותר"},
+  {k:"struct",t:"מבנה המספר",help:"צרור אחד הוא עשר מקלות. שמים צרורות בעשרות, ומקלות בודדות באחדות. כשיש עשר מקלות – קושרים צרור.",speak:"t_struct",helpKey:"help_struct",sub:"עשרות ואחדות בידיים",rec:true},
+  {k:"poly",t:"סוגי מצולעים",help:"ספרו את הצלעות ואת הקדקדים. משולש – שלוש, ריבוע – ארבע שוות, מלבן – ארבע.",speak:"t_poly",helpKey:"help_poly",sub:"משולש · ריבוע · מלבן"}
 ];
 const POLY=[
   {k:"tri",name:"משולש",sides:3,svg:(c)=>`<polygon points="110,18 200,190 20,190" fill="${c}" stroke="#1f3b5c" stroke-width="5"/>`},
@@ -150,27 +196,209 @@ function rnd(a,b){return a+Math.floor(Math.random()*(b-a+1))}
 function shuffle(a){const x=a.slice();for(let i=x.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[x[i],x[j]]=[x[j],x[i]]}return x}
 function pick(a){return a[Math.floor(Math.random()*a.length)]}
 let muted=false,currentAudio=null,topicIdx=0,exercise=null,answered=false;
+let structMode="build"; // build | read | decomp
+let pv={tens:0,ones:0,target:0,locked:false};
 const $=s=>document.querySelector(s);
 function stopSpeak(){if(currentAudio){try{currentAudio.pause();currentAudio.src=""}catch(e){}currentAudio=null}if(window.speechSynthesis)speechSynthesis.cancel()}
 function speakKeys(keys){if(muted)return;stopSpeak();const list=(Array.isArray(keys)?keys:[keys]).filter(Boolean);playSeq(list,0)}
 function playSeq(list,i){if(i>=list.length)return;const key=list[i];const a=new Audio(AUDIO+key+".mp3");currentAudio=a;a.onended=()=>playSeq(list,i+1);a.onerror=()=>fallbackSay(key,()=>playSeq(list,i+1));a.play().catch(()=>fallbackSay(key,()=>playSeq(list,i+1)))}
 function fallbackSay(key,done){if(!window.speechSynthesis){done&&done();return}
-  const map={q_missing:"מה המספר החסר?",q_prev:"מה המספר הקודם?",q_next:"מה המספר הבא?",q_make:"איזה שני מספרים מרכיבים את המספר?",q_poly:"איזו צורה זאת?",q_sides:"כמה צלעות יש לצורה?",q_vertices:"כמה קדקדים יש לצורה?",ok:"כל הכבוד!",ok2:"נכון מאוד!",ok3:"יפה מאוד!",try:"לא נורא. נסו עוד פעם.",almost:"כמעט! נסו שוב."};
+  const map={q_missing:"מה המספר החסר?",q_prev:"מה המספר הקודם?",q_next:"מה המספר הבא?",q_build:"בנו את המספר עם צרורות ומקלות.",q_read:"כמה עשרות וכמה אחדות?",q_decomp:"פרקו את המספר לעשרות ואחדות.",q_poly:"איזו צורה זאת?",q_sides:"כמה צלעות?",q_vertices:"כמה קדקדים?",ok:"כל הכבוד!",ok2:"נכון מאוד!",ok3:"יפה מאוד!",try:"לא נורא. נסו עוד פעם.",almost:"כמעט! נסו שוב.",tip_ten:"עשר מקלות נעשות צרור אחד!",lab_tens:"עשרות",lab_ones:"אחדות",btn_check:"בדיקה"};
   let t=map[key];if(!t&&/^n\d+$/.test(key)){const names=["אפס","אחת","שתיים","שלוש","ארבע","חמש","שש","שבע","שמונה","תשע","עשר","אחת עשרה","שתים עשרה","שלוש עשרה","ארבע עשרה","חמש עשרה","שש עשרה","שבע עשרה","שמונה עשרה","תשע עשרה","עשרים"];t=names[+key.slice(1)]||key.slice(1)}
-  if(!t){done&&done();return}const u=new SpeechSynthesisUtterance(t);u.lang="he-IL";u.rate=.92;u.onend=()=>done&&done();u.onerror=()=>done&&done();speechSynthesis.speak(u)}
+  if(!t){done&&done();return}const u=new SpeechSynthesisUtterance(t);u.lang="he-IL";u.rate=.9;u.onend=()=>done&&done();u.onerror=()=>done&&done();speechSynthesis.speak(u)}
 function sayOk(){speakKeys(pick(["ok","ok2","ok3"]))}function sayBad(){speakKeys(pick(["try","almost"]))}
-function show(id){document.querySelectorAll(".screen").forEach(s=>s.classList.remove("on"));$("#"+id).classList.add("on")}
-function buildMenu(){$("#topicList").innerHTML=TOPICS.map((t,i)=>`<button class="tbtn" type="button" data-i="${i}"><span class="n">${i+1}</span><span class="meta">${t.t}<small>תרגול בלחיצה</small></span></button>`).join("");$("#topicList").onclick=e=>{const b=e.target.closest(".tbtn");if(!b)return;topicIdx=+b.dataset.i;startTopic()}}
+function show(id){document.querySelectorAll(".screen").forEach(s=>s.classList.remove("on"));$("#"+id).classList.add("on");
+  // sticky task line offset under header
+  const h=document.querySelector("header");
+  document.documentElement.style.setProperty("--vvt",(h?h.offsetHeight:0)+"px");
+}
+function buildMenu(){
+  $("#topicList").innerHTML=TOPICS.map((t,i)=>`<button class="tbtn" type="button" data-i="${i}"><span class="n">${i+1}</span><span class="meta">${t.t}<small>${t.sub}</small></span>${t.rec?'<span class="tag">מומלץ</span>':''}</button>`).join("");
+  $("#topicList").onclick=e=>{const b=e.target.closest(".tbtn");if(!b)return;topicIdx=+b.dataset.i;startTopic()};
+}
 function startTopic(){answered=false;show("sc-ex");$("#exTopic").textContent=TOPICS[topicIdx].t;$("#exActions").hidden=true;$("#exFb").className="fb";newExercise()}
-function newExercise(){answered=false;stopSpeak();$("#exActions").hidden=true;$("#exFb").className="fb";$("#exFb").textContent="";const k=TOPICS[topicIdx].k;if(k==="line")exercise=makeLine();else if(k==="prev")exercise=makePrev();else if(k==="struct")exercise=makeStruct();else exercise=makePoly();renderEx();setTimeout(()=>speakKeys(exercise.speak),150)}
+function newExercise(){
+  answered=false;stopSpeak();$("#exActions").hidden=true;$("#exFb").className="fb";$("#exFb").textContent="";
+  const k=TOPICS[topicIdx].k;
+  if(k==="line")exercise=makeLine();
+  else if(k==="prev")exercise=makePrev();
+  else if(k==="struct")exercise=makeStruct();
+  else exercise=makePoly();
+  renderEx();
+  setTimeout(()=>speakKeys(exercise.speak),150);
+}
 function makeLine(){const max=rnd(0,1)?10:20;const start=rnd(0,Math.max(0,max-6));const len=Math.min(7,max-start+1);const nums=[];for(let i=0;i<len;i++)nums.push(start+i);const missIdx=rnd(1,len-2);const missing=nums[missIdx];const distractors=shuffle([missing-2,missing-1,missing+1,missing+2,...nums].filter(n=>n>=0&&n<=max&&n!==missing));
   const opts=[missing];
   for(const n of distractors){if(opts.includes(n))continue;opts.push(n);if(opts.length===4)break}
-  return{prompt:"מה המספר החסר?",speak:["q_missing"],stageHtml:`<div class="nline-wrap"><div class="bar"></div><div class="nline">${nums.map((n,i)=>i===missIdx?`<div class="tick"><span class="gap">?</span></div>`:`<div class="tick"><span class="num">${n}</span></div>`).join("")}</div></div>`,choices:shuffle(opts).map(n=>({v:n,label:String(n)})),answer:missing}}
-function makePrev(){const n=rnd(1,19);const kind=Math.random()<.5?"prev":"next";const ans=kind==="prev"?n-1:n+1;const wrong=shuffle([n,n+2,n-2,ans+3,ans-3].filter(x=>x>=0&&x<=20&&x!==ans)).slice(0,3);return{prompt:kind==="prev"?`מה המספר הקודם ל־${n}?`:`מה המספר הבא אחרי ${n}?`,speak:kind==="prev"?["q_prev","n"+n]:["q_next","n"+n],stageHtml:`<div class="bignum">${n}</div>`,choices:shuffle([ans,...wrong]).map(v=>({v,label:String(v)})),answer:ans}}
-function makeStruct(){const total=rnd(4,10);const a=rnd(1,total-1),b=total-a;const pairs=[[a,b]];let g=0;while(pairs.length<4&&g++<80){const w=rnd(0,10),z=rnd(0,10);if(w+z===total)continue;if(pairs.some(p=>p[0]===w&&p[1]===z))continue;pairs.push([w,z])}const dots=Array.from({length:10},(_,i)=>`<div class="dot ${i<total?"on":""}"></div>`).join("");return{prompt:`איזה שני מספרים מרכיבים את ${total}?`,speak:["q_make","n"+total],stageHtml:`<div class="tenframe">${dots}</div><div class="tenlab">${total} נקודות</div>`,choices:shuffle(pairs).map(p=>({v:p[0]+"+"+p[1],label:p[0]+" + "+p[1],ok:(p[0]+p[1])===total})),answer:a+"+"+b}}
-function makePoly(){const mode=pick(["name","sides","vertices"]);const shape=pick(POLY);const color=pick(COLORS);const svg=`<div class="polybox"><svg viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg">${shape.svg(color)}</svg></div>`;if(mode==="name"){const opts=shuffle(POLY.map(p=>p.k)).slice(0,4);if(!opts.includes(shape.k))opts[0]=shape.k;return{prompt:"איזו צורה זאת?",speak:["q_poly"],stageHtml:svg,choices:shuffle(opts).map(k=>{const p=POLY.find(x=>x.k===k);return{v:k,label:p.name}}),answer:shape.k}}const ans=shape.sides;const wrong=shuffle([3,4,5,6,7,8].filter(n=>n!==ans)).slice(0,3);return{prompt:mode==="sides"?"כמה צלעות יש לצורה?":"כמה קדקדים יש לצורה?",speak:[mode==="sides"?"q_sides":"q_vertices"],stageHtml:svg,choices:shuffle([ans,...wrong]).map(n=>({v:n,label:String(n)})),answer:ans}}
-function renderEx(){$("#exPrompt").textContent=exercise.prompt;$("#exStage").innerHTML=exercise.stageHtml;const box=$("#exChoices");const n=exercise.choices.length;box.className="choices"+(n===3?" row3":n===4?"":n>4?" row4":"");box.innerHTML=exercise.choices.map((c,i)=>`<button class="cbtn" type="button" data-i="${i}">${c.label}</button>`).join("");box.onclick=onChoice}
+  return{kind:"choice",prompt:"מה המספר החסר?",speak:["q_missing"],stageHtml:`<div class="nline-wrap"><div class="bar"></div><div class="nline">${nums.map((n,i)=>i===missIdx?`<div class="tick"><span class="gap">?</span></div>`:`<div class="tick"><span class="num">${n}</span></div>`).join("")}</div></div>`,choices:shuffle(opts).map(n=>({v:n,label:String(n)})),answer:missing}}
+function makePrev(){const n=rnd(1,19);const kind=Math.random()<.5?"prev":"next";const ans=kind==="prev"?n-1:n+1;const wrong=shuffle([n,n+2,n-2,ans+3,ans-3].filter(x=>x>=0&&x<=20&&x!==ans)).slice(0,3);return{kind:"choice",prompt:kind==="prev"?`מה המספר הקודם ל־${n}?`:`מה המספר הבא אחרי ${n}?`,speak:kind==="prev"?["q_prev","n"+n]:["q_next","n"+n],stageHtml:`<div class="bignum">${n}</div>`,choices:shuffle([ans,...wrong]).map(v=>({v,label:String(v)})),answer:ans}}
+function makePoly(){const mode=pick(["name","sides","vertices"]);const shape=pick(POLY);const color=pick(COLORS);const svg=`<div class="polybox"><svg viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg">${shape.svg(color)}</svg></div>`;if(mode==="name"){const opts=shuffle(POLY.map(p=>p.k)).slice(0,4);if(!opts.includes(shape.k))opts[0]=shape.k;return{kind:"choice",prompt:"איזו צורה זאת?",speak:["q_poly"],stageHtml:svg,choices:shuffle(opts).map(k=>{const p=POLY.find(x=>x.k===k);return{v:k,label:p.name}}),answer:shape.k}}const ans=shape.sides;const wrong=shuffle([3,4,5,6,7,8].filter(n=>n!==ans)).slice(0,3);return{kind:"choice",prompt:mode==="sides"?"כמה צלעות יש לצורה?":"כמה קדקדים יש לצורה?",speak:[mode==="sides"?"q_sides":"q_vertices"],stageHtml:svg,choices:shuffle([ans,...wrong]).map(n=>({v:n,label:String(n)})),answer:ans}}
+
+/* —— מבנה המספר: build / read / decomp —— */
+function makeStruct(){
+  // Range from teacher sheet / guide: numbers to 20. Place-value meaningful from 10–20; also 11–19 mostly.
+  const target=rnd(10,20);
+  const tens=Math.floor(target/10), ones=target%10;
+  // default מומלץ = build; rotate sometimes
+  if(Math.random()<0.15) structMode = pick(["build","read","decomp"]);
+  // keep last chosen mode from UI if set via buttons — handled in render
+  pv={tens:0,ones:0,target,locked:false,ansTens:tens,ansOnes:ones};
+  if(structMode==="read"){
+    pv.tens=tens;pv.ones=ones;pv.locked=true;
+    return{kind:"struct",mode:"read",prompt:"כמה עשרות וכמה אחדות?",speak:["q_read","n"+target],target,tens,ones};
+  }
+  if(structMode==="decomp"){
+    return{kind:"struct",mode:"decomp",prompt:"פרקו את המספר לעשרות ואחדות",speak:["q_decomp","n"+target],target,tens,ones};
+  }
+  // build
+  pv.tens=0;pv.ones=0;pv.locked=false;
+  return{kind:"struct",mode:"build",prompt:"בנו את המספר עם צרורות ומקלות",speak:["q_build","n"+target],target,tens,ones};
+}
+
+function pvTotal(){return pv.tens*10+pv.ones}
+function renderPvBins(animateBundle){
+  const tb=$("#pvTensBin"), ob=$("#pvOnesBin");
+  if(!tb||!ob)return;
+  tb.innerHTML=Array.from({length:pv.tens},()=>`<div class="bundle${animateBundle?" bundle-pop":""}"></div>`).join("");
+  ob.innerHTML=Array.from({length:pv.ones},()=>`<div class="stick"></div>`).join("");
+  const tc=$("#pvTensCnt"), oc=$("#pvOnesCnt"), live=$("#pvLive");
+  if(tc)tc.textContent=String(pv.tens);
+  if(oc)oc.textContent=String(pv.ones);
+  if(live)live.textContent=String(pvTotal());
+  const h=$("#pvHint");
+  if(h)h.style.display=pvTotal()===0?"":"none";
+}
+function tryBundle(){
+  if(pv.ones>=10){
+    pv.ones-=10;pv.tens+=1;
+    renderPvBins(true);
+    speakKeys(["tip_ten"]);
+    return true;
+  }
+  return false;
+}
+function addStick(){if(pv.locked||answered)return;if(pvTotal()>=20&&structMode==="build")return;pv.ones+=1;renderPvBins(false);if(!tryBundle()){/*noop*/}}
+function addBundle(){if(pv.locked||answered)return;if(pv.tens>=2)return;pv.tens+=1;renderPvBins(true)}
+function remStick(){if(pv.locked||answered)return;if(pv.ones>0){pv.ones--;renderPvBins(false)}else if(pv.tens>0){pv.tens--;pv.ones=9;renderPvBins(false)}}
+function remBundle(){if(pv.locked||answered)return;if(pv.tens>0){pv.tens--;renderPvBins(false)}}
+
+function structShell(inner){
+  const modes=`<div class="modes" id="structModes">
+    <button class="btn segb" type="button" data-m="build" aria-pressed="${structMode==="build"}">לבנות<span class="rec">מומלץ</span></button>
+    <button class="btn segb" type="button" data-m="read" aria-pressed="${structMode==="read"}">לקרוא</button>
+    <button class="btn segb" type="button" data-m="decomp" aria-pressed="${structMode==="decomp"}">לפרק</button>
+  </div>`;
+  return modes+inner;
+}
+function matHtml(readonly){
+  return `<div class="pvmat ${readonly?"model-readonly":""}">
+    <div class="pvcol tens"><div class="pvlab">עשרות <span class="cnt" id="pvTensCnt">0</span></div><div class="pvbin" id="pvTensBin"></div></div>
+    <div class="pvcol ones"><div class="pvlab">אחדות <span class="cnt" id="pvOnesCnt">0</span></div><div class="pvbin" id="pvOnesBin"></div></div>
+  </div>`;
+}
+function trayHtml(){
+  return `<div class="tray">
+    <button class="btn add" type="button" id="btnAddBundle"><span class="ico-b"></span>+ צרור (10)</button>
+    <button class="btn add" type="button" id="btnAddStick"><span class="ico-s"></span>+ מקל</button>
+    <button class="btn sm" type="button" id="btnRemStick">הסר מקל</button>
+  </div>`;
+}
+
+function renderStruct(){
+  const ex=exercise;
+  $("#exChoices").innerHTML="";
+  $("#exChoices").className="";
+  let body="";
+  if(ex.mode==="build"){
+    body=`<div class="target-row"><span class="tg" id="pvTarget">${ex.target}</span><span class="eqlive">בניתם: <span id="pvLive">0</span></span></div>
+      ${matHtml(false)}${trayHtml()}
+      <p class="note" id="pvHint" style="text-align:center;margin:8px 0 0">לחצו על צרור או מקל — הם יופיעו על השטיח</p>
+      <button class="btn pri" type="button" id="btnCheck" style="width:100%;max-width:320px;margin:8px auto;display:block">בדיקה</button>`;
+  } else if(ex.mode==="read"){
+    body=`<p class="sub" style="text-align:center;margin:0 0 6px">ספרו את הצרורות ואת המקלות</p>
+      ${matHtml(true)}
+      <div class="digitrow">
+        <div class="digitbox"><label>עשרות</label><input class="dg" id="inTens" type="number" inputmode="numeric" min="0" max="2" aria-label="עשרות"></div>
+        <div class="digitbox"><label>אחדות</label><input class="dg" id="inOnes" type="number" inputmode="numeric" min="0" max="9" aria-label="אחדות"></div>
+      </div>
+      <button class="btn pri" type="button" id="btnCheck" style="width:100%;max-width:320px;margin:8px auto;display:block">בדיקה</button>`;
+  } else {
+    body=`<div class="target-row"><span class="tg">${ex.target}</span></div>
+      <div class="deceq">
+        <input class="dg" id="inTens" type="number" inputmode="numeric" min="0" max="2" aria-label="עשרות">
+        <span>× 10</span><span class="plus">+</span>
+        <input class="dg" id="inOnes" type="number" inputmode="numeric" min="0" max="9" aria-label="אחדות">
+        <span>= ${ex.target}</span>
+      </div>
+      <p class="sub" style="text-align:center">כמה עשרות? כמה אחדות?</p>
+      <button class="btn pri" type="button" id="btnCheck" style="width:100%;max-width:320px;margin:8px auto;display:block">בדיקה</button>`;
+  }
+  $("#exStage").innerHTML=structShell(body);
+  // wire modes
+  const modes=$("#structModes");
+  if(modes)modes.onclick=e=>{
+    const b=e.target.closest("[data-m]");if(!b)return;
+    structMode=b.dataset.m;
+    newExercise();
+  };
+  if(ex.mode==="build"){
+    $("#btnAddStick").onclick=()=>addStick();
+    $("#btnAddBundle").onclick=()=>addBundle();
+    $("#btnRemStick").onclick=()=>remStick();
+    renderPvBins(false);
+  } else if(ex.mode==="read"){
+    renderPvBins(false);
+  }
+  $("#btnCheck").onclick=checkStruct;
+}
+
+function checkStruct(){
+  if(answered)return;
+  const ex=exercise;
+  let ok=false;
+  if(ex.mode==="build"){
+    ok = pvTotal()===ex.target && pv.tens===ex.tens && pv.ones===ex.ones;
+    // also accept equivalent (e.g. 0 tens + 14 ones) only if we auto-bundled — we force bundling so require canonical
+    if(!ok && pvTotal()===ex.target){
+      // soft accept any correct total after bundling rule
+      ok = true;
+    }
+  } else {
+    const t=parseInt(($("#inTens").value||"").trim(),10);
+    const o=parseInt(($("#inOnes").value||"").trim(),10);
+    ok = (t===ex.tens && o===ex.ones);
+    ["inTens","inOnes"].forEach(id=>{const el=$("#"+id);if(!el)return;el.classList.remove("ok","bad");});
+    if(ok){["inTens","inOnes"].forEach(id=>{const el=$("#"+id);if(el){el.classList.add("ok");el.disabled=true}})}
+    else{
+      if(!Number.isFinite(t)||t!==ex.tens){const el=$("#inTens");if(el)el.classList.add("bad")}
+      if(!Number.isFinite(o)||o!==ex.ones){const el=$("#inOnes");if(el)el.classList.add("bad")}
+    }
+  }
+  if(ok){
+    answered=true;
+    $("#exFb").className="fb on ok";
+    $("#exFb").textContent=`כל הכבוד! ${ex.target} = ${ex.tens} עשרות + ${ex.ones} אחדות 🌟`;
+    $("#exActions").hidden=false;
+    sayOk();
+    setTimeout(()=>speakKeys(["n"+ex.target]),600);
+  } else {
+    $("#exFb").className="fb on bad";
+    $("#exFb").textContent="נסו שוב 🙂 · צרור = 10 מקלות";
+    sayBad();
+    setTimeout(()=>{if(!answered){$("#exFb").className="fb";$("#exFb").textContent=""}},1400);
+  }
+}
+
+function renderEx(){
+  $("#exPrompt").textContent=exercise.prompt;
+  if(exercise.kind==="struct"){renderStruct();return}
+  $("#exStage").innerHTML=exercise.stageHtml;
+  const box=$("#exChoices");
+  const n=exercise.choices.length;
+  box.className="choices"+(n===3?" row3":"");
+  box.innerHTML=exercise.choices.map((c,i)=>`<button class="cbtn" type="button" data-i="${i}">${c.label}</button>`).join("");
+  box.onclick=onChoice;
+}
 function onChoice(e){const b=e.target.closest(".cbtn");if(!b||answered)return;const c=exercise.choices[+b.dataset.i];const ok=(c.ok===true)||(c.v===exercise.answer);if(ok){answered=true;b.classList.add("ok");document.querySelectorAll("#exChoices .cbtn").forEach(x=>x.disabled=true);$("#exFb").className="fb on ok";$("#exFb").textContent="כל הכבוד! 🌟";$("#exActions").hidden=false;sayOk()}else{b.classList.add("bad");b.disabled=true;$("#exFb").className="fb on bad";$("#exFb").textContent="נסו שוב 🙂";sayBad();setTimeout(()=>{if(!answered){$("#exFb").className="fb";$("#exFb").textContent=""}},1000)}}
 $("#btnMenu").onclick=()=>{stopSpeak();$("#helpPanel").classList.remove("on");show("sc-menu")};
 $("#btnMore").onclick=()=>newExercise();
@@ -179,6 +407,7 @@ $("#btnSpeak").onclick=()=>{if(exercise)speakKeys(exercise.speak);else speakKeys
 $("#btnMute").onclick=function(){muted=!muted;this.setAttribute("aria-pressed",muted?"true":"false");this.textContent=muted?"🔇":"🔈";if(muted)stopSpeak()};
 $("#btnHelp").onclick=()=>{const t=TOPICS[topicIdx];$("#helpTitle").textContent="עזרה";$("#helpH2").textContent=t.t;$("#helpBody").textContent=t.help;$("#helpPanel").classList.add("on");speakKeys([t.helpKey])};
 $("#helpClose").onclick=()=>{$("#helpPanel").classList.remove("on");stopSpeak()};
+window.addEventListener("resize",()=>{const h=document.querySelector("header");document.documentElement.style.setProperty("--vvt",(h?h.offsetHeight:0)+"px")});
 buildMenu();
 })();
 </script>
