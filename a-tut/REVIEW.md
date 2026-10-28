@@ -24,3 +24,16 @@ Pass: findall-only menu + slower TTS + י=יוּד. Artifacts: hub/lang/math, la
 ## Open questions for Adi
 1. Math game picks from MATH_GAMES_PROPOSAL.md (unchanged).
 2. Publish permanent link? (preview only until approved).
+
+
+---
+
+## Pass · 28.10.2026 evening · start-button + haptics (Asia/Jerusalem)
+
+**Root cause of dead «בואו נתחיל»:** commit bee404f truncated `lang/index.html` after the TOPICS array (333 lines of JS removed) — no `btnQuick` handler / `startTopic` / `startFindAll`. Restored from 3e69cc0; kept findall-only TOPICS.
+
+**Fixes**
+- Restored full game JS; start unlocks AudioContext on tap.
+- Correct tap: WebAudio success arpeggio + `navigator.vibrate([12,40,18])` (Android) / iOS switch-checkbox haptic fallback.
+- Wrong tap: soft error tone + longer vibrate pattern; narrate **tapped** letter name (`ln_*` @0.55) then `try_again` («נַסּוּ שׁוּב.» Deepdub @0.75, ASR «נסו שוב.»); `inputLocked` while speaking.
+- QA assert: `#btnQuick` → `#sc-ex` + 22 `.azcell` + prompt; deep-link `?topic=findall`; math quick + all 4 topics start. Chromium iPhone UA. WebKit MiniBrowser blocked on host (missing libevent) — Chromium+Safari UA used instead.
