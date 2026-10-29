@@ -155,16 +155,11 @@ main{max-width:980px;margin:0 auto;padding:8px}
 .nm-opt .nm-ico{font-size:28px;line-height:1}
 .nm-opt .nm-num{font:800 18px system-ui;color:var(--mute)}
 .nm-opt.playing{box-shadow:0 0 0 4px var(--org);border-color:var(--org);background:var(--hl)}
-.nm-opt.sel{box-shadow:0 0 0 4px var(--blue);border-color:var(--blue);background:#eef4fb}
 .nm-opt.bad{animation:nudge .35s;background:#fff6e8;border-color:var(--warn)}
-.nm-confirm{display:flex;align-items:center;justify-content:center;width:100%;max-width:280px;margin:4px auto 0;min-height:56px;font-size:22px;font-weight:800;border-radius:14px;background:var(--good);border:2px solid var(--good);color:#fff;cursor:pointer;touch-action:manipulation}
-.nm-confirm[hidden]{display:none!important}
-.nm-confirm:active{transform:scale(.97)}
 @media(max-width:400px){
   .nm-letter{font-size:72px;min-height:80px;margin:4px auto 8px}
   .nm-opt{min-height:76px}
   .nm-opt .nm-ico{font-size:24px}
-  .nm-confirm{min-height:52px;font-size:20px}
 }
 @media(min-width:600px){
   .nm-letter{font-size:112px;min-height:120px}
@@ -270,7 +265,7 @@ const GAMES=[
    help:"תשמעו את שם האות. לחצו עליה בלוח. אפשר ללחוץ שוב על הרמקול. בלי מיקרופון.",
    helpKey:"help_findall"},
   {k:"nameletter",t:"איך קוראים לאות?",sub:"רואים אות · בוחרים את השם לפי השמע",
-   help:"רואים אות גדולה. מקשיבים לשלושה שמות. לוחצים על הכפתור עם השם הנכון, ואז על «זה!». בלי מיקרופון.",
+   help:"רואים אות גדולה. מקשיבים לשלושה שמות. לוחצים על הכפתור עם השם הנכון. אפשר 🔊 שמעו שוב. בלי מיקרופון.",
    helpKey:"help_letter"}
 ];
 const TOPICS=GAMES;
@@ -522,16 +517,14 @@ function azFinish(){
 function startNameLetter(){
   nmActive=true;nmDone=new Set();nmTries=0;nmSel=null;nmFirst=true;
   nmQueue=shuffle(ALEF.map(x=>x.ch));nmTarget=null;nmOpts=[];
-  $("#exPrompt").textContent="איזו אות זאת? בחרו את השם";
-  $("#exStage").innerHTML=`<div class="azbar"><span class="azprog" id="nmProg">0 מתוך 22</span><button class="azrep" id="nmReplay" type="button" aria-label="השמעה שוב">🔊 שוב</button></div>
+  $("#exPrompt").textContent="איזו אות זאת? לחצו על השם";
+  $("#exStage").innerHTML=`<div class="azbar"><span class="azprog" id="nmProg">0 מתוך 22</span><button class="azrep" id="nmReplay" type="button" aria-label="שמעו שוב את שלושת השמות">🔊 שמעו שוב</button></div>
     <div class="nm-letter" id="nmLetter" aria-live="polite"></div>`;
   const box=$("#exChoices");box.className="";
-  box.innerHTML=`<div class="nm-opts" id="nmOpts"></div><button class="nm-confirm" id="nmConfirm" type="button" hidden>זה! ✓</button>`;
+  box.innerHTML=`<div class="nm-opts" id="nmOpts"></div>`;
   box.onclick=onNmChoice;
-  $("#nmConfirm").onclick=(e)=>{e.stopPropagation();nmConfirm()};
   $("#nmReplay").onclick=()=>{
-    if(!nmActive||!nmOpts.length)return;
-    inputLocked=false;
+    if(!nmActive||!nmOpts.length||inputLocked)return;
     $("#exFb").className="fb";
     document.querySelectorAll(".nm-opt.bad").forEach(el=>el.classList.remove("bad"));
     nmPlayOptions();
@@ -578,7 +571,6 @@ function nmNext(){
     const item=ALEF.find(x=>x.ch===ch);
     return `<button class="nm-opt" type="button" data-ch="${ch}" data-i="${i}" aria-label="אפשרות ${i+1}"><span class="nm-num">${i+1}</span><span class="nm-ico">🔊</span></button>`;
   }).join("");
-  const conf=$("#nmConfirm");if(conf)conf.hidden=true;
   $("#exFb").className="fb";$("#exFb").textContent="";
   // First round: short question clip, then the three names.
   if(nmFirst){
@@ -595,7 +587,7 @@ function nmNext(){
 function nmPlayOptions(){
   if(!nmOpts.length)return;
   inputLocked=true;
-  document.querySelectorAll(".nm-opt").forEach(el=>el.classList.remove("playing","sel","bad"));
+  document.querySelectorAll(".nm-opt").forEach(el=>el.classList.remove("playing","bad"));
   const keys=nmOpts.map(ch=>{const it=ALEF.find(x=>x.ch===ch);return it?it.key:null}).filter(Boolean);
   let step=0;
   const playOne=()=>{
@@ -619,25 +611,13 @@ function nmPlayOptions(){
 }
 function onNmChoice(e){
   const b=e.target.closest(".nm-opt");if(!b||!nmActive||!nmTarget)return;
+  // Ignore taps while options/feedback audio is playing.
   if(inputLocked)return;
   const ch=b.dataset.ch;
-  // First tap on a card: select + hear. Second tap on the same card: confirm.
-  if(nmSel===ch){
-    nmConfirm();
-    return;
-  }
-  nmSel=ch;
-  document.querySelectorAll(".nm-opt").forEach(el=>{
-    el.classList.toggle("sel", el.dataset.ch===ch);
-    el.classList.remove("playing","bad");
-  });
-  const conf=$("#nmConfirm");if(conf)conf.hidden=false;
-  const item=ALEF.find(x=>x.ch===ch);
-  if(item) speakKeys([item.key]);
+  nmAnswer(ch);
 }
-function nmConfirm(){
-  if(!nmActive||!nmTarget||!nmSel||inputLocked)return;
-  const ch=nmSel;
+function nmAnswer(ch){
+  if(!nmActive||!nmTarget||inputLocked)return;
   if(ch===nmTarget){
     inputLocked=true;
     stopSpeak();
@@ -663,17 +643,12 @@ function nmConfirm(){
     if(badBtn)badBtn.classList.add("bad");
     $("#exFb").className="fb on bad";$("#exFb").textContent="נסו שוב 🙂";
     sfxBad(); vibrateBad();
-    // Wrong confirm: do NOT replay the chosen (wrong) letter name — first tap already played it.
-    // Just "נסו שוב", then re-play the three options (same continue-flow as before).
+    // Wrong tap: no letter-name replay — just "נסו שוב", then re-play the three options.
     setTimeout(()=>{
       if(!nmActive){inputLocked=false;return}
       speakKeys(["try_again"], ()=>{
         if(badBtn)badBtn.classList.remove("bad");
         $("#exFb").className="fb";
-        nmSel=null;
-        document.querySelectorAll(".nm-opt.sel").forEach(el=>el.classList.remove("sel"));
-        const conf=$("#nmConfirm");if(conf)conf.hidden=true;
-        // Replay the three option names so the child can choose again.
         nmPlayOptions();
       }, 250);
     }, 250);
