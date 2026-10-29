@@ -663,13 +663,11 @@ function nmConfirm(){
     if(badBtn)badBtn.classList.add("bad");
     $("#exFb").className="fb on bad";$("#exFb").textContent="נסו שוב 🙂";
     sfxBad(); vibrateBad();
-    const tapped=ALEF.find(x=>x.ch===ch);
-    const keys=[];
-    if(tapped) keys.push(tapped.key);
-    keys.push("try_again");
+    // Wrong confirm: do NOT replay the chosen (wrong) letter name — first tap already played it.
+    // Just "נסו שוב", then re-play the three options (same continue-flow as before).
     setTimeout(()=>{
       if(!nmActive){inputLocked=false;return}
-      speakKeys(keys, ()=>{
+      speakKeys(["try_again"], ()=>{
         if(badBtn)badBtn.classList.remove("bad");
         $("#exFb").className="fb";
         nmSel=null;
