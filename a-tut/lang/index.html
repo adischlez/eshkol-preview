@@ -135,6 +135,18 @@ main{max-width:980px;margin:0 auto;padding:8px}
   .tcard{min-width:56px;min-height:56px;font-size:24px}
   .prompt{font-size:15px;margin:0 0 6px}
 }
+
+/* big green start */
+.startwrap{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:28px 16px 20px;min-height:58dvh}
+.startwrap h2{margin:0 0 6px;font-size:22px;font-weight:800;color:var(--navy)}
+.startsub{margin:0 0 22px;font-size:15px;color:var(--mute);font-weight:600}
+.btn.startbig{display:flex;align-items:center;justify-content:center;width:100%;max-width:300px;margin:0 auto;min-height:76px;font-size:30px;font-weight:800;letter-spacing:.02em;border-radius:18px;background:var(--good);border:2px solid var(--good);color:#fff;box-shadow:0 6px 18px rgba(47,143,78,.38);touch-action:manipulation;cursor:pointer;flex:none}
+.btn.startbig:active{transform:scale(.97)}
+@media(max-width:400px){
+  .startwrap{padding:20px 12px 16px;min-height:52dvh}
+  .startwrap h2{font-size:20px}
+  .btn.startbig{min-height:68px;font-size:26px;max-width:100%}
+}
 </style>
 </head>
 <body>
@@ -152,10 +164,11 @@ main{max-width:980px;margin:0 auto;padding:8px}
 <main>
   <section class="screen on" id="sc-menu">
     <div class="card endsc" id="start">
-      <h2 tabindex="-1">איך מתרגלים היום?</h2>
-      <button class="btn pri qk" id="btnQuick" type="button"><b>בואו נתחיל ←</b><small>מצאו את האות · 22 אותיות</small></button>
-      <p class="ecq">או לפתוח מהתפריט:</p>
-      <div class="tgrid sgrid" id="topicList"></div>
+      <div class="startwrap">
+        <h2 tabindex="-1">מצאו את האות</h2>
+        <p class="startsub">22 אותיות · א–ת · בלי מיקרופון</p>
+        <button class="btn startbig" id="btnStart" type="button">התחל</button>
+      </div>
       <p class="priv">🔒 אין שמירת נתונים · אין עוגיות · הכל על המכשיר שלכם</p>
     </div>
   </section>
@@ -302,9 +315,8 @@ function sfxBad(){
 }
 function show(id){document.querySelectorAll(".screen").forEach(s=>s.classList.remove("on"));$("#"+id).classList.add("on");document.body.classList.toggle("ex",id==="sc-ex");const h=document.querySelector("header");document.documentElement.style.setProperty("--vvt",(h?h.offsetHeight:0)+"px")}
 function buildMenu(){
-  $("#topicList").innerHTML=TOPICS.map((t,i)=>`<button class="btn tbtn" type="button" data-i="${i}">${i+1}. ${t.t}<span class="subline">${t.sub}</span></button>`).join("");
-  $("#topicList").onclick=e=>{const b=e.target.closest("[data-i]");if(!b)return;MODE="single";topicIdx=+b.dataset.i;startTopic()};
-  $("#btnQuick").onclick=()=>{unlockAudio();MODE="quick";topicIdx=0;startTopic()};
+  const startBtn=$("#btnStart");
+  if(startBtn) startBtn.onclick=()=>{unlockAudio();MODE="single";startTopic()};
 }
 function startTopic(){
   unlockAudio();
@@ -331,7 +343,8 @@ function startFindAll(){
   box.onclick=onAzChoice;
   $("#azReplay").onclick=()=>{if(azTarget){const item=ALEF.find(x=>x.ch===azTarget);if(item)speakKeys([item.key])}};
   $("#exActions").hidden=true;
-  setTimeout(()=>{speakKeys(["t_findall","q_findall"]);setTimeout(azNext,900)},150);
+  // First letter right away after the התחל tap (audio already unlocked).
+  setTimeout(azNext,80);
 }
 function updateAzProgress(){const el=$("#azProg");if(el)el.textContent=azDone.size+" מתוך 22"}
 function clearAzHints(){document.querySelectorAll(".azcell.hint,.azcell.bad").forEach(b=>b.classList.remove("hint","bad"))}
@@ -350,11 +363,21 @@ function onAzChoice(e){
     inputLocked=true;
     stopSpeak();
     b.classList.add("done");b.disabled=true;azDone.add(ch);azQueue=azQueue.filter(c=>c!==ch);
-    $("#exFb").className="fb on ok";$("#exFb").textContent="נכון! 🌟";
     sfxOk(); vibrateOk();
     updateAzProgress();
-    sayOk();
-    setTimeout(()=>{inputLocked=false;if(!azActive)return;$("#exFb").className="fb";azNext()},900);
+    const n=azDone.size;
+    // Spoken+visual praise only every 4th correct (not on the final letter — azFinish handles that).
+    const midPraise=(n%4===0 && azQueue.length>0);
+    if(midPraise){
+      $("#exFb").className="fb on ok";$("#exFb").textContent="כל הכבוד! 🌟";
+      speakKeys(pick(["ok","ok2","ok3"]), ()=>{
+        inputLocked=false;if(!azActive)return;$("#exFb").className="fb";azNext();
+      });
+    }else{
+      // Quick non-blocking correct: short SFX only, next letter right away.
+      $("#exFb").className="fb";$("#exFb").textContent="";
+      setTimeout(()=>{inputLocked=false;if(!azActive)return;azNext()},280);
+    }
   }else{
     inputLocked=true;
     stopSpeak();
@@ -617,11 +640,11 @@ $("#btnHelp").onclick=()=>{const t=TOPICS[topicIdx];$("#helpTitle").textContent=
 $("#helpClose").onclick=()=>$("#helpPanel").classList.remove("on");
 
 buildMenu();
-window.__eshkol={getAz:()=>azTarget,getLocked:()=>inputLocked,getBusy:()=>speakQueueBusy};
-/* deep-link: ?topic=fish|train|findall or hash */
+window.__eshkol={getAz:()=>azTarget,getLocked:()=>inputLocked,getBusy:()=>speakQueueBusy,getDone:()=>azDone.size};
+/* deep-link: ?topic=findall (or fish|train) — select topic but wait for התחל so iOS can unlock audio */
 const params=new URLSearchParams(location.search);
 const want=params.get("topic")||(location.hash||"").replace(/^#/,"");
-if(want){const i=TOPICS.findIndex(t=>t.k===want);if(i>=0){MODE="single";topicIdx=i;startTopic()}}
+if(want){const i=TOPICS.findIndex(t=>t.k===want);if(i>=0){MODE="single";topicIdx=i}}
 })();
 </script>
 </body>
