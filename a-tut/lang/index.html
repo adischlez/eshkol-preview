@@ -239,22 +239,45 @@ function unlockAudio(){
   }catch(e){}
   try{const a=new Audio(AUDIO+"ok.mp3");a.volume=0;a.play().then(()=>{a.pause();a.src="";}).catch(()=>{});}catch(e){}
 }
-function stopSpeak(){if(currentAudio){try{currentAudio.pause();currentAudio.src=""}catch(e){}currentAudio=null}if(window.speechSynthesis)speechSynthesis.cancel();speakQueueBusy=false}
-function speakKeys(keys,done){
+let speakGen=0;
+function stopSpeak(){
+  speakGen+=1;
+  if(currentAudio){
+    try{currentAudio.onended=null;currentAudio.onerror=null;currentAudio.pause();currentAudio.src=""}catch(e){}
+    currentAudio=null;
+  }
+  if(window.speechSynthesis)speechSynthesis.cancel();
+  speakQueueBusy=false;
+}
+function speakKeys(keys,done,gapMs){
   if(muted){done&&done();return}
   stopSpeak();
+  const my=++speakGen;
   const list=(Array.isArray(keys)?keys:[keys]).filter(Boolean);
+  const gap=Math.max(0, gapMs|0);
   speakQueueBusy=true;
-  playSeq(list,0,()=>{speakQueueBusy=false;done&&done()});
+  playSeq(list,0,()=>{
+    if(my!==speakGen)return;
+    speakQueueBusy=false;done&&done();
+  }, gap, my);
 }
-function playSeq(list,i,done){
+function playSeq(list,i,done,gap,my){
+  if(my!==speakGen)return;
   if(i>=list.length){done&&done();return}
   const key=list[i];
   const a=new Audio(AUDIO+key+".mp3");
   currentAudio=a;
-  a.onended=()=>playSeq(list,i+1,done);
-  a.onerror=()=>fallbackSay(key,()=>playSeq(list,i+1,done));
-  a.play().catch(()=>fallbackSay(key,()=>playSeq(list,i+1,done)));
+  let advanced=false;
+  const advance=()=>{
+    if(advanced||my!==speakGen)return;
+    advanced=true;
+    if(i+1>=list.length){done&&done();return}
+    if(gap>0) setTimeout(()=>playSeq(list,i+1,done,gap,my), gap);
+    else playSeq(list,i+1,done,gap,my);
+  };
+  a.onended=advance;
+  a.onerror=()=>fallbackSay(key,advance);
+  a.play().catch(()=>fallbackSay(key,advance));
 }
 function fallbackSay(key,done){
   if(!window.speechSynthesis){done&&done();return}
@@ -341,7 +364,15 @@ function startFindAll(){
   const box=$("#exChoices");box.className="azgrid";
   box.innerHTML=ALEF.map(L=>`<button class="azcell" type="button" data-ch="${L.ch}" aria-label="${L.ch}">${L.ch}</button>`).join("");
   box.onclick=onAzChoice;
-  $("#azReplay").onclick=()=>{if(azTarget){const item=ALEF.find(x=>x.ch===azTarget);if(item)speakKeys([item.key])}};
+  $("#azReplay").onclick=()=>{
+    if(!azTarget)return;
+    const item=ALEF.find(x=>x.ch===azTarget);if(!item)return;
+    // Replay stays available during the wrong-tap sequence; cancels it cleanly.
+    inputLocked=false;
+    $("#exFb").className="fb";
+    document.querySelectorAll(".azcell.bad").forEach(el=>el.classList.remove("bad"));
+    speakKeys([item.key]);
+  };
   $("#exActions").hidden=true;
   // First letter right away after the התחל tap (audio already unlocked).
   setTimeout(azNext,80);
@@ -379,25 +410,32 @@ function onAzChoice(e){
       setTimeout(()=>{inputLocked=false;if(!azActive)return;azNext()},280);
     }
   }else{
+    // Ignore further letter taps while the correction sequence plays.
     inputLocked=true;
     stopSpeak();
     azTries+=1;b.classList.add("bad");
     $("#exFb").className="fb on bad";$("#exFb").textContent="נסו שוב 🙂";
     sfxBad(); vibrateBad();
     const tapped=ALEF.find(x=>x.ch===ch);
-    // Name the letter the child tapped, then "נסו שוב". Queue, no overlap.
+    const targetItem=ALEF.find(x=>x.ch===azTarget);
+    // No "זאת" clip on disk — ln_* already says "הָאוֹת, X."
+    // Sequence: tapped letter → נסו שוב → re-prompt target. ~250ms gaps, no overlap.
     const keys=[];
     if(tapped) keys.push(tapped.key);
     keys.push("try_again");
-    speakKeys(keys, ()=>{
-      b.classList.remove("bad");
-      if(azTries>=2&&azTarget){
-        const c=document.querySelector('.azcell[data-ch="'+azTarget+'"]');
-        if(c)c.classList.add("hint");
-      }
-      $("#exFb").className="fb";
-      inputLocked=false;
-    });
+    if(targetItem) keys.push(targetItem.key);
+    setTimeout(()=>{
+      if(!azActive){inputLocked=false;return}
+      speakKeys(keys, ()=>{
+        b.classList.remove("bad");
+        if(azTries>=2&&azTarget){
+          const c=document.querySelector('.azcell[data-ch="'+azTarget+'"]');
+          if(c)c.classList.add("hint");
+        }
+        $("#exFb").className="fb";
+        inputLocked=false;
+      }, 250);
+    }, 250);
   }
 }
 function azFinish(){
