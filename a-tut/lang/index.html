@@ -196,7 +196,7 @@ main{max-width:980px;margin:0 auto;padding:8px}
     <div class="card endsc" id="start">
       <div class="startwrap">
         <h2 tabindex="-1">מה תרצו לתרגל?</h2>
-        <p class="startsub">בחרו משחק · 22 אותיות · בלי מיקרופון</p>
+        <p class="startsub">בחרו משחק · אותיות ומילים · בלי מיקרופון</p>
         <div class="game-menu" id="gameMenu" role="list"></div>
       </div>
       <p class="priv">🔒 אין שמירת נתונים · אין עוגיות · הכל על המכשיר שלכם</p>
@@ -266,7 +266,10 @@ const GAMES=[
    helpKey:"help_findall"},
   {k:"nameletter",t:"איך קוראים לאות?",sub:"רואים אות · בוחרים את השם לפי השמע",
    help:"רואים אות גדולה. מקשיבים לשלושה שמות. לוחצים על הכפתור עם השם הנכון. אפשר 🔊 שמעו שוב. בלי מיקרופון.",
-   helpKey:"help_letter"}
+   helpKey:"help_letter"},
+  {k:"words",t:"כותבים מילים",sub:"רואים תמונה · משלימים את המילה באותיות",
+   help:"רואים תמונה ומשלימים את המילה באותיות. בלי מיקרופון.",
+   helpKey:"help_letter", href:"words/"}
 ];
 const TOPICS=GAMES;
 function rnd(a,b){return a+Math.floor(Math.random()*(b-a+1))}
@@ -401,6 +404,8 @@ function buildMenu(){
   box.onclick=(e)=>{
     const b=e.target.closest(".gbtn");if(!b)return;
     unlockAudio();
+    const g=GAMES[+b.dataset.i];
+    if(g && g.href){ location.href=g.href; return; }
     pickGame(+b.dataset.i);
   };
   const startBtn=$("#btnStart");

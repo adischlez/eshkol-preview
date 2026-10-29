@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 720" width="720" height="720">
+<rect width="720" height="720" fill="#f5f0e6"/>
+
+<path d="M120 400 Q200 340 280 400 Q360 460 440 400 Q520 340 600 400" stroke="#3a78c2" stroke-width="36" fill="none" stroke-linecap="round"/>
+<path d="M120 480 Q200 420 280 480 Q360 540 440 480 Q520 420 600 480" stroke="#5a98d2" stroke-width="28" fill="none" stroke-linecap="round"/>
+<path d="M360 160 Q300 280 360 340 Q420 280 360 160 Z" fill="#3a78c2"/>
+<path d="M260 200 Q220 280 260 320 Q300 280 260 200 Z" fill="#5a98d2"/>
+<path d="M460 200 Q420 280 460 320 Q500 280 460 200 Z" fill="#5a98d2"/>
+
+</svg>
