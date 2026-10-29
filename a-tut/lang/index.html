@@ -136,6 +136,41 @@ main{max-width:980px;margin:0 auto;padding:8px}
   .prompt{font-size:15px;margin:0 0 6px}
 }
 
+
+/* game picker menu */
+.game-menu{display:flex;flex-direction:column;gap:12px;margin:8px 0 4px;width:100%;max-width:360px}
+.gbtn{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;width:100%;min-height:72px;padding:14px 18px;border:2px solid var(--navy);border-radius:16px;background:#fff;color:var(--navy);font:800 20px/1.25 system-ui;text-align:right;cursor:pointer;touch-action:manipulation;box-shadow:0 3px 10px rgba(31,59,92,.12)}
+.gbtn:active{transform:scale(.98)}
+.gbtn .gsub{display:block;margin-top:4px;font:600 13px/1.3 system-ui;color:var(--mute)}
+.gbtn.pri{background:var(--good);border-color:var(--good);color:#fff;box-shadow:0 4px 14px rgba(47,143,78,.32)}
+.gbtn.pri .gsub{color:rgba(255,255,255,.9)}
+@media(max-width:400px){
+  .gbtn{min-height:64px;font-size:18px;padding:12px 14px}
+  .gbtn .gsub{font-size:12px}
+}
+/* name-the-letter */
+.nm-letter{font:800 96px/1 "Times New Roman",serif;color:var(--navy);margin:6px auto 10px;min-height:100px;display:flex;align-items:center;justify-content:center;user-select:none}
+.nm-opts{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:100%;max-width:420px;margin:0 auto 10px}
+.nm-opt{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-height:88px;border:2.5px solid var(--ink);border-radius:16px;background:#fff;cursor:pointer;touch-action:manipulation;padding:10px 6px;font:800 22px system-ui;color:var(--navy)}
+.nm-opt .nm-ico{font-size:28px;line-height:1}
+.nm-opt .nm-num{font:800 18px system-ui;color:var(--mute)}
+.nm-opt.playing{box-shadow:0 0 0 4px var(--org);border-color:var(--org);background:var(--hl)}
+.nm-opt.sel{box-shadow:0 0 0 4px var(--blue);border-color:var(--blue);background:#eef4fb}
+.nm-opt.bad{animation:nudge .35s;background:#fff6e8;border-color:var(--warn)}
+.nm-confirm{display:flex;align-items:center;justify-content:center;width:100%;max-width:280px;margin:4px auto 0;min-height:56px;font-size:22px;font-weight:800;border-radius:14px;background:var(--good);border:2px solid var(--good);color:#fff;cursor:pointer;touch-action:manipulation}
+.nm-confirm[hidden]{display:none!important}
+.nm-confirm:active{transform:scale(.97)}
+@media(max-width:400px){
+  .nm-letter{font-size:72px;min-height:80px;margin:4px auto 8px}
+  .nm-opt{min-height:76px}
+  .nm-opt .nm-ico{font-size:24px}
+  .nm-confirm{min-height:52px;font-size:20px}
+}
+@media(min-width:600px){
+  .nm-letter{font-size:112px;min-height:120px}
+  .nm-opt{min-height:100px}
+  .nm-opt .nm-ico{font-size:32px}
+}
 /* big green start */
 .startwrap{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:28px 16px 20px;min-height:58dvh}
 .startwrap h2{margin:0 0 6px;font-size:22px;font-weight:800;color:var(--navy)}
@@ -159,14 +194,24 @@ main{max-width:980px;margin:0 auto;padding:8px}
       <button class="iconb" id="btnMute" type="button" title="השתקה" aria-label="השתקה" aria-pressed="false">🔈</button>
     </div>
   </div>
-  <p>מצאו את האות · בלי מיקרופון · בלי שמירת נתונים</p>
+  <p id="hdrSub">בחרו משחק · בלי מיקרופון · בלי שמירת נתונים</p>
 </div></header>
 <main>
   <section class="screen on" id="sc-menu">
     <div class="card endsc" id="start">
       <div class="startwrap">
-        <h2 tabindex="-1">מצאו את האות</h2>
-        <p class="startsub">22 אותיות · א–ת · בלי מיקרופון</p>
+        <h2 tabindex="-1">מה תרצו לתרגל?</h2>
+        <p class="startsub">בחרו משחק · 22 אותיות · בלי מיקרופון</p>
+        <div class="game-menu" id="gameMenu" role="list"></div>
+      </div>
+      <p class="priv">🔒 אין שמירת נתונים · אין עוגיות · הכל על המכשיר שלכם</p>
+    </div>
+  </section>
+  <section class="screen" id="sc-gostart">
+    <div class="card endsc">
+      <div class="startwrap">
+        <h2 id="goTitle" tabindex="-1">משחק</h2>
+        <p class="startsub" id="goSub">22 אותיות · א–ת</p>
         <button class="btn startbig" id="btnStart" type="button">התחל</button>
       </div>
       <p class="priv">🔒 אין שמירת נתונים · אין עוגיות · הכל על המכשיר שלכם</p>
@@ -219,15 +264,22 @@ const SIM={
   "ו":["ז"],"ז":["ו"],"ס":["מ"],"מ":["ס"],
   "ע":["צ"],"צ":["ע"]
 };
-const TOPICS=[
-  {k:"findall",t:"מצאו את האות",sub:"22 אותיות · א–ת · בלי סופיות",
-   help:"תשמעו את שם האות. לחצו עליה בלוח. אפשר ללחוץ שוב על הרמקול. בלי מיקרופון."}
+/* Data-driven game list — add entries here to show more on the menu. */
+const GAMES=[
+  {k:"findall",t:"מצאו את האות",sub:"שומעים שם · לוחצים על האות בלוח",
+   help:"תשמעו את שם האות. לחצו עליה בלוח. אפשר ללחוץ שוב על הרמקול. בלי מיקרופון.",
+   helpKey:"help_findall"},
+  {k:"nameletter",t:"איך קוראים לאות?",sub:"רואים אות · בוחרים את השם לפי השמע",
+   help:"רואים אות גדולה. מקשיבים לשלושה שמות. לוחצים על הכפתור עם השם הנכון, ואז על «זה!». בלי מיקרופון.",
+   helpKey:"help_letter"}
 ];
+const TOPICS=GAMES;
 function rnd(a,b){return a+Math.floor(Math.random()*(b-a+1))}
 function shuffle(a){const x=a.slice();for(let i=x.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[x[i],x[j]]=[x[j],x[i]]}return x}
 function pick(a){return a[Math.floor(Math.random()*a.length)]}
 let muted=false,currentAudio=null,topicIdx=0,MODE="single",inputLocked=false,speakQueueBusy=false;
 let azQueue=[],azDone=new Set(),azTarget=null,azTries=0,azActive=false;
+let nmQueue=[],nmDone=new Set(),nmTarget=null,nmOpts=[],nmSel=null,nmTries=0,nmActive=false,nmFirst=true;
 let fishLevel="rec",fishRound=0,fishTarget=null,fishCaught=[],fishActive=false,fishTries=0;
 let trainLevel="easy",trainSeg=[],trainGaps=[],trainCards=[],trainSel=null,trainActive=false,trainRound=0;
 let audioCtx=null;
@@ -282,7 +334,7 @@ function playSeq(list,i,done,gap,my){
 function fallbackSay(key,done){
   if(!window.speechSynthesis){done&&done();return}
   const map={ok:"כל הכבוד!",ok2:"נכון מאוד!",ok3:"יפה מאוד!",try:"לא נורא. נסו עוד פעם.",almost:"כמעט! נסו שוב.",
-    t_findall:"מצאו את האות",q_findall:"איזו אות שמעתם? לחצו עליה.",help_findall:"תשמעו את שם האות. לחצו עליה בלוח.",
+    t_findall:"מצאו את האות",q_findall:"איזו אות שמעתם? לחצו עליה.",help_findall:"תשמעו את שם האות. לחצו עליה בלוח.",t_nameletter:"איך קוראים לאות?",q_which_letter:"איזו אות זאת?",help_letter:"הקשיבו לצליל. לחצו על האות הנכונה.",
     find_done:"כל הכבוד! מצאתם את כל האותיות!",find_again:"עוד סיבוב",try_again:"נסו שוב",
     t_fish:"דגים אותיות",catch_letter:"תפסו את האות",help_fish:"תפסו את הדג עם האות ששמעתם.",fish_done:"כל הכבוד! תפסתם את כל הדגים!",
     t_train:"רכבת האלף בית",q_train:"איזו אות חסרה בקרון?",help_train:"גררו או לחצו את האות החסרה לקרון.",train_done:"כל הכבוד! השלמתם את הרכבת!",
@@ -337,17 +389,36 @@ function sfxBad(){
   setTimeout(()=>tone(180, 0.16, "sine", 0.05), 70);
 }
 function show(id){document.querySelectorAll(".screen").forEach(s=>s.classList.remove("on"));$("#"+id).classList.add("on");document.body.classList.toggle("ex",id==="sc-ex");const h=document.querySelector("header");document.documentElement.style.setProperty("--vvt",(h?h.offsetHeight:0)+"px")}
+function pickGame(idx){
+  MODE="single";topicIdx=idx;
+  const g=GAMES[topicIdx];
+  $("#goTitle").textContent=g.t;
+  $("#goSub").textContent=g.sub;
+  const hs=$("#hdrSub");if(hs)hs.textContent=g.t+" · בלי מיקרופון · בלי שמירת נתונים";
+  show("sc-gostart");
+}
 function buildMenu(){
+  const box=$("#gameMenu");
+  if(!box) return;
+  box.innerHTML=GAMES.map((g,i)=>
+    `<button class="gbtn" type="button" role="listitem" data-i="${i}">${g.t}<span class="gsub">${g.sub}</span></button>`
+  ).join("");
+  box.onclick=(e)=>{
+    const b=e.target.closest(".gbtn");if(!b)return;
+    unlockAudio();
+    pickGame(+b.dataset.i);
+  };
   const startBtn=$("#btnStart");
   if(startBtn) startBtn.onclick=()=>{unlockAudio();MODE="single";startTopic()};
 }
 function startTopic(){
   unlockAudio();
   stopSpeak();inputLocked=false;$("#exActions").hidden=true;$("#exFb").className="fb";$("#exFb").textContent="";
-  show("sc-ex");$("#exTopic").textContent=TOPICS[topicIdx].t;
-  document.body.classList.remove("g-az","g-fish","g-train");
-  const k=TOPICS[topicIdx].k;
+  show("sc-ex");$("#exTopic").textContent=GAMES[topicIdx].t;
+  document.body.classList.remove("g-az","g-nm","g-fish","g-train");
+  const k=GAMES[topicIdx].k;
   if(k==="findall"){document.body.classList.add("g-az");startFindAll()}
+  else if(k==="nameletter"){document.body.classList.add("g-nm");startNameLetter()}
   else if(k==="fish"){document.body.classList.add("g-fish");startFish()}
   else {document.body.classList.add("g-train");startTrain()}
 }
@@ -442,6 +513,178 @@ function azFinish(){
   azActive=false;azTarget=null;
   $("#exPrompt").textContent="כל הכבוד!";
   $("#exStage").innerHTML=`<div class="azceleb"><div class="stars">🌟🌟🌟</div><h3>מצאתם את כל האותיות!</h3></div>`;
+  $("#exChoices").innerHTML="";$("#exChoices").className="";
+  $("#exFb").className="fb on ok";$("#exFb").textContent="22 מתוך 22";
+  $("#exActions").hidden=false;$("#btnMore").textContent="עוד סיבוב";refreshNextLabel();speakKeys(["find_done"]);
+}
+
+/* —— איך קוראים לאות? —— */
+function startNameLetter(){
+  nmActive=true;nmDone=new Set();nmTries=0;nmSel=null;nmFirst=true;
+  nmQueue=shuffle(ALEF.map(x=>x.ch));nmTarget=null;nmOpts=[];
+  $("#exPrompt").textContent="איזו אות זאת? בחרו את השם";
+  $("#exStage").innerHTML=`<div class="azbar"><span class="azprog" id="nmProg">0 מתוך 22</span><button class="azrep" id="nmReplay" type="button" aria-label="השמעה שוב">🔊 שוב</button></div>
+    <div class="nm-letter" id="nmLetter" aria-live="polite"></div>`;
+  const box=$("#exChoices");box.className="";
+  box.innerHTML=`<div class="nm-opts" id="nmOpts"></div><button class="nm-confirm" id="nmConfirm" type="button" hidden>זה! ✓</button>`;
+  box.onclick=onNmChoice;
+  $("#nmConfirm").onclick=(e)=>{e.stopPropagation();nmConfirm()};
+  $("#nmReplay").onclick=()=>{
+    if(!nmActive||!nmOpts.length)return;
+    inputLocked=false;
+    $("#exFb").className="fb";
+    document.querySelectorAll(".nm-opt.bad").forEach(el=>el.classList.remove("bad"));
+    nmPlayOptions();
+  };
+  $("#exActions").hidden=true;
+  setTimeout(nmNext,80);
+}
+function updateNmProgress(){const el=$("#nmProg");if(el)el.textContent=nmDone.size+" מתוך 22"}
+function nmDistractors(target,n){
+  const avoid=new Set([target]);
+  // Early rounds: skip look-alike letters so the child learns shapes before fine discrimination.
+  if(nmDone.size<8){
+    (SIM[target]||[]).forEach(c=>avoid.add(c));
+  }
+  let pool=ALEF.map(x=>x.ch).filter(c=>!avoid.has(c));
+  if(nmDone.size<8){
+    // Also avoid picking two look-alikes as the pair of distractors.
+    pool=shuffle(pool);
+    const out=[];
+    for(const c of pool){
+      if(out.length>=n)break;
+      const clash=out.some(o=>(SIM[o]||[]).includes(c));
+      if(clash)continue;
+      out.push(c);
+    }
+    while(out.length<n){
+      const extra=pool.find(c=>!out.includes(c)&&c!==target);
+      if(!extra)break;out.push(extra);
+    }
+    return out;
+  }
+  return shuffle(pool).slice(0,n);
+}
+function nmNext(){
+  nmTries=0;nmSel=null;
+  if(nmQueue.length===0){nmFinish();return}
+  nmTarget=nmQueue[0];
+  updateNmProgress();
+  const d=nmDistractors(nmTarget,2);
+  nmOpts=shuffle([nmTarget].concat(d));
+  const letter=$("#nmLetter");if(letter)letter.textContent=nmTarget;
+  const opts=$("#nmOpts");
+  opts.innerHTML=nmOpts.map((ch,i)=>{
+    const item=ALEF.find(x=>x.ch===ch);
+    return `<button class="nm-opt" type="button" data-ch="${ch}" data-i="${i}" aria-label="אפשרות ${i+1}"><span class="nm-num">${i+1}</span><span class="nm-ico">🔊</span></button>`;
+  }).join("");
+  const conf=$("#nmConfirm");if(conf)conf.hidden=true;
+  $("#exFb").className="fb";$("#exFb").textContent="";
+  // First round: short question clip, then the three names.
+  if(nmFirst){
+    nmFirst=false;
+    inputLocked=true;
+    speakKeys(["q_which_letter"], ()=>{
+      if(!nmActive)return;
+      nmPlayOptions();
+    }, 250);
+  }else{
+    nmPlayOptions();
+  }
+}
+function nmPlayOptions(){
+  if(!nmOpts.length)return;
+  inputLocked=true;
+  document.querySelectorAll(".nm-opt").forEach(el=>el.classList.remove("playing","sel","bad"));
+  const keys=nmOpts.map(ch=>{const it=ALEF.find(x=>x.ch===ch);return it?it.key:null}).filter(Boolean);
+  let step=0;
+  const playOne=()=>{
+    if(!nmActive){inputLocked=false;return}
+    if(step>=nmOpts.length){
+      document.querySelectorAll(".nm-opt.playing").forEach(el=>el.classList.remove("playing"));
+      inputLocked=false;
+      return;
+    }
+    const ch=nmOpts[step];
+    document.querySelectorAll(".nm-opt").forEach(el=>{
+      el.classList.toggle("playing", el.dataset.ch===ch);
+    });
+    const item=ALEF.find(x=>x.ch===ch);
+    speakKeys([item.key], ()=>{
+      step+=1;
+      setTimeout(playOne, 250);
+    });
+  };
+  playOne();
+}
+function onNmChoice(e){
+  const b=e.target.closest(".nm-opt");if(!b||!nmActive||!nmTarget)return;
+  if(inputLocked)return;
+  const ch=b.dataset.ch;
+  // First tap on a card: select + hear. Second tap on the same card: confirm.
+  if(nmSel===ch){
+    nmConfirm();
+    return;
+  }
+  nmSel=ch;
+  document.querySelectorAll(".nm-opt").forEach(el=>{
+    el.classList.toggle("sel", el.dataset.ch===ch);
+    el.classList.remove("playing","bad");
+  });
+  const conf=$("#nmConfirm");if(conf)conf.hidden=false;
+  const item=ALEF.find(x=>x.ch===ch);
+  if(item) speakKeys([item.key]);
+}
+function nmConfirm(){
+  if(!nmActive||!nmTarget||!nmSel||inputLocked)return;
+  const ch=nmSel;
+  if(ch===nmTarget){
+    inputLocked=true;
+    stopSpeak();
+    nmDone.add(ch);nmQueue=nmQueue.filter(c=>c!==ch);
+    sfxOk(); vibrateOk();
+    updateNmProgress();
+    const n=nmDone.size;
+    const midPraise=(n%4===0 && nmQueue.length>0);
+    if(midPraise){
+      $("#exFb").className="fb on ok";$("#exFb").textContent="כל הכבוד! 🌟";
+      speakKeys(pick(["ok","ok2","ok3"]), ()=>{
+        inputLocked=false;if(!nmActive)return;$("#exFb").className="fb";nmNext();
+      });
+    }else{
+      $("#exFb").className="fb";$("#exFb").textContent="";
+      setTimeout(()=>{inputLocked=false;if(!nmActive)return;nmNext()},280);
+    }
+  }else{
+    inputLocked=true;
+    stopSpeak();
+    nmTries+=1;
+    const badBtn=document.querySelector('.nm-opt[data-ch="'+ch+'"]');
+    if(badBtn)badBtn.classList.add("bad");
+    $("#exFb").className="fb on bad";$("#exFb").textContent="נסו שוב 🙂";
+    sfxBad(); vibrateBad();
+    const tapped=ALEF.find(x=>x.ch===ch);
+    const keys=[];
+    if(tapped) keys.push(tapped.key);
+    keys.push("try_again");
+    setTimeout(()=>{
+      if(!nmActive){inputLocked=false;return}
+      speakKeys(keys, ()=>{
+        if(badBtn)badBtn.classList.remove("bad");
+        $("#exFb").className="fb";
+        nmSel=null;
+        document.querySelectorAll(".nm-opt.sel").forEach(el=>el.classList.remove("sel"));
+        const conf=$("#nmConfirm");if(conf)conf.hidden=true;
+        // Replay the three option names so the child can choose again.
+        nmPlayOptions();
+      }, 250);
+    }, 250);
+  }
+}
+function nmFinish(){
+  nmActive=false;nmTarget=null;nmSel=null;
+  $("#exPrompt").textContent="כל הכבוד!";
+  $("#exStage").innerHTML=`<div class="azceleb"><div class="stars">🌟🌟🌟</div><h3>יודעים את כל השמות!</h3></div>`;
   $("#exChoices").innerHTML="";$("#exChoices").className="";
   $("#exFb").className="fb on ok";$("#exFb").textContent="22 מתוך 22";
   $("#exActions").hidden=false;$("#btnMore").textContent="עוד סיבוב";refreshNextLabel();speakKeys(["find_done"]);
@@ -655,34 +898,51 @@ function trainFinish(){
 }
 
 $("#btnMore").onclick=()=>{
-  const k=TOPICS[topicIdx].k;
+  const k=GAMES[topicIdx].k;
   if(k==="findall")startFindAll();
+  else if(k==="nameletter")startNameLetter();
   else if(k==="fish")startFish();
   else startTrain();
 };
 $("#btnNext").onclick=()=>{
-  if(MODE==="quick"){if(topicIdx>=TOPICS.length-1){show("sc-menu");return}topicIdx+=1}
-  else{topicIdx=(topicIdx+1)%TOPICS.length}
-  startTopic();
+  if(MODE==="quick"){if(topicIdx>=GAMES.length-1){show("sc-menu");return}topicIdx+=1}
+  else{topicIdx=(topicIdx+1)%GAMES.length}
+  pickGame(topicIdx);
 };
-$("#btnMenu").onclick=()=>{stopSpeak();fishActive=false;trainActive=false;azActive=false;show("sc-menu")};
+$("#btnMenu").onclick=()=>{
+  stopSpeak();fishActive=false;trainActive=false;azActive=false;nmActive=false;
+  const hs=$("#hdrSub");if(hs)hs.textContent="בחרו משחק · בלי מיקרופון · בלי שמירת נתונים";
+  show("sc-menu");
+};
 $("#btnSpeak").onclick=()=>{
-  const k=TOPICS[topicIdx]?TOPICS[topicIdx].k:"";
+  const k=GAMES[topicIdx]?GAMES[topicIdx].k:"";
   if(k==="findall"&&azTarget){const item=ALEF.find(x=>x.ch===azTarget);if(item)speakKeys([item.key])}
+  else if(k==="nameletter"&&nmOpts.length){nmPlayOptions()}
   else if(k==="fish"&&fishTarget)speakCatch(fishTarget);
   else if(k==="train")speakKeys(["q_train"]);
 };
 $("#btnMute").onclick=()=>{muted=!muted;$("#btnMute").setAttribute("aria-pressed",muted?"true":"false");$("#btnMute").textContent=muted?"🔇":"🔈";if(muted)stopSpeak()};
-$("#btnHelp").onclick=()=>{const t=TOPICS[topicIdx];$("#helpTitle").textContent="עזרה";$("#helpH2").textContent=t.t;$("#helpBody").textContent=t.help;$("#helpPanel").classList.add("on");
-  speakKeys([t.k==="findall"?"help_findall":t.k==="fish"?"help_fish":"help_train"])};
+$("#btnHelp").onclick=()=>{
+  const t=GAMES[topicIdx];
+  $("#helpTitle").textContent="עזרה";$("#helpH2").textContent=t.t;$("#helpBody").textContent=t.help;
+  $("#helpPanel").classList.add("on");
+  speakKeys([t.helpKey||"help_findall"]);
+};
 $("#helpClose").onclick=()=>$("#helpPanel").classList.remove("on");
 
 buildMenu();
-window.__eshkol={getAz:()=>azTarget,getLocked:()=>inputLocked,getBusy:()=>speakQueueBusy,getDone:()=>azDone.size};
-/* deep-link: ?topic=findall (or fish|train) — select topic but wait for התחל so iOS can unlock audio */
+window.__eshkol={
+  getAz:()=>azTarget,getNm:()=>nmTarget,getNmOpts:()=>nmOpts.slice(),getNmSel:()=>nmSel,
+  getLocked:()=>inputLocked,getBusy:()=>speakQueueBusy,
+  getDone:()=>azDone.size,getNmDone:()=>nmDone.size,getGames:()=>GAMES.map(g=>g.k)
+};
+/* deep-link: ?topic=findall|nameletter — show התחל for that game (iOS unlock) */
 const params=new URLSearchParams(location.search);
 const want=params.get("topic")||(location.hash||"").replace(/^#/,"");
-if(want){const i=TOPICS.findIndex(t=>t.k===want);if(i>=0){MODE="single";topicIdx=i}}
+if(want){
+  const i=GAMES.findIndex(t=>t.k===want);
+  if(i>=0){MODE="single";topicIdx=i;pickGame(i)}
+}
 })();
 </script>
 </body>
