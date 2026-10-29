@@ -489,7 +489,7 @@ function onAzChoice(e){
     sfxBad(); vibrateBad();
     const tapped=ALEF.find(x=>x.ch===ch);
     const targetItem=ALEF.find(x=>x.ch===azTarget);
-    // No "זאת" clip on disk — ln_* already says "הָאוֹת, X."
+    // No "זאת" clip on disk — when Deepdub is back, add one; ln_* is now letter-name only.
     // Sequence: tapped letter → נסו שוב → re-prompt target. ~250ms gaps, no overlap.
     const keys=[];
     if(tapped) keys.push(tapped.key);
