@@ -1,0 +1,581 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>במה מתחילה המילה?</title>
+<style>
+:root{--bg:#f5f4f0;--card:#fff;--ink:#1c2230;--navy:#1f3b5c;--mute:#667085;--line:#d9d6cc;--blue:#3a78c2;--org:#e8862a;--good:#2f8f4e;--warn:#d98a1c;--bad:#d9534f;--hl:#fff4dc;--r:14px;--letter:"Segoe UI","Arial Hebrew","Noto Sans Hebrew","Heebo",Arial,sans-serif}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Arial,sans-serif;-webkit-text-size-adjust:100%}
+body{padding-bottom:28px;min-height:100dvh}
+header{background:var(--navy);color:#fff;position:sticky;top:0;z-index:20}
+.hw{max-width:980px;margin:0 auto;padding:8px 12px}
+.hrow{display:flex;align-items:center;gap:8px;justify-content:space-between}
+header h1{margin:0;font-size:17px;font-weight:750;flex:1;line-height:1.2}
+.iconb{border:1px solid rgba(255,255,255,.55);background:transparent;color:#fff;border-radius:10px;min-width:44px;min-height:44px;font-size:18px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;padding:4px 8px;touch-action:manipulation}
+.iconb[aria-pressed=true]{background:#fff;color:var(--navy);border-color:#fff}
+.hbts{display:flex;gap:6px}
+main{max-width:560px;margin:0 auto;padding:8px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:12px;margin:0 0 10px}
+.screen{display:none}.screen.on{display:block}
+.startwrap{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:28px 16px 20px;min-height:50dvh}
+.startwrap h2{margin:0 0 6px;font-size:22px;font-weight:800;color:var(--navy)}
+.startsub{margin:0 0 18px;font-size:15px;color:var(--mute);font-weight:600}
+.btn{border:1px solid var(--ink);background:#fff;color:var(--ink);border-radius:12px;padding:7px 14px;min-height:44px;font:700 14.5px system-ui;cursor:pointer;touch-action:manipulation}
+.btn.startbig{display:flex;align-items:center;justify-content:center;width:100%;max-width:300px;margin:0 auto;min-height:76px;font-size:30px;font-weight:800;border-radius:18px;background:var(--good);border:2px solid var(--good);color:#fff;box-shadow:0 6px 18px rgba(47,143,78,.38)}
+.btn.startbig:active{transform:scale(.97)}
+.btn.pri{background:var(--good);border-color:var(--good);color:#fff}
+.btn.sm{min-height:44px;font-size:15px;padding:8px 12px}
+.priv{font-size:13px;color:var(--mute);text-align:center;margin:10px 0 0;line-height:1.35}
+.foot{max-width:560px;margin:6px auto 0;padding:6px 12px;font-size:12px;color:var(--mute);text-align:center;line-height:1.45}
+.lv-pick{display:flex;flex-direction:column;gap:12px;width:100%;max-width:340px;margin:0 auto}
+.lv-card{display:flex;align-items:center;gap:12px;text-align:right;border:2px solid var(--navy);background:#fff;border-radius:16px;padding:14px 14px;min-height:68px;cursor:pointer;touch-action:manipulation;font:inherit;color:var(--navy);width:100%}
+.lv-card:active{transform:scale(.98);background:#f0f5fb}
+.lv-stars{font-size:22px;letter-spacing:1px;min-width:7.5em;text-align:center;flex:none}
+.lv-meta{flex:1;display:flex;flex-direction:column;align-items:flex-start;gap:3px}
+.lv-name{font:800 17px system-ui;color:var(--navy)}
+.lv-desc{font:600 12.5px system-ui;color:var(--mute);line-height:1.3}
+.lv-back{margin:16px auto 0;display:block}
+.photo-wrap{width:100%;max-width:280px;margin:0 auto 12px;border-radius:16px;overflow:hidden;border:2px solid var(--line);background:#f3f0e8;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center}
+.photo-wrap img{width:100%;height:100%;object-fit:contain;display:block;padding:8px}
+.photo-wrap.dim{opacity:.35;filter:grayscale(.15)}
+.prog{font:700 14px system-ui;color:var(--navy);text-align:center;margin:0}
+.prompt{font:800 18px/1.3 system-ui;color:var(--navy);text-align:center;margin:0 0 10px}
+.tiles{display:grid;gap:12px;width:100%;max-width:340px;margin:8px auto 0}
+.tiles.cols3{grid-template-columns:repeat(3,1fr);max-width:300px}
+.tiles.cols4{grid-template-columns:repeat(2,1fr);max-width:280px}
+.tiles.cols6{grid-template-columns:repeat(3,1fr);max-width:340px}
+.tile{border:2px solid var(--ink);background:#fff;border-radius:16px;min-height:72px;font:800 40px/1 var(--letter);color:var(--ink);cursor:pointer;touch-action:manipulation;padding:10px 4px;user-select:none;-webkit-user-select:none}
+.tile:active{transform:scale(.96)}
+.tile.ok{background:#eef8f1;border-color:var(--good);color:var(--navy);animation:pop .28s ease}
+.tile.bad{animation:nudge .35s;background:#fff6e8;border-color:var(--warn)}
+.tile.hint{animation:blinkHint 0.7s ease-in-out 3;background:#e8f5e9;border-color:var(--good);box-shadow:0 0 0 3px rgba(47,143,78,.35)}
+.tile:disabled{cursor:default}
+@keyframes nudge{0%,100%{transform:none}30%{transform:translateX(-5px)}70%{transform:translateX(5px)}}
+@keyframes blinkHint{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.08);opacity:.85}}
+@keyframes pop{0%{transform:scale(.6)}70%{transform:scale(1.12)}100%{transform:scale(1)}}
+.fb{border-radius:8px;padding:8px 12px;font-weight:700;text-align:center;font-size:15px;display:none;margin:10px 0 0}
+.fb.on{display:block}.fb.ok{background:#eef8f1;color:#1f6b38}.fb.bad{background:#fff6e8;color:#8a5200}
+.name-reveal{display:none;text-align:center;padding:8px 4px 4px}
+.name-reveal.on{display:block}
+.name-big{font:800 36px/1.25 var(--letter);color:var(--navy);margin:6px 0 4px;letter-spacing:.02em}
+.celeb{text-align:center;padding:12px 8px}.celeb .stars{font-size:40px;margin:6px 0}
+.celeb h3{margin:6px 0 8px;color:var(--good);font-size:24px}
+.celeb .celeb-sub{color:var(--mute);font-weight:600;font-size:16px;margin:0 0 6px}
+.celeb .celeb-extra{font-size:28px;margin:8px 0}
+.endbtns{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;justify-content:center}
+.endbtns .btn{min-height:48px;font-size:16px;min-width:140px}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0 0 8px;flex-wrap:wrap}
+.replay{border:1px solid var(--navy);background:#fff;color:var(--navy);border-radius:999px;min-height:44px;min-width:44px;padding:6px 10px;font:700 13px system-ui;cursor:pointer;touch-action:manipulation;white-space:nowrap;flex:none}
+.lv-tag{font:700 12px system-ui;color:var(--mute);background:#eef0f3;border-radius:999px;padding:3px 10px}
+.explain{position:fixed;inset:0;z-index:50;background:var(--bg);overflow-y:auto;display:none}
+.explain.on{display:block}
+.xbar{position:sticky;top:0;background:rgba(245,244,240,.96);border-bottom:1px solid var(--line);padding:8px 12px;z-index:2;display:flex;gap:8px;align-items:center}
+.xin{max-width:560px;margin:0 auto;padding:14px 16px 28px}
+.xin h2{font-size:20px;color:var(--navy);margin:0 0 10px}
+.idea{background:#eef4fb;border-radius:10px;padding:12px 14px;font-size:16px;font-weight:600;color:var(--navy);margin:0 0 10px}
+.confirm-mask{position:fixed;inset:0;z-index:60;background:rgba(28,34,48,.45);display:none;align-items:center;justify-content:center;padding:16px}
+.confirm-mask.on{display:flex}
+.confirm-box{background:#fff;border-radius:16px;padding:18px 16px;max-width:320px;width:100%;text-align:center;box-shadow:0 12px 40px rgba(0,0,0,.2)}
+.confirm-box p{margin:0 0 14px;font:700 16px system-ui;color:var(--navy);line-height:1.4}
+.confirm-acts{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+@media(max-width:400px){
+  .startwrap{padding:20px 12px;min-height:46dvh}
+  .startwrap h2{font-size:20px}
+  .btn.startbig{min-height:68px;font-size:26px;max-width:100%}
+  .photo-wrap{max-width:220px}
+  .tile{min-height:64px;font-size:34px}
+  .tiles{gap:10px;max-width:100%}
+  .replay{font-size:12px;padding:6px 8px}
+  .lv-stars{font-size:18px;min-width:6.5em}
+  .lv-name{font-size:15px}
+  .name-big{font-size:30px}
+  .prompt{font-size:16px}
+}
+@media(min-width:600px){
+  .tile{min-height:84px;font-size:48px}
+  .photo-wrap{max-width:320px}
+  .tiles.cols3{max-width:360px}
+  .tiles.cols4{max-width:320px}
+  .tiles.cols6{max-width:400px}
+}
+@media(prefers-reduced-motion:reduce){
+  .tile.bad,.tile.ok,.tile.hint{animation:none!important}
+}
+</style>
+</head>
+<body>
+<header><div class="hw">
+  <div class="hrow">
+    <h1>במה מתחילה המילה?</h1>
+    <div class="hbts">
+      <button class="iconb" id="btnHelp" type="button" title="עזרה" aria-label="עזרה">?</button>
+      <button class="iconb" id="btnHub" type="button" title="תפריט משחקים" aria-label="חזרה לתפריט המשחקים">☰</button>
+      <button class="iconb" id="btnHome" type="button" title="התחלה" aria-label="חזרה להתחלה">⌂</button>
+      <button class="iconb" id="btnMute" type="button" title="השתקה" aria-label="השתקה" aria-pressed="false">🔈</button>
+    </div>
+  </div>
+</div></header>
+<main>
+  <section class="screen on" id="sc-start">
+    <div class="card">
+      <div class="startwrap">
+        <h2>במה מתחילה המילה?</h2>
+        <p class="startsub">רואים תמונה · שומעים מילה · לוחצים על האות הראשונה</p>
+        <button class="btn startbig" id="btnStart" type="button">התחל</button>
+      </div>
+      <p class="priv">🔒 אין שמירת נתונים · אין עוגיות · בלי שמות ילדים</p>
+    </div>
+  </section>
+  <section class="screen" id="sc-levels">
+    <div class="card">
+      <div class="startwrap" style="min-height:auto;padding:18px 12px 12px">
+        <h2>בחרו רמה</h2>
+        <p class="startsub" style="margin-bottom:14px">⭐ קל ← ⭐⭐⭐⭐ קשה · מומלץ להתחיל ברמה 1</p>
+        <div class="lv-pick" role="group" aria-label="רמת קושי">
+          <button class="lv-card" type="button" data-lv="1">
+            <span class="lv-stars">⭐</span>
+            <span class="lv-meta"><span class="lv-name">רמה 1 · 3 אותיות</span><span class="lv-desc">שלוש אותיות שונות מאוד בצליל ובצורה</span></span>
+          </button>
+          <button class="lv-card" type="button" data-lv="2">
+            <span class="lv-stars">⭐⭐</span>
+            <span class="lv-meta"><span class="lv-name">רמה 2 · 4 אותיות</span><span class="lv-desc">ארבע אותיות · עדיין ברורות</span></span>
+          </button>
+          <button class="lv-card" type="button" data-lv="3">
+            <span class="lv-stars">⭐⭐⭐</span>
+            <span class="lv-meta"><span class="lv-name">רמה 3 · דומות בצורה</span><span class="lv-desc">ארבע אותיות · כולל אותיות דומות במראה</span></span>
+          </button>
+          <button class="lv-card" type="button" data-lv="4">
+            <span class="lv-stars">⭐⭐⭐⭐</span>
+            <span class="lv-meta"><span class="lv-name">רמה 4 · 6 אותיות</span><span class="lv-desc">שש אותיות · יותר בחירה</span></span>
+          </button>
+        </div>
+        <button class="btn lv-back" id="btnBackStart" type="button">→ חזרה</button>
+      </div>
+    </div>
+  </section>
+  <section class="screen" id="sc-play">
+    <div class="card">
+      <div class="bar">
+        <span class="prog" id="prog">1 מתוך 6</span>
+        <span class="lv-tag" id="lvTag">רמה 1</span>
+        <button class="replay" id="btnReplay" type="button" aria-label="תשמיעו לי את המילה">🔊 תשמיעו לי</button>
+      </div>
+      <p class="prompt" id="qPrompt">במה מתחילה המילה?</p>
+      <div class="photo-wrap" id="photoWrap"><img id="photo" alt="" width="512" height="512"></div>
+      <div class="tiles" id="tiles" role="group" aria-label="אותיות לבחירה"></div>
+      <div class="name-reveal" id="nameReveal">
+        <div class="name-big" id="nameBig"></div>
+      </div>
+      <div class="fb" id="fb"></div>
+    </div>
+  </section>
+  <section class="screen" id="sc-done">
+    <div class="card">
+      <div class="celeb">
+        <div class="celeb-extra">🎉✨🎉</div>
+        <div class="stars" id="doneStars">⭐⭐⭐</div>
+        <h3>כל הכבוד!</h3>
+        <p class="celeb-sub">סיימתם את כל שש המילים</p>
+        <div class="endbtns">
+          <button class="btn pri" id="btnAgain" type="button">עוד פעם</button>
+          <button class="btn" id="btnPickLevel" type="button">בחירת רמה</button>
+          <button class="btn" id="btnToStart" type="button">לתפריט</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+<div class="explain" id="helpPanel" role="dialog" aria-modal="true">
+  <div class="xbar">
+    <button class="btn sm" id="helpClose" type="button">→ חזרה</button>
+    <strong style="flex:1;color:var(--navy)">עזרה</strong>
+  </div>
+  <div class="xin">
+    <h2>איך משחקים?</h2>
+    <div class="idea">רואים תמונה ושומעים מילה. לוחצים על האות הראשונה של המילה.</div>
+    <div class="idea">בכל משחק יש 6 מילים (באקראי). מומלץ להתחיל ברמה 1.</div>
+    <div class="idea">⭐ רמה 1 — שלוש אותיות שונות מאוד.</div>
+    <div class="idea">⭐⭐ רמה 2 — ארבע אותיות.</div>
+    <div class="idea">⭐⭐⭐ רמה 3 — ארבע אותיות, כולל דומות במראה.</div>
+    <div class="idea">⭐⭐⭐⭐ רמה 4 — שש אותיות לבחירה.</div>
+    <div class="idea">אפשר ללחוץ על 🔊 תשמיעו לי כדי לשמוע את המילה שוב.</div>
+  </div>
+</div>
+<div class="confirm-mask" id="homeConfirm" role="dialog" aria-modal="true" aria-labelledby="homeConfirmTxt">
+  <div class="confirm-box">
+    <p id="homeConfirmTxt">לצאת למשחק ולחזור להתחלה?</p>
+    <div class="confirm-acts">
+      <button class="btn pri" id="homeYes" type="button">כן, לצאת</button>
+      <button class="btn" id="homeNo" type="button">להמשיך לשחק</button>
+    </div>
+  </div>
+</div>
+<label id="hapticLab" aria-hidden="true" style="position:fixed;left:-9999px;top:0;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none">
+  <input type="checkbox" id="hapticSwitch" switch>
+</label>
+<div class="foot">A-TUT-LANG · במה מתחילה המילה? · א׳ תות<br>נבנה ע״י אשכול-בוט</div>
+<script>
+(function(){
+"use strict";
+const AUDIO="audio/";
+const RUN_SIZE=6;
+/* Never same-round: א/ע, כ/ק/ח, ט/ת, ס/שׂ, ב/ו, צ/ס — and never put confuse pairs as distractors on ANY level */
+const SOUND_GROUPS=[
+  ["א","ע","ה"],
+  ["כ","ק","ח"],
+  ["ט","ת"],
+  ["ס","ש"], /* treat ש as possible sin risk with ס — we only use שין words, but still ban ס↔ש same round for safety with שׂ confusion */
+  ["ב","ו"],
+  ["צ","ס"]
+];
+/* Shape lookalikes OK on harder levels (not same sound) */
+const SHAPE_SIM={
+  "ד":["ר"],"ר":["ד"],
+  "מ":["ס"],"ס":["מ"],
+  "ה":["ח"],"ח":["ה"],
+  "ו":["ז"],"ז":["ו"],
+  "ב":["כ"],"כ":["ב"],
+  "ג":["נ"],"נ":["ג"]
+};
+const LEVELS={
+  1:{id:1, stars:"⭐",       label:"רמה 1 · 3 אותיות", short:"רמה 1", nOptions:3, useShape:false},
+  2:{id:2, stars:"⭐⭐",     label:"רמה 2 · 4 אותיות", short:"רמה 2", nOptions:4, useShape:false},
+  3:{id:3, stars:"⭐⭐⭐",   label:"רמה 3 · דומות בצורה", short:"רמה 3", nOptions:4, useShape:true},
+  4:{id:4, stars:"⭐⭐⭐⭐", label:"רמה 4 · 6 אותיות", short:"רמה 4", nOptions:6, useShape:true}
+};
+let level=1;
+/* ONLY words with phonetically unambiguous first letter for age 6.
+   Allowed starters: מ ל נ ר ש(shin) ס ז ד ג פ צ י ח
+   Excluded starters: א ע ה כ ק ט ת ב ו + שׂ */
+const WORDS=[
+  {id:"dag",     label:"דג",   text:"דג",   first:"ד", img:"img/dag.webp",     say:"w_dag",     alt:"תמונת דג"},
+  {id:"lev",     label:"לב",   text:"לב",   first:"ל", img:"img/lev.webp",     say:"w_lev",     alt:"תמונת לב"},
+  {id:"yad",     label:"יד",   text:"יד",   first:"י", img:"img/yad.webp",     say:"w_yad",     alt:"תמונת יד"},
+  {id:"perach",  label:"פרח",  text:"פרח",  first:"פ", img:"img/perach.webp",  say:"w_perach",  alt:"תמונת פרח"},
+  {id:"pil",     label:"פיל",  text:"פיל",  first:"פ", img:"img/pil.webp",     say:"w_pil",     alt:"תמונת פיל"},
+  {id:"sefer",   label:"ספר",  text:"ספר",  first:"ס", img:"img/sefer.webp",   say:"w_sefer",   alt:"תמונת ספר"},
+  {id:"mayim",   label:"מים",  text:"מים",  first:"מ", img:"img/mayim.webp",   say:"w_mayim",   alt:"תמונת מים"},
+  {id:"shemesh", label:"שמש",  text:"שמש",  first:"ש", img:"img/shemesh.webp", say:"w_shemesh", alt:"תמונת שמש"},
+  {id:"yareach", label:"ירח",  text:"ירח",  first:"י", img:"img/yareach.webp", say:"w_yareach", alt:"תמונת ירח"},
+  {id:"delet",   label:"דלת",  text:"דלת",  first:"ד", img:"img/delet.webp",   say:"w_delet",   alt:"תמונת דלת"},
+  {id:"dov",     label:"דב",   text:"דב",   first:"ד", img:"img/dov.webp",     say:"w_dov",     alt:"תמונת דב"},
+  {id:"chatul",  label:"חתול", text:"חתול", first:"ח", img:"img/chatul.webp",  say:"w_chatul",  alt:"תמונת חתול"},
+  {id:"tzahov",  label:"צהוב", text:"צהוב", first:"צ", img:"img/tzahov.webp",  say:"w_tzahov",  alt:"צבע צהוב"},
+  {id:"yarok",   label:"ירוק", text:"ירוק", first:"י", img:"img/yarok.webp",   say:"w_yarok",   alt:"צבע ירוק"},
+  {id:"parpar",  label:"פרפר", text:"פרפר", first:"פ", img:"img/parpar.webp",  say:"w_parpar",  alt:"תמונת פרפר"},
+  {id:"nachash", label:"נחש",  text:"נחש",  first:"נ", img:"img/nachash.webp", say:"w_nachash", alt:"תמונת נחש"},
+  {id:"regel",   label:"רגל",  text:"רגל",  first:"ר", img:"img/regel.webp",   say:"w_regel",   alt:"תמונת רגל"},
+  {id:"gamal",   label:"גמל",  text:"גמל",  first:"ג", img:"img/gamal.webp",   say:"w_gamal",   alt:"תמונת גמל"},
+  {id:"sus",     label:"סוס",  text:"סוס",  first:"ס", img:"img/sus.webp",     say:"w_sus",     alt:"תמונת סוס"},
+  {id:"limon",   label:"לימון",text:"לימון",first:"ל", img:"img/limon.webp",   say:"w_limon",   alt:"תמונת לימון"},
+  {id:"zevuv",   label:"זבוב", text:"זבוב", first:"ז", img:"img/zevuv.webp",   say:"w_zevuv",   alt:"תמונת זבוב"},
+  {id:"matos",   label:"מטוס", text:"מטוס", first:"מ", img:"img/matos.webp",   say:"w_matos",   alt:"תמונת מטוס"},
+  {id:"gezer",   label:"גזר",  text:"גזר",  first:"ג", img:"img/gezer.webp",   say:"w_gezer",   alt:"תמונת גזר"},
+  {id:"chalav",  label:"חלב",  text:"חלב",  first:"ח", img:"img/chalav.webp",  say:"w_chalav",  alt:"תמונת חלב"}
+];
+/* Pool of distractor letters — only from unambiguous set; never include אעהכקטתב ו as distractors either? 
+   Steering: exclude words starting with those. Distractors can be those letters as shapes kids know,
+   BUT never same-sound pairs in one round. Safer: distractors only from clear consonants too, so
+   child never has to distinguish א/ע etc. */
+const DISTRACTOR_POOL=["מ","ל","נ","ר","ש","ס","ז","ד","ג","פ","צ","י","ח"];
+
+function shuffle(a){const x=a.slice();for(let i=x.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[x[i],x[j]]=[x[j],x[i]]}return x}
+function pick(a){return a[Math.floor(Math.random()*a.length)]}
+const $=s=>document.querySelector(s);
+let muted=false, currentAudio=null, speakGen=0, speakQueueBusy=false, audioCtx=null;
+let inputLocked=false, queue=[], idx=0, tiles=[], lastFirstId=null, wrongStreak=0, awaitingNext=false;
+let autoNextTimer=null, autoNextGen=0, currentFirst=null;
+
+function unlockAudio(){
+  try{if(!audioCtx)audioCtx=new (window.AudioContext||window.webkitAudioContext)();if(audioCtx.state==="suspended")audioCtx.resume();}catch(e){}
+  try{const a=new Audio(AUDIO+"ok.mp3");a.volume=0;a.play().then(()=>{a.pause();a.src="";}).catch(()=>{});}catch(e){}
+}
+function stopSpeak(){
+  speakGen+=1;
+  if(currentAudio){try{currentAudio.onended=null;currentAudio.onerror=null;currentAudio.pause();currentAudio.src=""}catch(e){} currentAudio=null;}
+  if(window.speechSynthesis)speechSynthesis.cancel();
+  speakQueueBusy=false;
+}
+function speakKeys(keys,done,gapMs){
+  if(muted){done&&done();return}
+  stopSpeak();
+  const my=++speakGen;
+  const list=(Array.isArray(keys)?keys:[keys]).filter(Boolean);
+  const gap=Math.max(0,gapMs|0);
+  speakQueueBusy=true;
+  playSeq(list,0,()=>{if(my!==speakGen)return;speakQueueBusy=false;done&&done();},gap,my);
+}
+function playSeq(list,i,done,gap,my){
+  if(my!==speakGen)return;
+  if(i>=list.length){done&&done();return}
+  const key=list[i];
+  const a=new Audio(AUDIO+key+".mp3");
+  currentAudio=a;
+  let advanced=false;
+  const advance=()=>{
+    if(advanced||my!==speakGen)return;advanced=true;
+    if(i+1>=list.length){done&&done();return}
+    if(gap>0)setTimeout(()=>playSeq(list,i+1,done,gap,my),gap);
+    else playSeq(list,i+1,done,gap,my);
+  };
+  a.onended=advance;a.onerror=advance;
+  a.play().catch(advance);
+}
+function vibrateOk(){try{if(navigator.vibrate){navigator.vibrate([12,40,18]);return;}}catch(e){} iosHaptic();}
+function vibrateBad(){try{if(navigator.vibrate){navigator.vibrate([30,50,30,50,40]);return;}}catch(e){} iosHaptic();setTimeout(iosHaptic,80);}
+function iosHaptic(){try{const sw=$("#hapticSwitch"),lab=$("#hapticLab");if(!sw||!lab)return;sw.checked=!sw.checked;lab.click();}catch(e){}}
+function tone(freq,dur,type,gain){
+  try{unlockAudio();if(!audioCtx)return;const t0=audioCtx.currentTime;const o=audioCtx.createOscillator();const g=audioCtx.createGain();
+    o.type=type||"sine";o.frequency.setValueAtTime(freq,t0);g.gain.setValueAtTime(0.0001,t0);
+    g.gain.exponentialRampToValueAtTime(gain||0.12,t0+0.01);g.gain.exponentialRampToValueAtTime(0.0001,t0+dur);
+    o.connect(g);g.connect(audioCtx.destination);o.start(t0);o.stop(t0+dur+0.02);}catch(e){}
+}
+function sfxOk(){tone(523.25,0.09,"sine",0.11);setTimeout(()=>tone(659.25,0.10,"sine",0.10),55);setTimeout(()=>tone(783.99,0.14,"triangle",0.09),110);}
+function sfxBadGentle(){tone(260,0.10,"sine",0.05);setTimeout(()=>tone(220,0.12,"triangle",0.04),60);}
+function show(id){document.querySelectorAll(".screen").forEach(s=>s.classList.remove("on"));$("#"+id).classList.add("on");}
+
+function soundBanFor(ch){
+  const ban=new Set([ch]);
+  SOUND_GROUPS.forEach(g=>{
+    if(g.indexOf(ch)>=0) g.forEach(x=>ban.add(x));
+  });
+  return ban;
+}
+function confuseWithAny(selected){
+  const ban=new Set(selected);
+  selected.forEach(ch=>{
+    soundBanFor(ch).forEach(x=>ban.add(x));
+  });
+  return ban;
+}
+
+function buildOptions(answer){
+  const lv=LEVELS[level];
+  const n=lv.nOptions;
+  const used=new Set([answer]);
+  const ban=soundBanFor(answer);
+  const opts=[answer];
+  // Harder levels: prefer one shape lookalike first (if not sound-banned)
+  if(lv.useShape){
+    const sims=(SHAPE_SIM[answer]||[]).filter(c=>!ban.has(c)&&!used.has(c)&&DISTRACTOR_POOL.indexOf(c)>=0);
+    if(sims.length){
+      const s=pick(sims);
+      opts.push(s); used.add(s);
+      soundBanFor(s).forEach(x=>ban.add(x));
+    }
+  }
+  let pool=DISTRACTOR_POOL.filter(c=>!used.has(c)&&!ban.has(c));
+  // L1: prefer distant shapes — drop shape-sims of answer from pool first if possible
+  if(level===1){
+    const near=new Set(SHAPE_SIM[answer]||[]);
+    const far=pool.filter(c=>!near.has(c));
+    if(far.length>=n-1) pool=far;
+  }
+  while(opts.length<n && pool.length){
+    const i=Math.floor(Math.random()*pool.length);
+    const c=pool.splice(i,1)[0];
+    opts.push(c); used.add(c);
+    // expand ban so later picks don't clash with this distractor either
+    soundBanFor(c).forEach(x=>{
+      ban.add(x);
+      pool=pool.filter(p=>!ban.has(p)&&!used.has(p));
+    });
+  }
+  // If still short (tight bans), relax to any unused from pool ignoring shape but still sound-ban
+  if(opts.length<n){
+    let rest=DISTRACTOR_POOL.filter(c=>!used.has(c)&&!ban.has(c));
+    while(opts.length<n && rest.length){
+      opts.push(rest.splice(Math.floor(Math.random()*rest.length),1)[0]);
+    }
+  }
+  return shuffle(opts).map((ch,i)=>({ch,id:i}));
+}
+
+function pickQueue(){
+  let q=shuffle(WORDS).slice(0, RUN_SIZE);
+  // Soft start: shorter words first
+  q=q.map((n,i)=>({n,len:n.text.length,r:Math.random()})).sort((a,b)=>a.len-b.len||a.r-b.r).map(x=>x.n);
+  if(lastFirstId && q.length>1 && q[0].id===lastFirstId){
+    for(let j=1;j<q.length;j++){
+      if(q[j].id!==lastFirstId){ const t=q[0]; q[0]=q[j]; q[j]=t; break; }
+    }
+  }
+  lastFirstId=q[0].id;
+  return q;
+}
+
+function startGame(){
+  unlockAudio();
+  queue=pickQueue();
+  idx=0; wrongStreak=0; awaitingNext=false;
+  const lv=LEVELS[level];
+  $("#lvTag").textContent=lv.short+" "+lv.stars;
+  $("#doneStars").textContent=lv.stars;
+  show("sc-play");
+  loadRound();
+}
+function clearAutoNext(){
+  if(autoNextTimer){clearTimeout(autoNextTimer);autoNextTimer=null;}
+  autoNextGen+=1;
+}
+function hideReveal(){
+  clearAutoNext();
+  const nr=$("#nameReveal"); if(nr) nr.classList.remove("on");
+  const pw=$("#photoWrap"); if(pw) pw.classList.remove("dim");
+  const tb=$("#tiles"); if(tb) tb.style.display="";
+  awaitingNext=false;
+}
+function loadRound(){
+  inputLocked=false; wrongStreak=0;
+  hideReveal();
+  stopSpeak();
+  $("#fb").className="fb";$("#fb").textContent="";
+  const item=queue[idx];
+  currentFirst=item.first;
+  $("#prog").textContent=(idx+1)+" מתוך "+queue.length;
+  const img=$("#photo");
+  img.src=item.img; img.alt=item.alt;
+  tiles=buildOptions(item.first);
+  const tb=$("#tiles");
+  tb.classList.remove("cols3","cols4","cols6");
+  const n=LEVELS[level].nOptions;
+  if(n<=3) tb.classList.add("cols3");
+  else if(n<=4) tb.classList.add("cols4");
+  else tb.classList.add("cols6");
+  renderTiles();
+  speakKeys([item.say]);
+}
+function renderTiles(){
+  const box=$("#tiles");
+  box.innerHTML=tiles.map(t=>
+    `<button class="tile" type="button" data-id="${t.id}" aria-label="${t.ch}">${t.ch}</button>`
+  ).join("");
+  box.onclick=onTile;
+}
+function showFbBad(msg){
+  const fb=$("#fb");
+  fb.className="fb on bad";
+  fb.textContent=msg;
+}
+function blinkCorrect(){
+  const btn=[...document.querySelectorAll(".tile")].find(b=>b.textContent.trim()===currentFirst);
+  if(!btn) return;
+  btn.classList.remove("hint"); void btn.offsetWidth; btn.classList.add("hint");
+  setTimeout(()=>btn.classList.remove("hint"), 2200);
+}
+function handleWrong(btn){
+  wrongStreak++;
+  vibrateBad();
+  sfxBadGentle();
+  btn.classList.remove("bad");void btn.offsetWidth;btn.classList.add("bad");
+  setTimeout(()=>btn.classList.remove("bad"),400);
+  showFbBad("נסו שוב");
+  // Never speak wrong letter name; replay the WORD. After 3 wrongs, blink correct tile (silent).
+  const item=queue[idx];
+  if(wrongStreak>=3) blinkCorrect();
+  speakKeys(["try_again", item.say], null, 220);
+}
+function onTile(e){
+  const btn=e.target.closest(".tile"); if(!btn||inputLocked||awaitingNext) return;
+  const id=+btn.dataset.id;
+  const tile=tiles.find(t=>t.id===id); if(!tile) return;
+  if(tile.ch===currentFirst){
+    wrongStreak=0;
+    placeCorrect(btn);
+  } else {
+    handleWrong(btn);
+  }
+}
+function placeCorrect(btn){
+  inputLocked=true;
+  sfxOk(); vibrateOk();
+  btn.classList.add("ok");
+  document.querySelectorAll(".tile").forEach(b=>{ if(b!==btn) b.disabled=true; });
+  $("#fb").className="fb on ok";
+  $("#fb").textContent="נכון!";
+  const item=queue[idx];
+  awaitingNext=true;
+  const my=++autoNextGen;
+  const scheduleAdvance=()=>{
+    if(my!==autoNextGen||!awaitingNext) return;
+    // show word briefly then auto-advance (no הבא)
+    const pw=$("#photoWrap"); if(pw) pw.classList.add("dim");
+    $("#nameBig").textContent=item.label;
+    $("#nameReveal").classList.add("on");
+    const tb=$("#tiles"); if(tb) tb.style.display="none";
+    if(autoNextTimer){clearTimeout(autoNextTimer);autoNextTimer=null;}
+    autoNextTimer=setTimeout(()=>{
+      if(my!==autoNextGen||!awaitingNext) return;
+      autoNextTimer=null;
+      goNext();
+    }, 1500);
+  };
+  speakKeys([pick(["ok","ok2","ok3"])], scheduleAdvance, 80);
+}
+function goNext(){
+  if(!awaitingNext) return;
+  awaitingNext=false;
+  clearAutoNext();
+  idx++;
+  if(idx>=queue.length){
+    hideReveal();
+    show("sc-done");
+    speakKeys(["done_all"]);
+  } else {
+    loadRound();
+  }
+}
+function goLevels(){ stopSpeak(); inputLocked=false; awaitingNext=false; hideReveal(); show("sc-levels"); }
+function askHome(){
+  if($("#sc-play").classList.contains("on") || $("#sc-done").classList.contains("on") || $("#sc-levels").classList.contains("on")){
+    if($("#sc-start").classList.contains("on")) return;
+    $("#homeConfirm").classList.add("on");
+  } else {
+    stopSpeak();inputLocked=false;awaitingNext=false;hideReveal();show("sc-start");
+  }
+}
+$("#btnStart").onclick=()=>{unlockAudio(); goLevels();};
+$("#btnBackStart").onclick=()=>{stopSpeak(); show("sc-start");};
+document.querySelectorAll(".lv-card").forEach(b=>{
+  b.onclick=()=>{ level=+b.dataset.lv; unlockAudio(); startGame(); };
+});
+$("#btnAgain").onclick=()=>{unlockAudio(); startGame();};
+$("#btnPickLevel").onclick=()=>goLevels();
+$("#btnToStart").onclick=()=>{stopSpeak(); location.href="../";};
+$("#btnHome").onclick=()=>askHome();
+$("#homeYes").onclick=()=>{
+  $("#homeConfirm").classList.remove("on");
+  stopSpeak();inputLocked=false;awaitingNext=false;hideReveal();show("sc-start");
+};
+$("#homeNo").onclick=()=>$("#homeConfirm").classList.remove("on");
+$("#btnReplay").onclick=()=>{
+  if(awaitingNext||inputLocked)return;
+  const item=queue[idx]; if(!item) return;
+  speakKeys([item.say]);
+};
+$("#btnMute").onclick=()=>{
+  muted=!muted;
+  $("#btnMute").setAttribute("aria-pressed", muted?"true":"false");
+  $("#btnMute").textContent=muted?"🔇":"🔈";
+  if(muted){
+    stopSpeak();
+    if(awaitingNext && !autoNextTimer){
+      const my=autoNextGen;
+      autoNextTimer=setTimeout(()=>{
+        if(my!==autoNextGen||!awaitingNext) return;
+        autoNextTimer=null;
+        goNext();
+      }, 1500);
+    }
+  }
+};
+$("#btnHub").onclick=()=>{ location.href="../"; };
+$("#btnHelp").onclick=()=>{$("#helpPanel").classList.add("on"); if(!muted) speakKeys(["help"]);};
+$("#helpClose").onclick=()=>{$("#helpPanel").classList.remove("on"); stopSpeak();};
+})();
+</script>
+</body>
+</html>
