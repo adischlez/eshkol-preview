@@ -866,7 +866,7 @@ function onNext(){
 
 function buildBreakdown(sess){
   var wrap = $("res-break");
-  wrap.innerHTML = "<h3>פירוט השאלות</h3>";
+  wrap.innerHTML = "<h3>פירוט להורה</h3>";
   (sess.answers||[]).forEach(function(a, i){
     var row = document.createElement('div');
     row.className = 'row';
@@ -906,6 +906,7 @@ function startLive(){
 function openHelp(){
   $("help-overlay").hidden = false;
   document.body.classList.add("help-open");
+  try { $("btn-help-close").focus(); } catch (e) {}
 }
 function closeHelp(){
   var ov = $("help-overlay");
@@ -920,6 +921,9 @@ $("btn-help").addEventListener("click", openHelp);
 $("btn-help-close").addEventListener("click", closeHelp);
 $("help-overlay").addEventListener("click", function(e){
   if (e.target === $("help-overlay")) closeHelp();
+});
+document.addEventListener("keydown", function(e){
+  if (e.key === "Escape") closeHelp();
 });
 
 /* ---------- sim mode ---------- */
