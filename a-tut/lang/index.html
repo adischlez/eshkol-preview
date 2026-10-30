@@ -139,14 +139,20 @@ main{max-width:980px;margin:0 auto;padding:8px}
 
 /* game picker menu */
 .game-menu{display:flex;flex-direction:column;gap:12px;margin:8px 0 4px;width:100%;max-width:360px}
-.gbtn{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;width:100%;min-height:72px;padding:14px 18px;border:2px solid var(--navy);border-radius:16px;background:#fff;color:var(--navy);font:800 20px/1.25 system-ui;text-align:right;cursor:pointer;touch-action:manipulation;box-shadow:0 3px 10px rgba(31,59,92,.12)}
+.gbtn{display:flex;flex-direction:row;align-items:center;gap:12px;width:100%;min-height:72px;padding:12px 14px;border:2px solid var(--navy);border-radius:16px;background:#fff;color:var(--navy);font:800 20px/1.25 system-ui;text-align:right;cursor:pointer;touch-action:manipulation;box-shadow:0 3px 10px rgba(31,59,92,.12)}
 .gbtn:active{transform:scale(.98)}
+.gbtn .gstep{flex:none;width:28px;height:28px;border-radius:50%;background:#e8eef5;color:var(--navy);font:800 14px/1 system-ui;display:inline-flex;align-items:center;justify-content:center;border:1px solid #c5d0de}
+.gbtn .gbody{flex:1;min-width:0;display:flex;flex-direction:column;align-items:flex-start;justify-content:center}
 .gbtn .gsub{display:block;margin-top:4px;font:600 13px/1.3 system-ui;color:var(--mute)}
 .gbtn.pri{background:var(--good);border-color:var(--good);color:#fff;box-shadow:0 4px 14px rgba(47,143,78,.32)}
 .gbtn.pri .gsub{color:rgba(255,255,255,.9)}
+.gbtn.pri .gstep{background:rgba(255,255,255,.22);border-color:rgba(255,255,255,.45);color:#fff}
+.ped-note{margin:0 0 14px;max-width:360px;font:500 12.5px/1.45 system-ui;color:var(--mute);text-align:center}
 @media(max-width:400px){
-  .gbtn{min-height:64px;font-size:18px;padding:12px 14px}
+  .gbtn{min-height:64px;font-size:18px;padding:10px 12px;gap:10px}
+  .gbtn .gstep{width:26px;height:26px;font-size:13px}
   .gbtn .gsub{font-size:12px}
+  .ped-note{font-size:11.5px;margin:0 0 12px}
 }
 /* name-the-letter */
 .nm-letter{font:800 96px/1 "Times New Roman",serif;color:var(--navy);margin:6px auto 10px;min-height:100px;display:flex;align-items:center;justify-content:center;user-select:none}
@@ -197,6 +203,7 @@ main{max-width:980px;margin:0 auto;padding:8px}
       <div class="startwrap">
         <h2 tabindex="-1">מה תרצו לתרגל?</h2>
         <p class="startsub">בחרו משחק · אותיות ומילים · בלי מיקרופון</p>
+        <p class="ped-note">המשחקים מסודרים לפי סדר פדגוגי — מהקל למתקדם</p>
         <div class="game-menu" id="gameMenu" role="list"></div>
       </div>
       <p class="priv">🔒 אין שמירת נתונים · אין עוגיות · הכל על המכשיר שלכם</p>
@@ -267,12 +274,12 @@ const GAMES=[
   {k:"nameletter",t:"איך קוראים לאות?",sub:"רואים אות · בוחרים את השם לפי השמע",
    help:"רואים אות גדולה. מקשיבים לשלושה שמות. לוחצים על הכפתור עם השם הנכון. אפשר 🔊 שמעו שוב. בלי מיקרופון.",
    helpKey:"help_letter"},
-  {k:"words",t:"כותבים מילים",sub:"רואים תמונה · משלימים את המילה באותיות",
-   help:"רואים תמונה ומשלימים את המילה באותיות. בלי מיקרופון.",
-   helpKey:"help_letter", href:"words/"},
   {k:"firstletter",t:"במה מתחילה המילה?",sub:"רואים תמונה · שומעים מילה · לוחצים על האות הראשונה",
    help:"רואים תמונה ושומעים מילה. לוחצים על האות הראשונה. אפשר 🔊 תשמיעו לי. בלי מיקרופון.",
-   helpKey:"help_letter", href:"firstletter/"}
+   helpKey:"help_letter", href:"firstletter/"},
+  {k:"words",t:"כותבים מילים",sub:"רואים תמונה · משלימים את המילה באותיות",
+   help:"רואים תמונה ומשלימים את המילה באותיות. בלי מיקרופון.",
+   helpKey:"help_letter", href:"words/"}
 ];
 const TOPICS=GAMES;
 function rnd(a,b){return a+Math.floor(Math.random()*(b-a+1))}
@@ -402,7 +409,7 @@ function buildMenu(){
   const box=$("#gameMenu");
   if(!box) return;
   box.innerHTML=GAMES.map((g,i)=>
-    `<button class="gbtn" type="button" role="listitem" data-i="${i}">${g.t}<span class="gsub">${g.sub}</span></button>`
+    `<button class="gbtn" type="button" role="listitem" data-i="${i}" aria-label="${i+1}. ${g.t}"><span class="gstep" aria-hidden="true">${i+1}</span><span class="gbody">${g.t}<span class="gsub">${g.sub}</span></span></button>`
   ).join("");
   box.onclick=(e)=>{
     const b=e.target.closest(".gbtn");if(!b)return;
