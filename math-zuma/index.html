@@ -1,0 +1,1320 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="robots" content="noindex,nofollow">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>כדורי חשבון</title>
+<style>
+:root{
+  --bg:#dceef8;--ink:#1c2230;--navy:#1f3b5c;--mute:#5a6a7a;--line:#c5d6e4;
+  --good:#2f8f4e;--warn:#d98a1c;--org:#e8862a;--bad:#d9534f;
+  --ice:#eaf6ff;--snow:#ffffff;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%;background:#0a2a44;color:var(--ink);
+  font:16px/1.45 system-ui,-apple-system,"Segoe UI","Arial Hebrew",Arial,sans-serif;
+  -webkit-text-size-adjust:100%;overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none}
+#app{position:relative;width:100%;height:100%;max-width:520px;margin:0 auto;background:linear-gradient(180deg,#b8dff5 0%,#e8f4fc 40%,#f5f9fc 100%);overflow:hidden}
+canvas#game{display:block;width:100%;height:100%;touch-action:none}
+.hud{position:absolute;inset:0;pointer-events:none;z-index:5}
+.hud .top{position:absolute;top:0;left:0;right:0;display:flex;align-items:flex-start;justify-content:space-between;
+  padding:max(8px,env(safe-area-inset-top)) 10px 6px;gap:8px;pointer-events:none}
+.hud .bot{position:absolute;bottom:0;left:0;right:0;display:flex;align-items:center;justify-content:space-between;
+  padding:6px 10px max(10px,env(safe-area-inset-bottom));gap:8px;pointer-events:none}
+.pill{pointer-events:auto;border:0;background:rgba(31,59,92,.88);color:#fff;border-radius:999px;
+  min-width:44px;min-height:44px;padding:0 14px;font:700 15px system-ui;cursor:pointer;
+  display:inline-flex;align-items:center;justify-content:center;gap:6px;touch-action:manipulation;
+  box-shadow:0 2px 8px rgba(0,0,0,.18)}
+.pill.ghost{background:rgba(255,255,255,.9);color:var(--navy);border:1.5px solid var(--navy)}
+.pill:active{transform:scale(.96)}
+.scorebox{pointer-events:none;background:rgba(255,255,255,.92);color:var(--navy);border-radius:14px;
+  padding:6px 12px;font:800 15px system-ui;box-shadow:0 2px 8px rgba(0,0,0,.12);min-width:90px;text-align:center}
+.scorebox small{display:block;font:600 11px system-ui;color:var(--mute);margin-top:1px}
+.fbtoast{position:absolute;left:50%;top:auto;bottom:72px;transform:translate(-50%,8px);opacity:0;
+  background:rgba(255,255,255,.95);color:var(--navy);border-radius:14px;padding:8px 14px;
+  font:800 16px system-ui;box-shadow:0 6px 20px rgba(0,0,0,.18);pointer-events:none;transition:opacity .25s,transform .25s;
+  white-space:nowrap;z-index:8;max-width:86%;text-align:center}
+.fbtoast.on{opacity:1;transform:translate(-50%,0)}
+.fbtoast.ok{color:#1f6b38;background:#eef8f1}
+.fbtoast.bad{color:#8a5200;background:#fff6e8}
+.screen{position:absolute;inset:0;z-index:20;background:linear-gradient(180deg,#9fd0ef 0%,#e8f4fc 55%,#fff 100%);
+  display:none;flex-direction:column;align-items:center;justify-content:center;padding:20px 16px;
+  overflow-y:auto;-webkit-overflow-scrolling:touch;touch-action:pan-y}
+.screen.on{display:flex}
+.start-art{width:min(180px,55vw);height:auto;margin:0 0 6px}
+h1{margin:0 0 2px;font-size:24px;font-weight:800;color:var(--navy);text-align:center}
+.sub{margin:0 0 12px;font-size:14px;color:var(--mute);font-weight:600;text-align:center;max-width:320px;line-height:1.4}
+.lv-pick{display:flex;flex-direction:column;gap:10px;width:100%;max-width:360px;margin:0 auto}
+.grade-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%;max-width:360px;margin:0 auto}
+.grade-btn{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
+  border:2px solid var(--navy);background:#fff;border-radius:16px;min-height:72px;padding:10px 8px;
+  cursor:pointer;touch-action:manipulation;font:inherit;color:var(--navy);
+  box-shadow:0 2px 0 rgba(31,59,92,.12)}
+.grade-btn:active{transform:scale(.97);background:#f0f7fb}
+.grade-btn .g-letter{font:800 26px/1 system-ui;color:var(--navy)}
+.grade-btn .g-label{font:700 13px system-ui;color:var(--mute)}
+.lv-card{display:flex;align-items:center;gap:12px;text-align:right;border:2px solid var(--navy);background:#fff;
+  border-radius:16px;padding:12px 14px;min-height:64px;cursor:pointer;touch-action:manipulation;
+  font:inherit;color:var(--navy);width:100%;box-shadow:0 2px 0 rgba(31,59,92,.12)}
+.lv-card:active{transform:scale(.98);background:#f0f7fb}
+.lv-card.rec{border-color:var(--good);background:#eef8f1;box-shadow:0 2px 0 rgba(47,143,78,.25)}
+.lv-num{width:36px;height:36px;border-radius:50%;background:var(--navy);color:#fff;
+  display:inline-flex;align-items:center;justify-content:center;font:800 16px system-ui;flex:none}
+.lv-card.rec .lv-num{background:var(--good)}
+.lv-meta{flex:1;display:flex;flex-direction:column;align-items:flex-start;gap:2px}
+.lv-name{font:800 16px system-ui;color:var(--navy)}
+.lv-desc{font:600 12.5px system-ui;color:var(--mute);line-height:1.3}
+.lv-badge{font:700 11px system-ui;background:var(--good);color:#fff;border-radius:999px;padding:3px 8px;flex:none}
+.backlink{border:0;background:transparent;color:var(--navy);font:700 14px system-ui;cursor:pointer;
+  min-height:44px;padding:8px 12px;touch-action:manipulation;margin:4px 0 0}
+.step-title{margin:0 0 10px;font:800 18px system-ui;color:var(--navy);text-align:center}
+.hud-grade{pointer-events:none;font:700 12px system-ui;color:var(--mute);background:rgba(255,255,255,.85);
+  border-radius:999px;padding:4px 10px;margin-top:4px}
+.btn{border:1.5px solid var(--ink);background:#fff;color:var(--ink);border-radius:14px;padding:10px 16px;
+  min-height:48px;font:700 16px system-ui;cursor:pointer;touch-action:manipulation}
+.btn.pri{background:var(--good);border-color:var(--good);color:#fff;box-shadow:0 4px 14px rgba(47,143,78,.35)}
+.btn.big{min-height:64px;font-size:22px;font-weight:800;border-radius:18px;width:100%;max-width:280px}
+.btn:active{transform:scale(.97)}
+.priv{font-size:12px;color:var(--mute);text-align:center;margin:14px 0 0;line-height:1.35;max-width:300px}
+.overlay{position:absolute;inset:0;z-index:30;background:rgba(10,30,50,.55);display:none;
+  align-items:center;justify-content:center;padding:16px;touch-action:manipulation}
+.overlay.on{display:flex}
+.panel{background:#fff;border-radius:18px;padding:18px 16px;max-width:340px;width:100%;
+  box-shadow:0 12px 40px rgba(0,0,0,.25);text-align:center}
+.panel h2{margin:0 0 8px;font-size:22px;color:var(--navy)}
+.panel p{margin:0 0 12px;font-size:15px;color:var(--mute);line-height:1.45;font-weight:600}
+.panel .acts{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.panel .acts .btn{min-width:120px}
+.help-body{text-align:right;font-size:15px;color:var(--ink);line-height:1.5;font-weight:500}
+.help-body ol{margin:8px 0 12px;padding:0 18px 0 0}
+.help-body li{margin:0 0 6px}
+.stars{font-size:36px;letter-spacing:4px;margin:6px 0 10px}
+.footnote{position:absolute;bottom:6px;left:0;right:0;text-align:center;font-size:10px;color:rgba(31,59,92,.45);pointer-events:none}
+</style>
+</head>
+<body>
+<div id="app">
+  <canvas id="game"></canvas>
+  <div class="hud" id="hud" hidden>
+    <div class="top">
+      <button type="button" class="pill ghost" id="btnPause" aria-label="השהיה">❚❚</button>
+      <button type="button" class="pill ghost" id="btnMute" aria-label="השתקה">🔊</button>
+    </div>
+    <div class="bot">
+      <div class="scorebox"><span id="scoreNum">0</span><small><span id="gradeTag"></span> · <span id="leftNum">0</span> נשארו</small></div>
+      <button type="button" class="pill" id="btnHelp">? עזרה</button>
+    </div>
+    <div class="fbtoast" id="toast"></div>
+  </div>
+
+  <div class="screen on" id="startScreen">
+    <svg class="start-art" viewBox="0 0 220 120" aria-hidden="true">
+      <defs>
+        <radialGradient id="bg1" cx="50%" cy="40%" r="60%"><stop offset="0%" stop-color="#fff"/><stop offset="100%" stop-color="#cfe8f8"/></radialGradient>
+      </defs>
+      <rect width="220" height="120" rx="16" fill="url(#bg1)"/>
+      <path d="M20 30 C60 20,80 50,110 45 S170 20,200 40" fill="none" stroke="#8bb8d4" stroke-width="14" stroke-linecap="round"/>
+      <circle cx="40" cy="28" r="12" fill="#e86a5a"/><text x="40" y="33" text-anchor="middle" font-size="12" font-weight="800" fill="#fff" font-family="system-ui">6</text>
+      <circle cx="68" cy="36" r="12" fill="#6a8fad"/><text x="68" y="40" text-anchor="middle" font-size="14" font-weight="800" fill="#fff" font-family="system-ui">−</text>
+      <circle cx="96" cy="44" r="12" fill="#fff" stroke="#e8862a" stroke-width="2" stroke-dasharray="3 2"/><text x="96" y="49" text-anchor="middle" font-size="12" font-weight="800" fill="#e8862a" font-family="system-ui">?</text>
+      <circle cx="124" cy="42" r="12" fill="#6a8fad"/><text x="124" y="46" text-anchor="middle" font-size="14" font-weight="800" fill="#fff" font-family="system-ui">=</text>
+      <circle cx="152" cy="34" r="12" fill="#3a9e6a"/><text x="152" y="39" text-anchor="middle" font-size="12" font-weight="800" fill="#fff" font-family="system-ui">3</text>
+      <circle cx="110" cy="88" r="18" fill="#5b4fcf"/><text x="110" y="94" text-anchor="middle" font-size="14" font-weight="800" fill="#fff" font-family="system-ui">3</text>
+      <path d="M110 70 L118 78 L110 74 L102 78 Z" fill="#ffd36a"/>
+    </svg>
+    <h1>כדורי חשבון</h1>
+    <p class="sub" id="startSub">ירו את המספר למקום החסר בתרגיל — והכדורים יתפוצצו!</p>
+    <div id="gradeStep">
+      <p class="step-title">בחרו כיתה</p>
+      <div class="grade-grid" id="gradePick"></div>
+    </div>
+    <div id="diffStep" hidden>
+      <p class="step-title" id="diffTitle">בחרו רמה</p>
+      <div class="lv-pick" id="diffPick"></div>
+      <button type="button" class="backlink" id="btnBackGrade">חזרה לבחירת כיתה</button>
+    </div>
+    <p class="priv">אין שמירת שמות או נתונים על הילד. מתאים לתרגול קצר בבית.</p>
+  </div>
+
+  <div class="overlay" id="pauseOverlay">
+    <div class="panel">
+      <h2>השהיה</h2>
+      <p>אפשר לנוח רגע ולחזור.</p>
+      <div class="acts">
+        <button type="button" class="btn pri" id="btnResume">המשך</button>
+        <button type="button" class="btn" id="btnRestart">התחל מחדש</button>
+        <button type="button" class="btn" id="btnQuit">למסך הראשי</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="overlay" id="helpOverlay">
+    <div class="panel">
+      <h2>איך משחקים?</h2>
+      <div class="help-body">
+        <ol>
+          <li>בוחרים כיתה (א׳ עד ו׳) ואז רמה קלה או מאתגרת.</li>
+          <li>במסילה רצים כדורים עם מספרים וסימנים — זה תרגיל חשבון לפי הכיתה.</li>
+          <li>הכדור עם סימן השאלה <b>?</b> הוא המקום החסר.</li>
+          <li>גררו את האצבע לכיוון הרצוי ושחררו כדי לירות.</li>
+          <li>אם המספר נכון — התרגיל מתפוצץ! אם לא — נסו שוב בלי לחץ.</li>
+          <li>לחיצה על התותח מחליפה בין הכדור הנוכחי לבא בתור.</li>
+        </ol>
+        <p style="text-align:center;color:var(--mute);font-size:13px;margin:0 0 10px">המטרה: לפוצץ את כל התרגילים לפני שהמסילה מגיעה לסוף.</p>
+      </div>
+      <div class="acts">
+        <button type="button" class="btn pri" id="btnHelpClose">חזור למשחק</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="overlay" id="endOverlay">
+    <div class="panel">
+      <h2 id="endTitle">כל הכבוד!</h2>
+      <div class="stars" id="endStars">★★★</div>
+      <p id="endMsg">פוצצתם את כל התרגילים.</p>
+      <div class="acts">
+        <button type="button" class="btn pri" id="btnAgain">עוד פעם</button>
+        <button type="button" class="btn" id="btnHome">רמות אחרות</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+'use strict';
+
+/* ========== Levels ========== */
+/* ========== Grades (Israeli curriculum, rough) ========== */
+const GRADES = [
+  {id:1, letter:'א׳', name:'כיתה א׳',
+    easy:{label:'קל', desc:'חיבור וחיסור עד 10, חסרה התוצאה', recommended:true},
+    hard:{label:'מאתגר', desc:'עד 20, לפעמים חסר מספר בתרגיל'}},
+  {id:2, letter:'ב׳', name:'כיתה ב׳',
+    easy:{label:'קל', desc:'חיבור וחיסור עד 100 בלי מעבר עשרת, חסרה התוצאה', recommended:true},
+    hard:{label:'מאתגר', desc:'גם כפל ב־2, 5 ו־10 · חסר מספר'}},
+  {id:3, letter:'ג׳', name:'כיתה ג׳',
+    easy:{label:'קל', desc:'חיבור וחיסור ולוח הכפל, חסרה התוצאה', recommended:true},
+    hard:{label:'מאתגר', desc:'מספרים גדולים יותר · חסר מספר בתרגיל'}},
+  {id:4, letter:'ד׳', name:'כיתה ד׳',
+    easy:{label:'קל', desc:'לוח הכפל וחילוק פשוט, חסרה התוצאה', recommended:true},
+    hard:{label:'מאתגר', desc:'חסר גורם · כפל דו־ספרתי בחד־ספרתי'}},
+  {id:5, letter:'ה׳', name:'כיתה ה׳',
+    easy:{label:'קל', desc:'חילוק בלי שארית וכפל ב־10 וב־100', recommended:true},
+    hard:{label:'מאתגר', desc:'חסר מספר · תרגילים מגוונים יותר'}},
+  {id:6, letter:'ו׳', name:'כיתה ו׳',
+    easy:{label:'קל', desc:'תרגילים מעורבים עם מספרים גדולים', recommended:true},
+    hard:{label:'מאתגר', desc:'חסר בכל מקום · מספרים עד שלוש ספרות'}}
+];
+
+function cfgFor(gradeId, diff){
+  // Returns generator config. miss: 'result' | 'any'
+  // Digits capped so balls stay readable (answers usually ≤ 3 digits).
+  const hard = diff==='hard';
+  switch(gradeId){
+    case 1: return {
+      kinds: hard ? ['add','sub'] : ['add','sub'],
+      maxSum: hard ? 20 : 10,
+      miss: hard ? 'any' : 'result',
+      noRegroup:false, exercises: hard?7:6, speed:12
+    };
+    case 2: return {
+      kinds: hard ? ['add','sub','mul2510'] : ['add','sub'],
+      maxSum: 100,
+      miss: hard ? 'any' : 'result',
+      noRegroup:true, exercises:7, speed:13
+    };
+    case 3: return {
+      kinds: hard ? ['add','sub','mul'] : ['add','sub','mul'],
+      maxSum: hard ? 1000 : 100,
+      miss: hard ? 'any' : 'result',
+      noRegroup:false, exercises:8, speed:16,
+      mulMax:10
+    };
+    case 4: return {
+      kinds: hard ? ['mul','div','mul2x1'] : ['mul','div'],
+      maxSum: 100,
+      miss: hard ? 'any' : 'result',
+      noRegroup:false, exercises:8, speed:17,
+      mulMax:10
+    };
+    case 5: return {
+      kinds: hard ? ['div','mul10','mul','add'] : ['div','mul10'],
+      maxSum: 900,
+      miss: hard ? 'any' : 'result',
+      noRegroup:false, exercises:8, speed:18,
+      mulMax:10
+    };
+    case 6: return {
+      kinds: ['add','sub','mul','div','mul10'],
+      maxSum: hard ? 900 : 400,
+      miss: hard ? 'any' : 'result',
+      noRegroup:false, exercises:8, speed:19,
+      mulMax:12
+    };
+    default: return cfgFor(1,'easy');
+  }
+}
+
+/* ========== Audio (WebAudio beeps) ========== */
+let audioCtx=null, muted=false;
+function ensureAudio(){
+  if(!audioCtx){ try{ audioCtx=new (window.AudioContext||window.webkitAudioContext)(); }catch(e){} }
+  if(audioCtx && audioCtx.state==='suspended') audioCtx.resume();
+}
+function beep(freq, dur, type, gain){
+  if(muted || !audioCtx) return;
+  try{
+    const o=audioCtx.createOscillator(), g=audioCtx.createGain();
+    o.type=type||'sine'; o.frequency.value=freq;
+    g.gain.value=gain||0.08;
+    g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime+(dur||0.12));
+    o.connect(g); g.connect(audioCtx.destination);
+    o.start(); o.stop(audioCtx.currentTime+(dur||0.12));
+  }catch(e){}
+}
+function sfxPop(){ beep(520,.08,'triangle',.1); setTimeout(()=>beep(780,.12,'triangle',.08),60); }
+function sfxMiss(){ beep(180,.15,'sine',.06); }
+function sfxShoot(){ beep(360,.06,'square',.05); }
+function sfxWin(){ beep(523,.1); setTimeout(()=>beep(659,.1),100); setTimeout(()=>beep(784,.2),200); }
+function sfxLose(){ beep(240,.2); setTimeout(()=>beep(180,.3),150); }
+
+/* ========== DOM ========== */
+const app=document.getElementById('app');
+const canvas=document.getElementById('game');
+const ctx=canvas.getContext('2d');
+const hud=document.getElementById('hud');
+const toastEl=document.getElementById('toast');
+const scoreNum=document.getElementById('scoreNum');
+const leftNum=document.getElementById('leftNum');
+const startScreen=document.getElementById('startScreen');
+const pauseOverlay=document.getElementById('pauseOverlay');
+const helpOverlay=document.getElementById('helpOverlay');
+const endOverlay=document.getElementById('endOverlay');
+const btnMute=document.getElementById('btnMute');
+
+/* ========== State ========== */
+let W=390, H=844, dpr=1;
+let running=false, paused=false, won=false, lost=false;
+let level=null; // {grade, diff, cfg, name}
+let selectedGrade=null;
+let pathPts=[]; // [{x,y}] densified path
+let pathLen=0;
+let balls=[]; // chain balls
+let headS=0; // distance of head along path
+let baseSpeed=18; // px/sec along path
+let shooter={x:0,y:0,angle:-Math.PI/2, current:null, next:null};
+let flying=null; // {x,y,vx,vy,value,color,r}
+let particles=[];
+let snow=[];
+let score=0, popped=0, totalEx=0;
+let aimActive=false, aimX=0, aimY=0;
+let lastTs=0;
+let toastTimer=0;
+let ballR=20;
+let exerciseIds=0;
+
+const NUM_COLORS=['#e86a5a','#3a9e6a','#5b4fcf','#e8a020','#2a8fbf','#c45ab0'];
+const OP_COLOR='#5a7a94';
+const GAP_COLOR='#e8862a';
+
+function colorForNum(n){ return NUM_COLORS[Math.abs(n|0)%NUM_COLORS.length]; }
+
+/* ========== Path ========== */
+function hudTopY(){ return 54; }
+function hudBotY(){ return H - 58; }
+
+function buildPath(){
+  // Portrait S-curve; keep clear of top pause/mute and bottom score/help.
+  const top=hudTopY()+8;
+  const bot=hudBotY()-6;
+  const pts=[
+    {x:W*0.55, y:top},
+    {x:W*0.82, y:top + (bot-top)*0.08},
+    {x:W*0.88, y:top + (bot-top)*0.16},
+    {x:W*0.70, y:top + (bot-top)*0.22},
+    {x:W*0.22, y:top + (bot-top)*0.28},
+    {x:W*0.12, y:top + (bot-top)*0.36},
+    {x:W*0.22, y:top + (bot-top)*0.44},
+    {x:W*0.78, y:top + (bot-top)*0.50},
+    {x:W*0.90, y:top + (bot-top)*0.58},
+    {x:W*0.78, y:top + (bot-top)*0.66},
+    {x:W*0.22, y:top + (bot-top)*0.72},
+    {x:W*0.12, y:top + (bot-top)*0.80},
+    {x:W*0.28, y:top + (bot-top)*0.88},
+    {x:W*0.55, y:bot}
+  ];
+  // Catmull-Rom densify
+  pathPts=[];
+  const dens=[];
+  for(let i=0;i<pts.length-1;i++){
+    const p0=pts[Math.max(0,i-1)], p1=pts[i], p2=pts[i+1], p3=pts[Math.min(pts.length-1,i+2)];
+    const steps=28;
+    for(let t=0;t<steps;t++){
+      const u=t/steps, u2=u*u, u3=u2*u;
+      dens.push({
+        x:0.5*((2*p1.x)+(-p0.x+p2.x)*u+(2*p0.x-5*p1.x+4*p2.x-p3.x)*u2+(-p0.x+3*p1.x-3*p2.x+p3.x)*u3),
+        y:0.5*((2*p1.y)+(-p0.y+p2.y)*u+(2*p0.y-5*p1.y+4*p2.y-p3.y)*u2+(-p0.y+3*p1.y-3*p2.y+p3.y)*u3)
+      });
+    }
+  }
+  dens.push(pts[pts.length-1]);
+  // Arc-length resample
+  const cum=[0];
+  for(let i=1;i<dens.length;i++){
+    const dx=dens[i].x-dens[i-1].x, dy=dens[i].y-dens[i-1].y;
+    cum.push(cum[i-1]+Math.hypot(dx,dy));
+  }
+  pathLen=cum[cum.length-1];
+  const step=2;
+  pathPts=[];
+  for(let s=0;s<=pathLen;s+=step){
+    let j=1; while(j<cum.length && cum[j]<s) j++;
+    const s0=cum[j-1], s1=cum[j]||s0+1;
+    const t=(s-s0)/(s1-s0||1);
+    const a=dens[j-1], b=dens[Math.min(j,dens.length-1)];
+    pathPts.push({x:a.x+(b.x-a.x)*t, y:a.y+(b.y-a.y)*t, s});
+  }
+  // Shooter in central clearing
+  shooter.x=W*0.50; shooter.y=(hudTopY()+hudBotY())/2;
+}
+
+function pointAt(s){
+  if(s<=0) return {x:pathPts[0].x,y:pathPts[0].y,s:0,ang:0};
+  if(s>=pathLen){ const p=pathPts[pathPts.length-1]; return {x:p.x,y:p.y,s:pathLen,ang:0}; }
+  const idx=Math.min(pathPts.length-2, Math.max(0, Math.floor(s/2)));
+  const a=pathPts[idx], b=pathPts[Math.min(idx+1,pathPts.length-1)];
+  const t=(s-a.s)/((b.s-a.s)||1);
+  const x=a.x+(b.x-a.x)*t, y=a.y+(b.y-a.y)*t;
+  const ang=Math.atan2(b.y-a.y,b.x-a.x);
+  return {x,y,s,ang};
+}
+
+/* ========== Exercise generation ========== */
+function makeExercise(cfg){
+  const kinds=cfg.kinds;
+  const kind=kinds[Math.floor(Math.random()*kinds.length)];
+  let a,b,c,op;
+
+  function addNoRegroup(maxSum){
+    // ones digits don't carry
+    const max=Math.min(maxSum,99);
+    for(let tries=0;tries<30;tries++){
+      const aa=1+Math.floor(Math.random()*Math.min(max-1,89));
+      const bb=1+Math.floor(Math.random()*Math.min(max-aa,89));
+      if(aa+bb>max) continue;
+      if(cfg.noRegroup && ((aa%10)+(bb%10)>=10)) continue;
+      return [aa,bb,aa+bb];
+    }
+    return [12,3,15];
+  }
+  function subNoRegroup(maxSum){
+    const max=Math.min(maxSum,99);
+    for(let tries=0;tries<30;tries++){
+      const aa=2+Math.floor(Math.random()*(max-1));
+      const bb=1+Math.floor(Math.random()*(aa-1));
+      if(cfg.noRegroup && ((aa%10)<(bb%10))) continue;
+      return [aa,bb,aa-bb];
+    }
+    return [15,3,12];
+  }
+
+  if(kind==='add'){
+    op='+';
+    if(cfg.maxSum<=20){
+      c=2+Math.floor(Math.random()*(cfg.maxSum-1));
+      a=1+Math.floor(Math.random()*(c-1)); b=c-a;
+    } else {
+      [a,b,c]=addNoRegroup(cfg.maxSum);
+      // allow regrouping when not flagged
+      if(!cfg.noRegroup && cfg.maxSum>=100){
+        c=10+Math.floor(Math.random()*Math.min(cfg.maxSum-10,890));
+        a=1+Math.floor(Math.random()*(c-1));
+        b=c-a;
+        // keep ≤3 digits
+        if(a>999||b>999||c>999){ a=120; b=45; c=165; }
+      }
+    }
+  } else if(kind==='sub'){
+    op='−';
+    if(cfg.maxSum<=20){
+      a=2+Math.floor(Math.random()*(cfg.maxSum-1));
+      b=1+Math.floor(Math.random()*(a-1)); c=a-b;
+    } else {
+      [a,b,c]=subNoRegroup(cfg.maxSum);
+      if(!cfg.noRegroup && cfg.maxSum>=100){
+        a=10+Math.floor(Math.random()*Math.min(cfg.maxSum-10,890));
+        b=1+Math.floor(Math.random()*(a-1));
+        c=a-b;
+        if(a>999){ a=240; b=75; c=165; }
+      }
+    }
+  } else if(kind==='mul2510'){
+    op='×';
+    const factors=[2,5,10];
+    b=factors[Math.floor(Math.random()*factors.length)];
+    a=1+Math.floor(Math.random()*10);
+    c=a*b;
+  } else if(kind==='mul'){
+    op='×';
+    const m=cfg.mulMax||10;
+    a=1+Math.floor(Math.random()*m);
+    b=1+Math.floor(Math.random()*m);
+    c=a*b;
+  } else if(kind==='mul2x1'){
+    op='×';
+    a=10+Math.floor(Math.random()*40); // 10-49
+    b=2+Math.floor(Math.random()*7);   // 2-8
+    c=a*b;
+    if(c>999){ a=12; b=4; c=48; }
+  } else if(kind==='div'){
+    op='÷';
+    // remainder-free
+    b=2+Math.floor(Math.random()*9);
+    c=2+Math.floor(Math.random()*9);
+    a=b*c;
+    if(a>999){ b=5; c=6; a=30; }
+  } else if(kind==='mul10'){
+    op='×';
+    const tens=[10,100];
+    b=tens[Math.floor(Math.random()*tens.length)];
+    a=1+Math.floor(Math.random()*(b===100?9:20));
+    c=a*b;
+  } else {
+    op='+'; a=3; b=4; c=7;
+  }
+
+  // Cap display: prefer answers with ≤3 digits (already mostly ensured)
+  let miss=cfg.miss;
+  if(miss==='any'){
+    const opts=['result','second','first'];
+    miss=opts[Math.floor(Math.random()*opts.length)];
+  }
+  // For division, missing first = missing dividend; missing second = missing divisor — both ok
+  // Avoid missing divisor 1 edge cases already handled
+
+  let gapPos, answer;
+  if(miss==='first'){ gapPos=0; answer=a; }
+  else if(miss==='second'){ gapPos=2; answer=b; }
+  else { gapPos=4; answer=c; }
+
+  // Prefer shooting a number that fits on a ball (≤3 digits)
+  if(String(answer).length>3){
+    // regenerate as simple mul
+    op='×'; a=6; b=7; c=42; gapPos=4; answer=42; miss='result';
+  }
+
+  const tokens=[
+    {kind:'num', value:a},
+    {kind:'op', value:op},
+    {kind:'num', value:b},
+    {kind:'op', value:'='},
+    {kind:'num', value:c}
+  ];
+  tokens[gapPos]={kind:'gap', value:null, answer:answer};
+
+  const eid=++exerciseIds;
+  return {id:eid, tokens, answer, gapPos, popped:false};
+}
+
+function buildChain(cfg){
+  balls=[];
+  exerciseIds=0;
+  const spacing=ballR*2+3;
+  const exList=[];
+  for(let i=0;i<cfg.exercises;i++) exList.push(makeExercise(cfg));
+  totalEx=exList.length; popped=0;
+  // Show only complete exercises on the track (no half-equation / orphan spacer at the portal)
+  const completeEx = Math.min(exList.length, 2);
+  const keep = completeEx*5 + Math.max(0, completeEx-1); // tokens + spacers between them
+  headS = keep * spacing; // balls[keep] lands at s<=0
+
+  // Lay out from head backward (tail toward start of path = smaller s)
+  // Head is the front (toward the end hole). Balls stored head-first.
+  let s=headS;
+  const built=[];
+  for(let ei=0;ei<exList.length;ei++){
+    const ex=exList[ei];
+    // spacer between exercises (except first)
+    if(ei>0){
+      built.push({kind:'spacer', value:null, color:'#a8c4d8', exId:null, answer:null, s:s});
+      s-=spacing;
+    }
+    // tokens LTR: first token is farther from end (smaller s when head goes to end)
+    // Wait: head advances toward END (larger s). Front of chain = first to reach end = largest s.
+    // Visual reading of math along the track: we want left-to-right math when looking at a segment.
+    // Simpler: store balls head-first (index 0 = front = toward end). For each exercise,
+    // put tokens in reverse so that along the path direction (toward end) you see a,op,b,=,c
+    // Actually path goes toward end. Looking along the chain from tail to head (direction of motion),
+    // we want to see a, op, b, =, c. So from small-s to large-s: a,op,b,=,c.
+    // Head (large s, front) should be the LAST token (= or gap or c).
+    // So we push tokens in reverse order onto the head-first array... 
+    // Let's build by assigning s from head downward.
+    for(let ti=ex.tokens.length-1; ti>=0; ti--){
+      const tok=ex.tokens[ti];
+      const b={
+        kind:tok.kind,
+        value:tok.value,
+        answer:tok.kind==='gap'?tok.answer:null,
+        exId:ex.id,
+        gapPos:ex.gapPos,
+        color: tok.kind==='gap' ? GAP_COLOR : (tok.kind==='op' ? OP_COLOR : colorForNum(tok.value)),
+        s:s,
+        popping:0,
+        flash:0
+      };
+      built.push(b);
+      s-=spacing;
+    }
+  }
+  balls=built;
+  // Ensure shooter has matching ammo
+  refillAmmo(true);
+}
+
+function openGaps(){
+  return balls.filter(b=>b.kind==='gap' && !b.popping);
+}
+
+function ballClearOfHud(b){
+  if(!b || b.popping) return false;
+  if(b.s < ballR*0.6 || b.s > pathLen - ballR*0.6) return false;
+  const p=pointAt(b.s);
+  if(p.y < hudTopY() + ballR*0.85) return false;
+  if(p.y > hudBotY() - ballR*0.85) return false;
+  if(p.x < ballR*0.5 || p.x > W - ballR*0.5) return false;
+  return true;
+}
+
+function isExFullyVisible(exId){
+  const members=balls.filter(b=>b.exId===exId && b.kind!=='spacer' && !b.popping);
+  if(members.length < 5) return false;
+  return members.every(ballClearOfHud);
+}
+
+/** Open gaps whose whole exercise is on-screen and clear of the HUD. Prefer closest to the end. */
+function visibleOpenGaps(){
+  return openGaps()
+    .filter(g=>isExFullyVisible(g.exId))
+    .sort((a,b)=>b.s-a.s);
+}
+
+function refillAmmo(force){
+  let gaps=visibleOpenGaps();
+  if(!gaps.length){
+    // fallback: any open gap (incl. still entering), prefer closest to end — never a random orphan
+    gaps=openGaps().slice().sort((a,b)=>b.s-a.s);
+  }
+  const answers=gaps.map(g=>g.answer);
+  if(!answers.length) return;
+  // Current: prefer answer of the visible exercise closest to the end
+  const needCur = force || !shooter.current || !answers.includes(shooter.current.value);
+  if(needCur){
+    const v = answers[0];
+    shooter.current={value:v, color:colorForNum(v)};
+  }
+  // Next: another answer if possible, else same as current (still a valid visible/open answer)
+  const needNext = force || !shooter.next || !answers.includes(shooter.next.value);
+  if(needNext){
+    const others=answers.filter(a=>a!==shooter.current.value);
+    const v = others.length ? others[0] : answers[0];
+    shooter.next={value:v, color:colorForNum(v)};
+  }
+}
+
+/* ========== Layout / resize ========== */
+function resize(){
+  const rect=app.getBoundingClientRect();
+  W=Math.max(300, Math.floor(rect.width));
+  H=Math.max(480, Math.floor(rect.height));
+  dpr=Math.min(2.5, window.devicePixelRatio||1);
+  canvas.width=Math.floor(W*dpr);
+  canvas.height=Math.floor(H*dpr);
+  canvas.style.width=W+'px';
+  canvas.style.height=H+'px';
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  ballR=Math.max(20, Math.min(26, Math.floor(W/16)));
+  buildPath();
+  // rebuild snow
+  snow=[];
+  for(let i=0;i<40;i++) snow.push({x:Math.random()*W, y:Math.random()*H, r:1+Math.random()*2.5, vy:8+Math.random()*18, vx:-6+Math.random()*12});
+  if(running && balls.length){
+    // re-space balls preserving order
+    const spacing=ballR*2+3;
+    for(let i=0;i<balls.length;i++){
+      balls[i].s=headS - i*spacing;
+    }
+  }
+}
+window.addEventListener('resize', ()=>{ resize(); });
+
+/* ========== Drawing ========== */
+function drawBackground(){
+  // sky
+  const g=ctx.createLinearGradient(0,0,0,H);
+  g.addColorStop(0,'#7ec0e8');
+  g.addColorStop(0.45,'#cfe8f6');
+  g.addColorStop(1,'#eef6fb');
+  ctx.fillStyle=g;
+  ctx.fillRect(0,0,W,H);
+  // distant hills
+  ctx.fillStyle='#b7d7ea';
+  ctx.beginPath();
+  ctx.moveTo(0,H*0.72);
+  ctx.quadraticCurveTo(W*0.25,H*0.62,W*0.5,H*0.70);
+  ctx.quadraticCurveTo(W*0.75,H*0.78,W,H*0.66);
+  ctx.lineTo(W,H); ctx.lineTo(0,H); ctx.closePath(); ctx.fill();
+  ctx.fillStyle='#d5eaf5';
+  ctx.beginPath();
+  ctx.moveTo(0,H*0.82);
+  ctx.quadraticCurveTo(W*0.3,H*0.74,W*0.55,H*0.80);
+  ctx.quadraticCurveTo(W*0.8,H*0.86,W,H*0.78);
+  ctx.lineTo(W,H); ctx.lineTo(0,H); ctx.closePath(); ctx.fill();
+  // snowflakes
+  ctx.fillStyle='rgba(255,255,255,0.85)';
+  for(const f of snow){
+    ctx.beginPath(); ctx.arc(f.x,f.y,f.r,0,Math.PI*2); ctx.fill();
+  }
+  // ice frame
+  ctx.strokeStyle='rgba(180,220,245,0.7)';
+  ctx.lineWidth=10;
+  ctx.strokeRect(4,4,W-8,H-8);
+}
+
+function drawTrack(){
+  if(pathPts.length<2) return;
+  // brown track with snowy edges
+  ctx.lineCap='round'; ctx.lineJoin='round';
+  ctx.strokeStyle='#c9dde8';
+  ctx.lineWidth=ballR*2+16;
+  ctx.beginPath();
+  ctx.moveTo(pathPts[0].x, pathPts[0].y);
+  for(let i=1;i<pathPts.length;i+=2) ctx.lineTo(pathPts[i].x, pathPts[i].y);
+  ctx.stroke();
+  ctx.strokeStyle='#8b6a45';
+  ctx.lineWidth=ballR*2+4;
+  ctx.beginPath();
+  ctx.moveTo(pathPts[0].x, pathPts[0].y);
+  for(let i=1;i<pathPts.length;i+=2) ctx.lineTo(pathPts[i].x, pathPts[i].y);
+  ctx.stroke();
+  ctx.strokeStyle='#a67c52';
+  ctx.lineWidth=ballR*2-2;
+  ctx.beginPath();
+  ctx.moveTo(pathPts[0].x, pathPts[0].y);
+  for(let i=1;i<pathPts.length;i+=2) ctx.lineTo(pathPts[i].x, pathPts[i].y);
+  ctx.stroke();
+  // start portal
+  const st=pathPts[0];
+  ctx.fillStyle='rgba(180,220,255,0.7)';
+  ctx.beginPath(); ctx.arc(st.x,st.y,ballR+8,0,Math.PI*2); ctx.fill();
+  ctx.strokeStyle='#6aa0c8'; ctx.lineWidth=3;
+  ctx.beginPath(); ctx.arc(st.x,st.y,ballR+8,0,Math.PI*2); ctx.stroke();
+  // end hole
+  const en=pathPts[pathPts.length-1];
+  ctx.fillStyle='#3d8f55';
+  roundRect(en.x-ballR-6, en.y-ballR-6, (ballR+6)*2, (ballR+6)*2, 8);
+  ctx.fill();
+  ctx.fillStyle='#2a6b3e';
+  ctx.beginPath(); ctx.arc(en.x,en.y,ballR-2,0,Math.PI*2); ctx.fill();
+}
+
+function roundRect(x,y,w,h,r){
+  ctx.beginPath();
+  ctx.moveTo(x+r,y); ctx.arcTo(x+w,y,x+w,y+h,r); ctx.arcTo(x+w,y+h,x,y+h,r);
+  ctx.arcTo(x,y+h,x,y,r); ctx.arcTo(x,y,x+w,y,r); ctx.closePath();
+}
+
+function drawBallAt(x,y,b,r){
+  const rad=r||ballR;
+  if(b.popping>0){
+    const t=b.popping;
+    const sc=1+t*0.8;
+    ctx.globalAlpha=Math.max(0,1-t);
+    drawBallVisual(x,y,b,rad*sc);
+    ctx.globalAlpha=1;
+    return;
+  }
+  drawBallVisual(x,y,b,rad);
+}
+
+function drawBallVisual(x,y,b,rad){
+  // shadow
+  ctx.fillStyle='rgba(0,0,0,0.15)';
+  ctx.beginPath(); ctx.ellipse(x+2,y+rad*0.75,rad*0.7,rad*0.28,0,0,Math.PI*2); ctx.fill();
+
+  if(b.kind==='gap'){
+    ctx.fillStyle='#fff8ee';
+    ctx.beginPath(); ctx.arc(x,y,rad,0,Math.PI*2); ctx.fill();
+    ctx.setLineDash([4,3]);
+    ctx.strokeStyle=GAP_COLOR; ctx.lineWidth=3;
+    ctx.beginPath(); ctx.arc(x,y,rad-1,0,Math.PI*2); ctx.stroke();
+    ctx.setLineDash([]);
+    // pulse ring
+    const pulse=0.5+0.5*Math.sin(performance.now()/280);
+    ctx.strokeStyle=`rgba(232,134,42,${0.25+pulse*0.4})`;
+    ctx.lineWidth=2;
+    ctx.beginPath(); ctx.arc(x,y,rad+3+pulse*2,0,Math.PI*2); ctx.stroke();
+    ctx.fillStyle=GAP_COLOR;
+    ctx.font=`800 ${Math.floor(rad*0.95)}px system-ui,sans-serif`;
+    ctx.textAlign='center'; ctx.textBaseline='middle';
+    ctx.fillText('?', x, y+1);
+    return;
+  }
+
+  const col=b.color||'#888';
+  const grd=ctx.createRadialGradient(x-rad*0.3,y-rad*0.35,rad*0.1, x,y,rad);
+  grd.addColorStop(0, tint(col,0.45));
+  grd.addColorStop(0.55, col);
+  grd.addColorStop(1, shade(col,0.35));
+  ctx.fillStyle=grd;
+  ctx.beginPath(); ctx.arc(x,y,rad,0,Math.PI*2); ctx.fill();
+  ctx.strokeStyle='rgba(0,0,0,0.18)'; ctx.lineWidth=1.5;
+  ctx.beginPath(); ctx.arc(x,y,rad-0.5,0,Math.PI*2); ctx.stroke();
+  // gloss
+  ctx.fillStyle='rgba(255,255,255,0.35)';
+  ctx.beginPath(); ctx.ellipse(x-rad*0.25,y-rad*0.35,rad*0.35,rad*0.22, -0.5,0,Math.PI*2); ctx.fill();
+
+  // label (shrink font for 2–3 digit numbers so they stay readable)
+  ctx.fillStyle='#fff';
+  const label=b.kind==='spacer'?'·':String(b.value);
+  const digits=(b.kind==='num'||b.kind==='gap')?String(b.kind==='gap'?'?':b.value).length:1;
+  let fScale=b.kind==='op'?1.05:(digits>=3?0.62:(digits===2?0.78:0.95));
+  ctx.font=`800 ${Math.floor(rad*fScale)}px system-ui,sans-serif`;
+  ctx.textAlign='center'; ctx.textBaseline='middle';
+  // text shadow for readability
+  ctx.fillStyle='rgba(0,0,0,0.25)';
+  ctx.fillText(label, x+0.5, y+1.5);
+  ctx.fillStyle='#fff';
+  ctx.fillText(label, x, y+0.5);
+}
+
+function tint(hex,a){
+  const c=hexToRgb(hex); return `rgb(${Math.min(255,c.r+Math.floor((255-c.r)*a))},${Math.min(255,c.g+Math.floor((255-c.g)*a))},${Math.min(255,c.b+Math.floor((255-c.b)*a))})`;
+}
+function shade(hex,a){
+  const c=hexToRgb(hex); return `rgb(${Math.floor(c.r*(1-a))},${Math.floor(c.g*(1-a))},${Math.floor(c.b*(1-a))})`;
+}
+function hexToRgb(hex){
+  const h=hex.replace('#','');
+  return {r:parseInt(h.slice(0,2),16), g:parseInt(h.slice(2,4),16), b:parseInt(h.slice(4,6),16)};
+}
+
+function drawShooter(){
+  const x=shooter.x, y=shooter.y;
+  // next ball preview (behind)
+  if(shooter.next){
+    const nx=x - Math.cos(shooter.angle)* (ballR*2.2);
+    const ny=y - Math.sin(shooter.angle)* (ballR*2.2);
+    drawBallVisual(nx, ny, {kind:'num', value:shooter.next.value, color:shooter.next.color}, ballR*0.72);
+  }
+  // body (friendly ice toad / turret — original, not a brand)
+  ctx.save();
+  ctx.translate(x,y);
+  ctx.rotate(shooter.angle+Math.PI/2);
+  // body
+  ctx.fillStyle='#5b4fcf';
+  ctx.beginPath(); ctx.ellipse(0,6, ballR*1.35, ballR*1.15, 0,0,Math.PI*2); ctx.fill();
+  ctx.fillStyle='#7a6ef0';
+  ctx.beginPath(); ctx.ellipse(0,2, ballR*1.1, ballR*0.9, 0,0,Math.PI*2); ctx.fill();
+  // eyes
+  ctx.fillStyle='#fff';
+  ctx.beginPath(); ctx.arc(-10,-6,7,0,Math.PI*2); ctx.arc(10,-6,7,0,Math.PI*2); ctx.fill();
+  ctx.fillStyle='#1c2230';
+  ctx.beginPath(); ctx.arc(-10,-5,3.5,0,Math.PI*2); ctx.arc(10,-5,3.5,0,Math.PI*2); ctx.fill();
+  // barrel
+  ctx.fillStyle='#ffd36a';
+  ctx.beginPath(); roundRect(-8, -ballR*2.1, 16, ballR*1.3, 6); ctx.fill();
+  ctx.restore();
+
+  // current ball in barrel
+  if(shooter.current && !flying){
+    const bx=x + Math.cos(shooter.angle)* (ballR*0.15);
+    const by=y + Math.sin(shooter.angle)* (ballR*0.15);
+    drawBallVisual(bx, by, {kind:'num', value:shooter.current.value, color:shooter.current.color}, ballR*0.92);
+  }
+
+  // aim line
+  if(aimActive && !paused && running){
+    const dx=aimX-x, dy=aimY-y;
+    const len=Math.hypot(dx,dy)||1;
+    const ux=dx/len, uy=dy/len;
+    ctx.strokeStyle='rgba(91,79,207,0.45)';
+    ctx.lineWidth=3; ctx.setLineDash([8,8]);
+    ctx.beginPath();
+    ctx.moveTo(x+ux*ballR*1.6, y+uy*ballR*1.6);
+    ctx.lineTo(x+ux*Math.min(len, W*0.7), y+uy*Math.min(len, W*0.7));
+    ctx.stroke();
+    ctx.setLineDash([]);
+    // ghost preview along aim
+    for(let i=1;i<=3;i++){
+      ctx.globalAlpha=0.25-i*0.05;
+      drawBallVisual(x+ux*(ballR*2.5*i), y+uy*(ballR*2.5*i),
+        {kind:'num', value:shooter.current?shooter.current.value:0, color:shooter.current?shooter.current.color:'#888'},
+        ballR*0.55);
+    }
+    ctx.globalAlpha=1;
+  }
+}
+
+function drawFlying(){
+  if(!flying) return;
+  drawBallVisual(flying.x, flying.y, {kind:'num', value:flying.value, color:flying.color}, ballR*0.95);
+}
+
+function drawParticles(){
+  for(const p of particles){
+    ctx.globalAlpha=Math.max(0,1-p.t);
+    ctx.fillStyle=p.color;
+    ctx.beginPath(); ctx.arc(p.x,p.y,p.r*(1-p.t*0.5),0,Math.PI*2); ctx.fill();
+  }
+  ctx.globalAlpha=1;
+}
+
+function render(){
+  drawBackground();
+  drawTrack();
+  // balls
+  for(let i=balls.length-1;i>=0;i--){
+    const b=balls[i];
+    if(b.s< -ballR*2 || b.s>pathLen+ballR*2) continue;
+    const p=pointAt(b.s);
+    if(b.kind==='spacer'){
+      // only draw separator when BOTH neighboring exercises are on-track
+      let prev=null, next=null;
+      for(let j=i-1;j>=0;j--) if(balls[j].exId!=null){ prev=balls[j]; break; }
+      for(let j=i+1;j<balls.length;j++) if(balls[j].exId!=null){ next=balls[j]; break; }
+      const on=bb=>bb && bb.s>0 && bb.s<pathLen;
+      if(!(on(prev) && on(next))) continue;
+      ctx.fillStyle='rgba(255,255,255,0.95)';
+      ctx.strokeStyle='rgba(120,170,200,0.8)';
+      ctx.lineWidth=1.5;
+      const r=Math.max(5, ballR*0.28);
+      ctx.beginPath();
+      for(let k=0;k<6;k++){
+        const ang=-Math.PI/2 + k*Math.PI/3;
+        const x2=p.x+Math.cos(ang)*r, y2=p.y+Math.sin(ang)*r;
+        if(k===0) ctx.moveTo(x2,y2); else ctx.lineTo(x2,y2);
+      }
+      ctx.closePath(); ctx.fill(); ctx.stroke();
+      continue;
+    }
+    drawBallAt(p.x,p.y,b);
+  }
+  drawParticles();
+  drawFlying();
+  drawShooter();
+}
+
+/* ========== Game logic ========== */
+function showToast(msg, kind){
+  toastEl.textContent=msg;
+  toastEl.className='fbtoast on'+(kind?(' '+kind):'');
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>{ toastEl.className='fbtoast'; }, 1100);
+}
+
+function updateHud(){
+  scoreNum.textContent=String(score);
+  leftNum.textContent=String(Math.max(0, totalEx-popped));
+}
+
+function spawnParticles(x,y,color){
+  for(let i=0;i<14;i++){
+    const ang=Math.random()*Math.PI*2, sp=40+Math.random()*120;
+    particles.push({x,y, vx:Math.cos(ang)*sp, vy:Math.sin(ang)*sp, r:2+Math.random()*4, color, t:0});
+  }
+}
+
+function popExercise(exId){
+  const members=balls.filter(b=>b.exId===exId);
+  if(!members.length) return;
+  let cx=0,cy=0,n=0;
+  for(const b of members){
+    b.popping=0.01;
+    const p=pointAt(b.s);
+    cx+=p.x; cy+=p.y; n++;
+    spawnParticles(p.x,p.y,b.color||GAP_COLOR);
+  }
+  if(n){ cx/=n; cy/=n; }
+  popped++;
+  score+=10;
+  sfxPop();
+  showToast('יופי! ✨','ok');
+  updateHud();
+  // After animation, remove and close gap + pull back a bit
+  setTimeout(()=>{
+    balls=balls.filter(b=>b.exId!==exId);
+    // also remove orphan spacers at edges
+    compactChain();
+    headS=Math.max(ballR*2, headS - (ballR*2+3)*2.5); // gentle pull-back
+    refillAmmo(false);
+    if(openGaps().length===0){
+      winGame();
+    }
+  }, 280);
+}
+
+function compactChain(){
+  // Remove spacers that are no longer between exercises
+  const cleaned=[];
+  for(let i=0;i<balls.length;i++){
+    const b=balls[i];
+    if(b.kind==='spacer'){
+      const prev=cleaned[cleaned.length-1];
+      const next=balls.slice(i+1).find(x=>x.kind!=='spacer');
+      if(!prev || prev.kind==='spacer') continue;
+      if(!next) continue;
+      // keep one spacer between different exercises
+      if(prev.exId!==next.exId) cleaned.push(b);
+    } else cleaned.push(b);
+  }
+  balls=cleaned;
+  const spacing=ballR*2+3;
+  for(let i=0;i<balls.length;i++){
+    balls[i].s=headS - i*spacing;
+  }
+}
+
+function tryInsert(hitBall, value){
+  // Only gaps accept inserts
+  if(!hitBall || hitBall.kind!=='gap') return false;
+  if(hitBall.answer===value){
+    popExercise(hitBall.exId);
+    return true;
+  }
+  // wrong number into a gap
+  hitBall.flash=1;
+  sfxMiss();
+  showToast('לא בדיוק, נסו מספר אחר','bad');
+  return false;
+}
+
+function findNearestGap(x,y){
+  let best=null, bestD=ballR*2.4;
+  for(const b of balls){
+    if(b.kind!=='gap' || b.popping) continue;
+    const p=pointAt(b.s);
+    const d=Math.hypot(p.x-x, p.y-y);
+    if(d<bestD){ bestD=d; best=b; }
+  }
+  return best;
+}
+
+function findNearestBall(x,y){
+  let best=null, bestD=ballR*1.8;
+  for(const b of balls){
+    if(b.popping) continue;
+    const p=pointAt(b.s);
+    const d=Math.hypot(p.x-x, p.y-y);
+    if(d<bestD){ bestD=d; best=b; }
+  }
+  return best;
+}
+
+function fire(){
+  if(!running || paused || flying || !shooter.current || won || lost) return;
+  ensureAudio();
+  const dx=aimX-shooter.x, dy=aimY-shooter.y;
+  const len=Math.hypot(dx,dy)||1;
+  const speed=520;
+  flying={
+    x:shooter.x + (dx/len)*ballR,
+    y:shooter.y + (dy/len)*ballR,
+    vx:(dx/len)*speed,
+    vy:(dy/len)*speed,
+    value:shooter.current.value,
+    color:shooter.current.color
+  };
+  sfxShoot();
+  // advance ammo
+  shooter.current=shooter.next;
+  shooter.next=null;
+  refillAmmo(false);
+}
+
+function swapAmmo(){
+  if(!shooter.current || !shooter.next || flying) return;
+  const t=shooter.current; shooter.current=shooter.next; shooter.next=t;
+  beep(440,.05,'sine',.04);
+}
+
+function winGame(){
+  won=true; running=false;
+  sfxWin();
+  const stars = score>= totalEx*10 ? 3 : score>= totalEx*7 ? 2 : 1;
+  document.getElementById('endTitle').textContent='כל הכבוד!';
+  document.getElementById('endStars').textContent='★'.repeat(stars)+'☆'.repeat(3-stars);
+  document.getElementById('endMsg').textContent=`פוצצתם ${popped} תרגילים · ${score} נקודות`;
+  endOverlay.classList.add('on');
+  hud.hidden=true;
+}
+
+function loseGame(){
+  lost=true; running=false;
+  sfxLose();
+  document.getElementById('endTitle').textContent='המסילה הגיעה לסוף';
+  document.getElementById('endStars').textContent='★☆☆';
+  document.getElementById('endMsg').textContent='ננסה שוב? אפשר לבחור גם רמה קלה יותר.';
+  endOverlay.classList.add('on');
+  hud.hidden=true;
+}
+
+function startLevel(grade, diff){
+  ensureAudio();
+  const g = typeof grade==='object' ? grade : GRADES.find(x=>x.id===grade) || GRADES[0];
+  const d = diff || 'easy';
+  const cfg = cfgFor(g.id, d);
+  level={grade:g, diff:d, cfg:cfg, name:g.name+' · '+(d==='easy'?'קל':'מאתגר')};
+  score=0; popped=0; won=false; lost=false; flying=null; particles=[];
+  paused=false;
+  baseSpeed = cfg.speed || 16;
+  resize();
+  buildChain(cfg);
+  running=true;
+  startScreen.classList.remove('on');
+  endOverlay.classList.remove('on');
+  pauseOverlay.classList.remove('on');
+  helpOverlay.classList.remove('on');
+  hud.hidden=false;
+  const gt=document.getElementById('gradeTag');
+  if(gt) gt.textContent=g.name.replace('כיתה ','');
+  updateHud();
+  lastTs=performance.now();
+  showToast('בהצלחה!','ok');
+}
+
+function tick(ts){
+  requestAnimationFrame(tick);
+  const dt=Math.min(0.05, (ts-lastTs)/1000 || 0.016);
+  lastTs=ts;
+
+  // snow always
+  for(const f of snow){
+    f.y+=f.vy*dt; f.x+=f.vx*dt;
+    if(f.y>H){ f.y=-4; f.x=Math.random()*W; }
+    if(f.x<0) f.x=W; if(f.x>W) f.x=0;
+  }
+
+  if(running && !paused){
+    // advance chain
+    headS += baseSpeed * dt;
+    const spacing=ballR*2+3;
+    for(let i=0;i<balls.length;i++){
+      if(!balls[i].popping) balls[i].s = headS - i*spacing;
+      else {
+        balls[i].popping += dt*4;
+      }
+    }
+    // Keep barrel matched to a fully visible open exercise (prefer nearest the end)
+    if(!flying){
+      const vg=visibleOpenGaps();
+      if(vg.length){
+        const ans=vg.map(g=>g.answer);
+        if(!shooter.current || !ans.includes(shooter.current.value) || !shooter.next || !ans.includes(shooter.next.value)){
+          refillAmmo(true);
+        }
+      }
+    }
+    // lose if head reaches end
+    if(balls.length && balls[0].s >= pathLen - ballR){
+      loseGame();
+    }
+
+    // flying ball
+    if(flying){
+      flying.x += flying.vx*dt;
+      flying.y += flying.vy*dt;
+      // out of bounds
+      if(flying.x<-40||flying.x>W+40||flying.y<-40||flying.y>H+40){
+        flying=null;
+      } else {
+        // check gap hit first (priority)
+        const gap=findNearestGap(flying.x, flying.y);
+        if(gap){
+          const ok=tryInsert(gap, flying.value);
+          flying=null;
+          if(!ok){
+            // mild speed bump on miss — very gentle
+            baseSpeed = Math.min(baseSpeed+1.5, 28);
+          }
+        } else {
+          const hit=findNearestBall(flying.x, flying.y);
+          if(hit){
+            // bounced off non-gap
+            sfxMiss();
+            showToast('כוונו אל הכדור עם ?','bad');
+            spawnParticles(flying.x, flying.y, flying.color);
+            flying=null;
+            baseSpeed = Math.min(baseSpeed+0.8, 28);
+          }
+        }
+      }
+    }
+
+    // particles
+    for(const p of particles){
+      p.t += dt*1.8; p.x+=p.vx*dt; p.y+=p.vy*dt; p.vy+=80*dt;
+    }
+    particles=particles.filter(p=>p.t<1);
+
+    // flash decay
+    for(const b of balls){ if(b.flash>0) b.flash=Math.max(0,b.flash-dt*3); }
+  }
+
+  // aim angle follow
+  if(aimActive){
+    shooter.angle=Math.atan2(aimY-shooter.y, aimX-shooter.x);
+  }
+
+  render();
+}
+
+/* ========== Input ========== */
+function localXY(e){
+  const r=canvas.getBoundingClientRect();
+  const t=(e.touches&&e.touches[0]) || (e.changedTouches&&e.changedTouches[0]) || e;
+  return {x:(t.clientX-r.left)*(W/r.width), y:(t.clientY-r.top)*(H/r.height)};
+}
+
+function onDown(e){
+  if(!running || paused || won || lost) return;
+  e.preventDefault();
+  ensureAudio();
+  const p=localXY(e);
+  // tap on shooter = swap
+  if(Math.hypot(p.x-shooter.x, p.y-shooter.y) < ballR*1.8){
+    swapAmmo();
+    return;
+  }
+  aimActive=true; aimX=p.x; aimY=p.y;
+  shooter.angle=Math.atan2(aimY-shooter.y, aimX-shooter.x);
+}
+function onMove(e){
+  if(!aimActive) return;
+  e.preventDefault();
+  const p=localXY(e);
+  aimX=p.x; aimY=p.y;
+}
+function onUp(e){
+  if(!aimActive) return;
+  e.preventDefault();
+  const p=localXY(e);
+  aimX=p.x; aimY=p.y;
+  aimActive=false;
+  // only fire if aim moved away from shooter a bit
+  if(Math.hypot(aimX-shooter.x, aimY-shooter.y) > ballR*1.2){
+    fire();
+  }
+}
+
+canvas.addEventListener('pointerdown', onDown, {passive:false});
+canvas.addEventListener('pointermove', onMove, {passive:false});
+canvas.addEventListener('pointerup', onUp, {passive:false});
+canvas.addEventListener('pointercancel', ()=>{ aimActive=false; }, {passive:false});
+canvas.addEventListener('touchstart', onDown, {passive:false});
+canvas.addEventListener('touchmove', onMove, {passive:false});
+canvas.addEventListener('touchend', onUp, {passive:false});
+
+/* ========== UI wiring ========== */
+function showGradeStep(){
+  document.getElementById('gradeStep').hidden=false;
+  document.getElementById('diffStep').hidden=true;
+  document.getElementById('startSub').textContent='ירו את המספר למקום החסר בתרגיל — והכדורים יתפוצצו!';
+}
+function showDiffStep(g){
+  selectedGrade=g;
+  document.getElementById('gradeStep').hidden=true;
+  document.getElementById('diffStep').hidden=false;
+  document.getElementById('diffTitle').textContent=g.name+' — בחרו רמה';
+  document.getElementById('startSub').textContent='רמה קלה = חסרה התוצאה. מאתגרת = לפעמים חסר מספר בתוך התרגיל.';
+  const box=document.getElementById('diffPick');
+  box.innerHTML='';
+  [['easy', g.easy], ['hard', g.hard]].forEach(([key, info])=>{
+    const btn=document.createElement('button');
+    btn.type='button';
+    btn.className='lv-card'+(info.recommended?' rec':'');
+    btn.innerHTML=`<span class="lv-num">${key==='easy'?'1':'2'}</span>
+      <span class="lv-meta"><span class="lv-name">${info.label}</span><span class="lv-desc">${info.desc}</span></span>
+      ${info.recommended?'<span class="lv-badge">מומלץ</span>':''}`;
+    btn.addEventListener('click', ()=> startLevel(g, key));
+    box.appendChild(btn);
+  });
+}
+function buildGradePicker(){
+  const box=document.getElementById('gradePick');
+  box.innerHTML='';
+  GRADES.forEach(g=>{
+    const btn=document.createElement('button');
+    btn.type='button';
+    btn.className='grade-btn';
+    btn.setAttribute('aria-label', g.name);
+    btn.innerHTML=`<span class="g-letter">${g.letter}</span><span class="g-label">${g.name}</span>`;
+    btn.addEventListener('click', ()=> showDiffStep(g));
+    box.appendChild(btn);
+  });
+  const back=document.getElementById('btnBackGrade');
+  if(back) back.onclick=()=> showGradeStep();
+}
+
+document.getElementById('btnPause').addEventListener('click', ()=>{
+  if(!running||won||lost) return;
+  paused=true; pauseOverlay.classList.add('on');
+});
+document.getElementById('btnResume').addEventListener('click', ()=>{
+  paused=false; pauseOverlay.classList.remove('on'); lastTs=performance.now();
+});
+document.getElementById('btnRestart').addEventListener('click', ()=>{
+  pauseOverlay.classList.remove('on'); if(level) startLevel(level.grade, level.diff);
+});
+document.getElementById('btnQuit').addEventListener('click', ()=>{
+  running=false; paused=false; pauseOverlay.classList.remove('on');
+  hud.hidden=true; startScreen.classList.add('on'); showGradeStep();
+});
+document.getElementById('btnHelp').addEventListener('click', ()=>{
+  if(!running) return;
+  paused=true; helpOverlay.classList.add('on');
+});
+document.getElementById('btnHelpClose').addEventListener('click', ()=>{
+  helpOverlay.classList.remove('on'); paused=false; lastTs=performance.now();
+});
+document.getElementById('btnAgain').addEventListener('click', ()=> { if(level) startLevel(level.grade, level.diff); });
+document.getElementById('btnHome').addEventListener('click', ()=>{
+  endOverlay.classList.remove('on'); hud.hidden=true; startScreen.classList.add('on'); running=false; showGradeStep();
+});
+btnMute.addEventListener('click', ()=>{
+  muted=!muted;
+  btnMute.textContent=muted?'🔇':'🔊';
+  btnMute.setAttribute('aria-pressed', muted?'true':'false');
+  ensureAudio();
+});
+
+/* ========== Boot ========== */
+buildGradePicker(); showGradeStep();
+resize();
+requestAnimationFrame(tick);
+
+// Expose for Playwright tests
+window.__MZ = {
+  startLevel:(gradeId, diff)=>startLevel(gradeId||1, diff||'easy'),
+  getState:()=>({running,paused,won,lost,score,popped,totalEx, balls:balls.length, gaps:openGaps().length, current:shooter.current&&shooter.current.value, next:shooter.next&&shooter.next.value, headS, pathLen, baseSpeed, level:level&&{grade:level.grade.id, diff:level.diff, name:level.name}}),
+  getGaps:()=>openGaps().map(g=>{ const p=pointAt(g.s); return {answer:g.answer, x:p.x, y:p.y, exId:g.exId, s:g.s}; }),
+  getVisibleGaps:()=>visibleOpenGaps().map(g=>{ const p=pointAt(g.s); return {answer:g.answer, x:p.x, y:p.y, exId:g.exId, s:g.s, fullyVisible:true}; }),
+  ammoOk:()=>{ const vg=visibleOpenGaps(); if(!vg.length) return true; const ans=vg.map(g=>g.answer); return !!(shooter.current && ans.includes(shooter.current.value)); },
+
+  getBalls:()=>balls.filter(b=>b.s>0&&b.s<pathLen).map(b=>{ const p=pointAt(b.s); return {kind:b.kind,value:b.value,answer:b.answer,x:p.x,y:p.y,s:b.s,exId:b.exId}; }),
+  getChain:()=>balls.map(b=>{ const p=pointAt(Math.max(0,Math.min(pathLen,b.s))); return {kind:b.kind,value:b.value,answer:b.answer,s:Math.round(b.s),exId:b.exId,on:b.s>0&&b.s<pathLen,label:b.kind==='gap'?'?':(b.kind==='spacer'?'·':String(b.value))}; }),
+  getShooter:()=>({x:shooter.x,y:shooter.y,angle:shooter.angle,current:shooter.current,next:shooter.next}),
+  forceAmmo:(v)=>{ shooter.current={value:v,color:colorForNum(v)}; },
+  shootAt:(x,y)=>{ aimX=x; aimY=y; aimActive=false; fire(); },
+  setPaused:(v)=>{ paused=!!v; },
+  setSpeed:(v)=>{ baseSpeed=v; },
+  swap:()=>swapAmmo(),
+  grades:GRADES
+};
+})();
+</script>
+</body>
+</html>
