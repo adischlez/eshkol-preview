@@ -13,18 +13,15 @@ body.script-cursive .azcell,body.script-cursive .wagon,body.script-cursive .tcar
 body.script-cursive .nm-letter{font-size:104px}
 @media(max-width:400px){body.script-cursive .nm-letter{font-size:80px}}
 @media(min-width:600px){body.script-cursive .nm-letter{font-size:120px}}
-.scriptb{border:1px solid rgba(255,255,255,.55);background:transparent;color:#fff;border-radius:10px;min-width:72px;min-height:44px;padding:4px 8px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:4px;touch-action:manipulation;line-height:1;flex:none}
-.scriptb .st-print{font:800 15px/1 var(--letter-print);opacity:.95}
-.scriptb .st-cursive{font:400 17px/1 var(--letter-cursive);opacity:.7}
-.scriptb .st-sep{opacity:.55;font-size:12px}
-.scriptb[aria-pressed=true]{background:#fff;color:var(--navy);border-color:#fff}
-.scriptb[aria-pressed=true] .st-print{opacity:.45;color:var(--navy)}
-.scriptb[aria-pressed=true] .st-cursive{opacity:1;color:var(--navy)}
-.scriptb[aria-pressed=true] .st-sep{color:var(--navy);opacity:.5}
+.scriptb{border:1px solid rgba(255,255,255,.55);background:rgba(255,255,255,.08);color:#fff;border-radius:12px;min-height:44px;padding:3px;cursor:pointer;display:inline-flex;align-items:stretch;gap:2px;touch-action:manipulation;line-height:1;flex:none}
+.scriptb .seg{display:inline-flex;align-items:center;justify-content:center;min-width:40px;padding:0 6px;border-radius:9px;color:#fff;opacity:.7;transition:background .2s,color .2s,opacity .2s}
+.scriptb .st-print{font:800 15px/1 var(--letter-print)}
+.scriptb .st-cursive{font:400 19px/1 var(--letter-cursive)}
+body:not(.script-cursive) .scriptb .st-print,body.script-cursive .scriptb .st-cursive{background:#fff;color:var(--navy);opacity:1}
 @media(max-width:400px){
-  .scriptb{min-width:64px;padding:4px 6px;gap:3px}
+  .scriptb .seg{min-width:36px;padding:0 4px}
   .scriptb .st-print{font-size:13px}
-  .scriptb .st-cursive{font-size:15px}
+  .scriptb .st-cursive{font-size:17px}
 }
 *{box-sizing:border-box}
 html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Arial,sans-serif;-webkit-text-size-adjust:100%}
@@ -50,8 +47,8 @@ main{max-width:980px;margin:0 auto;padding:8px}
 .tbtn{border:1px solid var(--ink);background:#fff;border-radius:12px;padding:10px 12px;text-align:right;cursor:pointer;font:700 15px system-ui;color:var(--ink);min-height:48px;width:100%}
 .rem.tk{position:sticky;top:var(--vvt);z-index:6;font-size:13px;font-weight:600;background:#fff3e2;margin:0 -4px 4px;padding:4px 8px;box-shadow:0 2px 5px rgba(31,59,92,.16);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .rem.tk .ttl{flex:1;min-width:0;color:var(--navy)}
-.info{display:inline-flex;align-items:center;gap:6px;border:0;background:var(--navy);color:#fff;border-radius:999px;padding:3px 10px 3px 5px;min-height:38px;font:700 13px system-ui;cursor:pointer}
-.info .ic{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:#fff;color:var(--navy);font:italic 800 16px Georgia,serif}
+.info{display:inline-flex;align-items:center;gap:6px;border:0;background:var(--navy);color:#fff;border-radius:999px;padding:3px 12px 3px 6px;min-height:44px;font:700 13px system-ui;cursor:pointer}
+.info .ic{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;background:#fff;color:var(--navy);font:italic 800 16px Georgia,serif}
 .prompt{font-size:17px;font-weight:750;color:var(--navy);margin:0 0 8px;text-align:center;line-height:1.3}
 .stage{min-height:0;display:flex;align-items:center;justify-content:center;margin:0 0 6px}
 .stage-inner{width:100%;text-align:center}
@@ -59,7 +56,7 @@ main{max-width:980px;margin:0 auto;padding:8px}
 .fb.on{display:block}.fb.ok{background:#eef8f1;color:#1f6b38}.fb.bad{background:#fff6e8;color:#8a5200}
 .endbtns{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}.endbtns .btn{min-height:48px;font-size:16px}
 .endbtns[hidden]{display:none!important}
-.btn{border:1px solid var(--ink);background:#fff;color:var(--ink);border-radius:12px;padding:7px 14px;min-height:42px;font:700 14.5px system-ui;cursor:pointer;flex:1;min-width:120px}
+.btn{border:1px solid var(--ink);background:#fff;color:var(--ink);border-radius:12px;padding:7px 14px;min-height:44px;font:700 15px system-ui;cursor:pointer;flex:1;min-width:120px}
 .btn.pri{background:var(--good);border-color:var(--good);color:#fff}
 .btn.sm{min-width:0;min-height:44px;font-size:15px;padding:8px 12px}
 .priv{font-size:12px;color:var(--mute);text-align:center;margin:10px 0 0;line-height:1.35}
@@ -72,11 +69,11 @@ main{max-width:980px;margin:0 auto;padding:8px}
 .idea{background:#eef4fb;border-radius:10px;padding:12px 14px;font-size:16px;font-weight:600;color:var(--navy)}
 .screen{display:none}.screen.on{display:block}
 .lvrow{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin:0 0 8px}
-.lvbtn{border:1.5px solid var(--navy);background:#fff;color:var(--navy);border-radius:999px;min-height:36px;padding:4px 12px;font:700 13px system-ui;cursor:pointer}
+.lvbtn{border:1.5px solid var(--navy);background:#fff;color:var(--navy);border-radius:999px;min-height:44px;padding:4px 14px;font:700 14px system-ui;cursor:pointer}
 .lvbtn.on{background:var(--navy);color:#fff}
 .azbar,.gamebar{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0 0 8px;flex-wrap:wrap}
 .azprog,.gprog{font:700 15px system-ui;color:var(--navy)}
-.azrep,.greplay{border:1px solid var(--navy);background:#fff;color:var(--navy);border-radius:999px;min-height:40px;min-width:40px;padding:4px 12px;font:700 14px system-ui;cursor:pointer}
+.azrep,.greplay{border:1px solid var(--navy);background:#fff;color:var(--navy);border-radius:999px;min-height:44px;min-width:44px;padding:4px 14px;font:700 15px system-ui;cursor:pointer}
 .azgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;width:100%;max-width:420px;margin:0 auto}
 .azcell{border:1.5px solid var(--ink);background:#fff;border-radius:12px;min-height:48px;font:800 26px/1 var(--letter);color:var(--ink);cursor:pointer;padding:4px;touch-action:manipulation;line-height:1}
 .azcell.done{background:#eef8f1;border-color:#9fd4b2;color:#7a8a7e;opacity:.55;cursor:default}
@@ -136,7 +133,7 @@ main{max-width:980px;margin:0 auto;padding:8px}
   .btn.pri.qk,.qk{min-height:48px;font-size:15px;padding:6px 10px;margin:0 0 2px}
   .qk small{font-size:11px}
   .tgrid{gap:4px;margin-top:4px}
-  .tgrid .btn,.tgrid .tbtn{min-height:40px;padding:6px 8px;font-size:13.5px}
+  .tgrid .btn,.tgrid .tbtn{min-height:44px;padding:6px 8px;font-size:13.5px}
   .tgrid .btn .subline,.tgrid .tbtn .subline{font-size:11px;margin-top:0}
   #start h2,.card h2{font-size:15.5px;margin:0 0 4px}
   .ecq{margin:6px 0 2px;font-size:14px}
@@ -191,6 +188,18 @@ main{max-width:980px;margin:0 auto;padding:8px}
   .nm-opt{min-height:100px}
   .nm-opt .nm-ico{font-size:32px}
 }
+/* progress bar */
+.pbar{height:10px;border-radius:999px;background:#e8eef5;overflow:hidden;margin:0 auto 10px;max-width:420px;position:relative}
+.pbar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#7bc5a4,var(--good));border-radius:999px;transition:width .4s ease}
+@media(prefers-reduced-motion:reduce){.pbar i{transition:none}}
+/* name-the-letter: listening state */
+.nm-opts.listening .nm-opt:not(.playing){opacity:.55}
+.nm-opts.listening .nm-opt{cursor:default}
+.nm-opt.playing .nm-ico{animation:earpulse .6s ease-in-out infinite alternate}
+@keyframes earpulse{to{transform:scale(1.18)}}
+.azceleb .stars{display:inline-block}
+.azceleb .stars.popin{animation-delay:.1s}
+@media(prefers-reduced-motion:reduce){.nm-opt.playing .nm-ico{animation:none}}
 /* big green start */
 .startwrap{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:28px 16px 20px;min-height:58dvh}
 .startwrap h2{margin:0 0 6px;font-size:22px;font-weight:800;color:var(--navy)}
@@ -202,6 +211,27 @@ main{max-width:980px;margin:0 auto;padding:8px}
   .startwrap h2{font-size:20px}
   .btn.startbig{min-height:68px;font-size:26px;max-width:100%}
 }
+
+/* —— shared: iPhone touch + clarity —— */
+[hidden]{display:none!important}
+button{touch-action:manipulation;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none}
+button,img{-webkit-touch-callout:none}
+img{-webkit-user-drag:none}
+header .hw{padding-top:max(6px,env(safe-area-inset-top));padding-left:max(10px,env(safe-area-inset-left));padding-right:max(10px,env(safe-area-inset-right))}
+.iconb{min-width:44px;min-height:44px}
+:focus-visible{outline:3px solid var(--org);outline-offset:2px}
+.stoast{position:fixed;left:50%;top:calc(env(safe-area-inset-top) + 72px);z-index:80;transform:translate(-50%,-8px);background:#fff;color:var(--navy);border:2px solid var(--navy);border-radius:999px;padding:8px 18px;font:700 16px/1.2 system-ui;box-shadow:0 6px 18px rgba(31,59,92,.22);display:flex;align-items:center;gap:10px;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;white-space:nowrap}
+.stoast.on{opacity:1;transform:translate(-50%,0)}
+.stoast .smp{font:400 26px/1 var(--letter)}
+body:not(.script-cursive) .stoast .smp{font-weight:800;font-size:22px}
+/* gentle confetti (original shapes) */
+.confetti{position:fixed;inset:0;pointer-events:none;z-index:90;overflow:hidden}
+.confetti i{position:absolute;top:-14px;width:10px;height:14px;border-radius:3px;opacity:.95;animation:cfall 1.7s cubic-bezier(.25,.6,.4,1) forwards}
+.confetti i.c{border-radius:50%;width:11px;height:11px}
+@keyframes cfall{0%{transform:translate(0,0) rotate(0)}100%{transform:translate(var(--dx),78vh) rotate(var(--rot));opacity:0}}
+.popin{animation:popin .5s cubic-bezier(.2,.9,.3,1.3) both}
+@keyframes popin{0%{transform:scale(.3);opacity:0}100%{transform:scale(1);opacity:1}}
+@media(prefers-reduced-motion:reduce){.confetti{display:none}.popin{animation:none}.stoast{transition:none}}
 </style>
 </head>
 <body>
@@ -209,10 +239,10 @@ main{max-width:980px;margin:0 auto;padding:8px}
   <div class="hrow">
     <h1>שפה · א׳ תות</h1>
     <div class="hbts">
-      <button class="scriptb" id="btnScript" type="button" title="דפוס או כתב יד" aria-label="מעבר בין אותיות דפוס לכתב יד" aria-pressed="false"><span class="st-print">אבג</span><span class="st-sep">/</span><span class="st-cursive">אבג</span></button>
+      <button class="scriptb" id="btnScript" type="button" title="דפוס או כתב יד" aria-label="מעבר בין אותיות דפוס לכתב יד" aria-pressed="false"><span class="seg st-print" aria-hidden="true">אבג</span><span class="seg st-cursive" aria-hidden="true">אבג</span></button>
       <button class="iconb" id="btnMenu" type="button" title="תפריט" aria-label="חזרה לתפריט">☰</button>
-      <button class="iconb" id="btnSpeak" type="button" title="השמעה" aria-label="השמעה">🔊</button>
-      <button class="iconb" id="btnMute" type="button" title="השתקה" aria-label="השתקה" aria-pressed="false">🔈</button>
+      <button class="iconb" id="btnSpeak" type="button" title="השמעה" aria-label="השמעה" hidden>🔊</button>
+      <button class="iconb" id="btnMute" type="button" title="השתקה" aria-label="השתקת הקול" aria-pressed="false">🔊</button>
     </div>
   </div>
   <p id="hdrSub">בחרו משחק · בלי מיקרופון · בלי שמירת נתונים</p>
@@ -269,6 +299,35 @@ main{max-width:980px;margin:0 auto;padding:8px}
 </label>
 <div class="foot">A-TUT-LANG-01 · א׳ תות<br>נבנה ע״י אשכול-בוט</div>
 <script>
+
+/* —— shared helpers: script toast + confetti —— */
+function showScriptToast(cursive){
+  let t=document.getElementById("scriptToast");
+  if(!t){t=document.createElement("div");t.id="scriptToast";t.className="stoast";t.setAttribute("role","status");t.setAttribute("aria-live","polite");document.body.appendChild(t);}
+  t.innerHTML=cursive?'<span>עכשיו: כתב יד</span><span class="smp">אבג</span>':'<span>עכשיו: דפוס</span><span class="smp">אבג</span>';
+  t.classList.add("on");
+  clearTimeout(showScriptToast._t);
+  showScriptToast._t=setTimeout(()=>t.classList.remove("on"),1500);
+}
+function confetti(){
+  try{
+    if(window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+    const box=document.createElement("div");box.className="confetti";box.setAttribute("aria-hidden","true");
+    const cols=["#2f8f4e","#e8862a","#3a78c2","#f2c94c","#d96a8a","#7bc5a4"];
+    for(let i=0;i<22;i++){
+      const p=document.createElement("i");
+      if(i%3===0)p.className="c";
+      p.style.left=(5+Math.random()*90)+"%";
+      p.style.background=cols[i%cols.length];
+      p.style.setProperty("--dx",(Math.random()*80-40)+"px");
+      p.style.setProperty("--rot",(Math.random()*540-270)+"deg");
+      p.style.animationDelay=(Math.random()*0.35)+"s";
+      box.appendChild(p);
+    }
+    document.body.appendChild(box);
+    setTimeout(()=>box.remove(),2400);
+  }catch(e){}
+}
 (function(){
 "use strict";
 const AUDIO="audio/";
@@ -377,8 +436,8 @@ function vibrateOk(){
   iosHaptic();
 }
 function vibrateBad(){
-  try{ if(navigator.vibrate){ navigator.vibrate([30,50,30,50,40]); return; } }catch(e){}
-  iosHaptic(); setTimeout(iosHaptic, 80);
+  try{ if(navigator.vibrate){ navigator.vibrate(20); return; } }catch(e){}
+  iosHaptic();
 }
 function iosHaptic(){
   try{
@@ -466,12 +525,12 @@ function refreshNextLabel(){
 function startFindAll(){
   azActive=true;azDone=new Set();azTries=0;azQueue=shuffle(ALEF.map(x=>x.ch));azTarget=null;
   $("#exPrompt").textContent="איזו אות שמעתם? לחצו עליה";
-  $("#exStage").innerHTML=`<div class="azbar"><span class="azprog" id="azProg">0 מתוך 22</span><button class="azrep" id="azReplay" type="button" aria-label="השמעה שוב">🔊 שוב</button></div>`;
+  $("#exStage").innerHTML=`<div class="azbar"><span class="azprog" id="azProg">0 מתוך 22</span><button class="azrep" id="azReplay" type="button" aria-label="השמעה שוב">🔊 שוב</button></div><div class="pbar" aria-hidden="true"><i id="azBar"></i></div>`;
   const box=$("#exChoices");box.className="azgrid";
   box.innerHTML=ALEF.map(L=>`<button class="azcell" type="button" data-ch="${L.ch}" aria-label="${L.ch}">${L.ch}</button>`).join("");
   box.onclick=onAzChoice;
   $("#azReplay").onclick=()=>{
-    if(!azTarget)return;
+    if(!azTarget||azDone.has(azTarget))return; // mid-praise: next letter is coming anyway
     const item=ALEF.find(x=>x.ch===azTarget);if(!item)return;
     // Replay stays available during the wrong-tap sequence; cancels it cleanly.
     inputLocked=false;
@@ -483,7 +542,8 @@ function startFindAll(){
   // First letter right away after the התחל tap (audio already unlocked).
   setTimeout(azNext,80);
 }
-function updateAzProgress(){const el=$("#azProg");if(el)el.textContent=azDone.size+" מתוך 22"}
+function setBar(id,n,total){const b=$("#"+id);if(b)b.style.width=Math.round(100*n/total)+"%"}
+function updateAzProgress(){const el=$("#azProg");if(el)el.textContent=azDone.size+" מתוך 22";setBar("azBar",azDone.size,22)}
 function clearAzHints(){document.querySelectorAll(".azcell.hint,.azcell.bad").forEach(b=>b.classList.remove("hint","bad"))}
 function azNext(){
   azTries=0;if(azQueue.length===0){azFinish();return}
@@ -547,7 +607,7 @@ function onAzChoice(e){
 function azFinish(){
   azActive=false;azTarget=null;
   $("#exPrompt").textContent="כל הכבוד!";
-  $("#exStage").innerHTML=`<div class="azceleb"><div class="stars">🌟🌟🌟</div><h3>מצאתם את כל האותיות!</h3></div>`;
+  $("#exStage").innerHTML=`<div class="azceleb"><div class="stars popin">🌟🌟🌟</div><h3>מצאתם את כל האותיות!</h3></div>`;confetti();
   $("#exChoices").innerHTML="";$("#exChoices").className="";
   $("#exFb").className="fb on ok";$("#exFb").textContent="22 מתוך 22";
   $("#exActions").hidden=false;$("#btnMore").textContent="עוד סיבוב";refreshNextLabel();speakKeys(["find_done"]);
@@ -558,7 +618,7 @@ function startNameLetter(){
   nmActive=true;nmDone=new Set();nmTries=0;nmSel=null;nmFirst=true;
   nmQueue=shuffle(ALEF.map(x=>x.ch));nmTarget=null;nmOpts=[];
   $("#exPrompt").textContent="איזו אות זאת? לחצו על השם";
-  $("#exStage").innerHTML=`<div class="azbar"><span class="azprog" id="nmProg">0 מתוך 22</span><button class="azrep" id="nmReplay" type="button" aria-label="שמעו שוב את שלושת השמות">🔊 שמעו שוב</button></div>
+  $("#exStage").innerHTML=`<div class="azbar"><span class="azprog" id="nmProg">0 מתוך 22</span><button class="azrep" id="nmReplay" type="button" aria-label="שמעו שוב את שלושת השמות">🔊 שמעו שוב</button></div><div class="pbar" aria-hidden="true"><i id="nmBar"></i></div>
     <div class="nm-letter" id="nmLetter" aria-live="polite"></div>`;
   const box=$("#exChoices");box.className="";
   box.innerHTML=`<div class="nm-opts" id="nmOpts"></div>`;
@@ -572,7 +632,7 @@ function startNameLetter(){
   $("#exActions").hidden=true;
   setTimeout(nmNext,80);
 }
-function updateNmProgress(){const el=$("#nmProg");if(el)el.textContent=nmDone.size+" מתוך 22"}
+function updateNmProgress(){const el=$("#nmProg");if(el)el.textContent=nmDone.size+" מתוך 22";setBar("nmBar",nmDone.size,22)}
 function nmDistractors(target,n){
   const avoid=new Set([target]);
   // Early rounds: skip look-alike letters so the child learns shapes before fine discrimination.
@@ -626,14 +686,19 @@ function nmNext(){
 }
 function nmPlayOptions(){
   if(!nmOpts.length)return;
+  if(muted){inputLocked=false;const o=$("#nmOpts");if(o)o.classList.remove("listening");$("#exPrompt").textContent="הקול כבוי · לחצו על 🔇 כדי לשמוע";return}
   inputLocked=true;
   document.querySelectorAll(".nm-opt").forEach(el=>el.classList.remove("playing","bad"));
+  const ob=$("#nmOpts");if(ob)ob.classList.add("listening");
+  $("#exPrompt").textContent="מקשיבים לשלושה שמות… 👂";
   const keys=nmOpts.map(ch=>{const it=ALEF.find(x=>x.ch===ch);return it?it.key:null}).filter(Boolean);
   let step=0;
   const playOne=()=>{
     if(!nmActive){inputLocked=false;return}
     if(step>=nmOpts.length){
       document.querySelectorAll(".nm-opt.playing").forEach(el=>el.classList.remove("playing"));
+      const ob2=$("#nmOpts");if(ob2)ob2.classList.remove("listening");
+      $("#exPrompt").textContent="איזה שם נכון? לחצו עליו";
       inputLocked=false;
       return;
     }
@@ -697,7 +762,7 @@ function nmAnswer(ch){
 function nmFinish(){
   nmActive=false;nmTarget=null;nmSel=null;
   $("#exPrompt").textContent="כל הכבוד!";
-  $("#exStage").innerHTML=`<div class="azceleb"><div class="stars">🌟🌟🌟</div><h3>יודעים את כל השמות!</h3></div>`;
+  $("#exStage").innerHTML=`<div class="azceleb"><div class="stars popin">🌟🌟🌟</div><h3>יודעים את כל השמות!</h3></div>`;confetti();
   $("#exChoices").innerHTML="";$("#exChoices").className="";
   $("#exFb").className="fb on ok";$("#exFb").textContent="22 מתוך 22";
   $("#exActions").hidden=false;$("#btnMore").textContent="עוד סיבוב";refreshNextLabel();speakKeys(["find_done"]);
@@ -957,14 +1022,27 @@ $("#btnSpeak").onclick=()=>{
   else if(k==="fish"&&fishTarget)speakCatch(fishTarget);
   else if(k==="train")speakKeys(["q_train"]);
 };
-$("#btnMute").onclick=()=>{muted=!muted;$("#btnMute").setAttribute("aria-pressed",muted?"true":"false");$("#btnMute").textContent=muted?"🔇":"🔈";if(muted)stopSpeak()};
+function recoverAfterMute(){
+  // stopSpeak() cancels pending audio callbacks — make sure no game is left frozen.
+  if(azActive){
+    inputLocked=false;$("#exFb").className="fb";
+    document.querySelectorAll(".azcell.bad").forEach(el=>el.classList.remove("bad"));
+    if(azTarget&&azDone.has(azTarget))azNext();
+  }
+  if(nmActive){
+    inputLocked=false;$("#exFb").className="fb";
+    document.querySelectorAll(".nm-opt").forEach(el=>el.classList.remove("playing","bad"));
+    if(nmTarget&&nmDone.has(nmTarget))nmNext();else nmPlayOptions();
+  }
+}
+$("#btnMute").onclick=()=>{muted=!muted;$("#btnMute").setAttribute("aria-pressed",muted?"true":"false");$("#btnMute").textContent=muted?"🔇":"🔊";$("#btnMute").setAttribute("aria-label",muted?"הפעלת הקול":"השתקת הקול");$("#btnMute").title=muted?"הפעלת הקול":"השתקה";if(muted){stopSpeak();recoverAfterMute()}else if(nmActive&&!inputLocked&&nmOpts.length){nmPlayOptions()}};
 $("#btnHelp").onclick=()=>{
   const t=GAMES[topicIdx];
   $("#helpTitle").textContent="עזרה";$("#helpH2").textContent=t.t;$("#helpBody").textContent=t.help;
   $("#helpPanel").classList.add("on");
   speakKeys([t.helpKey||"help_findall"]);
 };
-$("#helpClose").onclick=()=>$("#helpPanel").classList.remove("on");
+$("#helpClose").onclick=()=>{$("#helpPanel").classList.remove("on");stopSpeak();recoverAfterMute();};
 
 /* ---------- Anonymous aggregate counts (a-tut) ----------
    GoatCounter account mipui-eshkol (same as mipui worksheet; a-tut/ paths keep them apart).
@@ -1040,6 +1118,7 @@ applyScript(params.get("script")==="cursive");
   if(b) b.onclick=()=>{
     const next=!isCursive();
     applyScript(next);
+    showScriptToast(next);
     try{
       const u=new URL(location.href);
       if(next) u.searchParams.set("script","cursive"); else u.searchParams.delete("script");
