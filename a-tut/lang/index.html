@@ -6,7 +6,26 @@
 <meta name="robots" content="noindex,nofollow">
 <title>A-TUT-LANG-01 · שפה · א׳ תות</title>
 <style>
-:root{--bg:#f5f4f0;--card:#fff;--ink:#1c2230;--navy:#1f3b5c;--mute:#667085;--line:#d9d6cc;--blue:#3a78c2;--org:#e8862a;--good:#2f8f4e;--warn:#d98a1c;--bad:#d9534f;--hl:#fff4dc;--pond1:#d8e8f2;--pond2:#b9d4e8;--pond3:#8fb8d6;--r:14px;--vvt:0px}
+@font-face{font-family:"Gveret Levin";src:url("fonts/GveretLevin-Regular.woff2") format("woff2");font-weight:400;font-display:swap}
+:root{--bg:#f5f4f0;--card:#fff;--ink:#1c2230;--navy:#1f3b5c;--mute:#667085;--line:#d9d6cc;--blue:#3a78c2;--org:#e8862a;--good:#2f8f4e;--warn:#d98a1c;--bad:#d9534f;--hl:#fff4dc;--pond1:#d8e8f2;--pond2:#b9d4e8;--pond3:#8fb8d6;--r:14px;--vvt:0px;--letter-print:"Times New Roman","Noto Serif Hebrew","Segoe UI",serif;--letter-cursive:"Gveret Levin","Segoe UI",cursive;--letter:var(--letter-print)}
+body.script-cursive{--letter:var(--letter-cursive)}
+body.script-cursive .azcell,body.script-cursive .wagon,body.script-cursive .tcard,body.script-cursive .fish,body.script-cursive .nm-letter,body.script-cursive .pondbucket .bk{font-weight:400}
+body.script-cursive .nm-letter{font-size:104px}
+@media(max-width:400px){body.script-cursive .nm-letter{font-size:80px}}
+@media(min-width:600px){body.script-cursive .nm-letter{font-size:120px}}
+.scriptb{border:1px solid rgba(255,255,255,.55);background:transparent;color:#fff;border-radius:10px;min-width:72px;min-height:44px;padding:4px 8px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:4px;touch-action:manipulation;line-height:1;flex:none}
+.scriptb .st-print{font:800 15px/1 var(--letter-print);opacity:.95}
+.scriptb .st-cursive{font:400 17px/1 var(--letter-cursive);opacity:.7}
+.scriptb .st-sep{opacity:.55;font-size:12px}
+.scriptb[aria-pressed=true]{background:#fff;color:var(--navy);border-color:#fff}
+.scriptb[aria-pressed=true] .st-print{opacity:.45;color:var(--navy)}
+.scriptb[aria-pressed=true] .st-cursive{opacity:1;color:var(--navy)}
+.scriptb[aria-pressed=true] .st-sep{color:var(--navy);opacity:.5}
+@media(max-width:400px){
+  .scriptb{min-width:64px;padding:4px 6px;gap:3px}
+  .scriptb .st-print{font-size:13px}
+  .scriptb .st-cursive{font-size:15px}
+}
 *{box-sizing:border-box}
 html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Arial,sans-serif;-webkit-text-size-adjust:100%}
 body{padding-bottom:28px;min-height:100dvh}
@@ -59,7 +78,7 @@ main{max-width:980px;margin:0 auto;padding:8px}
 .azprog,.gprog{font:700 15px system-ui;color:var(--navy)}
 .azrep,.greplay{border:1px solid var(--navy);background:#fff;color:var(--navy);border-radius:999px;min-height:40px;min-width:40px;padding:4px 12px;font:700 14px system-ui;cursor:pointer}
 .azgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;width:100%;max-width:420px;margin:0 auto}
-.azcell{border:1.5px solid var(--ink);background:#fff;border-radius:12px;min-height:48px;font:800 26px "Times New Roman",serif;color:var(--ink);cursor:pointer;padding:4px;touch-action:manipulation;line-height:1}
+.azcell{border:1.5px solid var(--ink);background:#fff;border-radius:12px;min-height:48px;font:800 26px/1 var(--letter);color:var(--ink);cursor:pointer;padding:4px;touch-action:manipulation;line-height:1}
 .azcell.done{background:#eef8f1;border-color:#9fd4b2;color:#7a8a7e;opacity:.55;cursor:default}
 .azcell.bad{animation:nudge .35s;background:#fff6e8;border-color:var(--warn)}
 .azcell.hint{box-shadow:0 0 0 3px var(--org);border-color:var(--org)}
@@ -69,9 +88,9 @@ main{max-width:980px;margin:0 auto;padding:8px}
 /* pond / fish */
 .pondwrap{position:relative;width:100%;max-width:520px;margin:0 auto;border-radius:16px;overflow:hidden;border:1px solid var(--line);background:linear-gradient(180deg,var(--pond1) 0%,var(--pond2) 55%,var(--pond3) 100%);height:210px}
 .pondbucket{position:absolute;left:8px;bottom:8px;z-index:3;display:flex;flex-direction:column;align-items:center;gap:2px}
-.pondbucket .bk{width:52px;height:40px;border:2px solid var(--navy);border-bottom-width:3px;border-radius:0 0 10px 10px;background:rgba(255,255,255,.55);display:flex;flex-wrap:wrap;align-content:center;justify-content:center;gap:1px;padding:2px;font:800 11px "Times New Roman",serif;color:var(--navy)}
+.pondbucket .bk{width:52px;height:40px;border:2px solid var(--navy);border-bottom-width:3px;border-radius:0 0 10px 10px;background:rgba(255,255,255,.55);display:flex;flex-wrap:wrap;align-content:center;justify-content:center;gap:1px;padding:2px;font:800 11px/1 var(--letter);color:var(--navy)}
 .pondbucket .lbl{font:700 11px system-ui;color:var(--navy)}
-.fish{position:absolute;min-width:56px;min-height:56px;border:0;border-radius:50% 40% 50% 40%;background:#fff;box-shadow:0 2px 6px rgba(31,59,92,.18);font:800 26px/1 "Times New Roman",serif;color:var(--navy);cursor:pointer;touch-action:manipulation;padding:0 10px;z-index:2}
+.fish{position:absolute;min-width:56px;min-height:56px;border:0;border-radius:50% 40% 50% 40%;background:#fff;box-shadow:0 2px 6px rgba(31,59,92,.18);font:800 26px/1 var(--letter);color:var(--navy);cursor:pointer;touch-action:manipulation;padding:0 10px;z-index:2}
 .fish::after{content:"";position:absolute;left:-10px;top:50%;width:0;height:0;border:10px solid transparent;border-right-color:#fff;transform:translateY(-50%);filter:drop-shadow(-1px 0 0 rgba(31,59,92,.15))}
 .fish.caught{opacity:0;pointer-events:none;transition:opacity .35s,transform .35s}
 .fish.flee{animation:flee .7s ease-in forwards}
@@ -92,7 +111,7 @@ main{max-width:980px;margin:0 auto;padding:8px}
 /* train */
 .traintrack{width:100%;max-width:560px;margin:0 auto 8px;padding:8px 4px 4px;background:linear-gradient(180deg,#eef2f6,#e4e9ef);border-radius:14px;border:1px solid var(--line);overflow:hidden}
 .trainrow{display:flex;flex-direction:row;direction:rtl;align-items:stretch;justify-content:center;gap:4px;min-height:72px}
-.wagon{flex:1;min-width:44px;max-width:72px;min-height:64px;border:2px solid var(--navy);border-radius:10px;background:#fff;display:flex;align-items:center;justify-content:center;font:800 28px/1 "Times New Roman",serif;color:var(--navy);position:relative}
+.wagon{flex:1;min-width:44px;max-width:72px;min-height:64px;border:2px solid var(--navy);border-radius:10px;background:#fff;display:flex;align-items:center;justify-content:center;font:800 28px/1 var(--letter);color:var(--navy);position:relative}
 .wagon.empty{border-style:dashed;background:#fffdf6;color:var(--mute);box-shadow:inset 0 0 0 2px var(--hl)}
 .wagon.empty.on{box-shadow:0 0 0 3px var(--org);border-color:var(--org)}
 .wagon.ok{background:#eef8f1;border-color:var(--good)}
@@ -100,7 +119,7 @@ main{max-width:980px;margin:0 auto;padding:8px}
 .wagon .wh2{position:absolute;bottom:-7px;width:10px;height:10px;border-radius:50%;background:var(--navy);right:8px}
 .engine{flex:0 0 48px;min-height:64px;border-radius:14px 10px 10px 10px;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;font-size:22px;transform:scaleX(-1)}
 .cardrow{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:8px 0 4px}
-.tcard{min-width:56px;min-height:56px;border:2px solid var(--ink);border-radius:12px;background:#fff;font:800 28px "Times New Roman",serif;color:var(--ink);cursor:pointer;touch-action:manipulation;padding:6px 12px}
+.tcard{min-width:56px;min-height:56px;border:2px solid var(--ink);border-radius:12px;background:#fff;font:800 28px/1 var(--letter);color:var(--ink);cursor:pointer;touch-action:manipulation;padding:6px 12px}
 .tcard.sel{box-shadow:0 0 0 3px var(--org);border-color:var(--org)}
 .tcard.used{opacity:.35;pointer-events:none}
 .tcard.dragging{opacity:.5}
@@ -155,7 +174,7 @@ main{max-width:980px;margin:0 auto;padding:8px}
   .ped-note{font-size:11.5px;margin:0 0 12px}
 }
 /* name-the-letter */
-.nm-letter{font:800 96px/1 "Times New Roman",serif;color:var(--navy);margin:6px auto 10px;min-height:100px;display:flex;align-items:center;justify-content:center;user-select:none}
+.nm-letter{font:800 96px/1 var(--letter);color:var(--navy);margin:6px auto 10px;min-height:100px;display:flex;align-items:center;justify-content:center;user-select:none}
 .nm-opts{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:100%;max-width:420px;margin:0 auto 10px}
 .nm-opt{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-height:88px;border:2.5px solid var(--ink);border-radius:16px;background:#fff;cursor:pointer;touch-action:manipulation;padding:10px 6px;font:800 22px system-ui;color:var(--navy)}
 .nm-opt .nm-ico{font-size:28px;line-height:1}
@@ -190,6 +209,7 @@ main{max-width:980px;margin:0 auto;padding:8px}
   <div class="hrow">
     <h1>שפה · א׳ תות</h1>
     <div class="hbts">
+      <button class="scriptb" id="btnScript" type="button" title="דפוס או כתב יד" aria-label="מעבר בין אותיות דפוס לכתב יד" aria-pressed="false"><span class="st-print">אבג</span><span class="st-sep">/</span><span class="st-cursive">אבג</span></button>
       <button class="iconb" id="btnMenu" type="button" title="תפריט" aria-label="חזרה לתפריט">☰</button>
       <button class="iconb" id="btnSpeak" type="button" title="השמעה" aria-label="השמעה">🔊</button>
       <button class="iconb" id="btnMute" type="button" title="השתקה" aria-label="השתקה" aria-pressed="false">🔈</button>
@@ -415,7 +435,7 @@ function buildMenu(){
     const b=e.target.closest(".gbtn");if(!b)return;
     unlockAudio();
     const g=GAMES[+b.dataset.i];
-    if(g && g.href){ location.href=g.href; return; }
+    if(g && g.href){ location.href=withScript(g.href); return; }
     pickGame(+b.dataset.i);
   };
   const startBtn=$("#btnStart");
@@ -425,7 +445,7 @@ function startTopic(){
   unlockAudio();
   const g=GAMES[topicIdx];
   // Games hosted on their own page (firstletter, words) must navigate — never fall through to dormant train.
-  if(g && g.href){ location.href=g.href; return; }
+  if(g && g.href){ location.href=withScript(g.href); return; }
   stopSpeak();inputLocked=false;$("#exActions").hidden=true;$("#exFb").className="fb";$("#exFb").textContent="";
   show("sc-ex");$("#exTopic").textContent=g.t;
   document.body.classList.remove("g-az","g-nm","g-fish","g-train");
@@ -909,7 +929,7 @@ function trainFinish(){
 
 $("#btnMore").onclick=()=>{
   const g=GAMES[topicIdx];
-  if(g && g.href){ location.href=g.href; return; }
+  if(g && g.href){ location.href=withScript(g.href); return; }
   const k=g?g.k:"";
   if(k==="findall")startFindAll();
   else if(k==="nameletter")startNameLetter();
@@ -922,7 +942,7 @@ $("#btnNext").onclick=()=>{
   else{topicIdx=(topicIdx+1)%GAMES.length}
   const g=GAMES[topicIdx];
   // "למשחק הבא" must open firstletter/words pages, not the dormant train fallback.
-  if(g && g.href){ location.href=g.href; return; }
+  if(g && g.href){ location.href=withScript(g.href); return; }
   pickGame(topicIdx);
 };
 $("#btnMenu").onclick=()=>{
@@ -998,14 +1018,42 @@ window.__eshkol={
   setTrainLevel:(lv)=>{trainLevel=lv}
 };
 /* deep-link: ?topic=findall|nameletter — show התחל for that game (iOS unlock) */
+function isCursive(){return document.body.classList.contains("script-cursive")}
+function applyScript(cursive){
+  document.body.classList.toggle("script-cursive", !!cursive);
+  const b=document.getElementById("btnScript");
+  if(b){
+    b.setAttribute("aria-pressed", cursive?"true":"false");
+    b.title = cursive ? "כתב יד פעיל · לחצו לדפוס" : "דפוס פעיל · לחצו לכתב יד";
+  }
+}
+function withScript(href){
+  if(!isCursive()) return href;
+  if(!href) return href;
+  if(href.indexOf("script=")>=0) return href;
+  return href + (href.indexOf("?")>=0 ? "&" : "?") + "script=cursive";
+}
 const params=new URLSearchParams(location.search);
+applyScript(params.get("script")==="cursive");
+(function(){
+  const b=document.getElementById("btnScript");
+  if(b) b.onclick=()=>{
+    const next=!isCursive();
+    applyScript(next);
+    try{
+      const u=new URL(location.href);
+      if(next) u.searchParams.set("script","cursive"); else u.searchParams.delete("script");
+      history.replaceState(null,"",u.pathname+u.search+u.hash);
+    }catch(e){}
+  };
+})();
 const want=params.get("topic")||(location.hash||"").replace(/^#/,"");
 if(want){
   const i=GAMES.findIndex(t=>t.k===want);
   if(i>=0){
     MODE="single";topicIdx=i;
     const g=GAMES[i];
-    if(g && g.href){ location.href=g.href; }
+    if(g && g.href){ location.href=withScript(g.href); }
     else pickGame(i);
   }
 }
