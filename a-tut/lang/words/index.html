@@ -275,7 +275,7 @@ body:not(.script-cursive) .stoast .smp{font-weight:800;font-size:22px}
 </div>
 <div class="confirm-mask" id="homeConfirm" role="dialog" aria-modal="true" aria-labelledby="homeConfirmTxt">
   <div class="confirm-box">
-    <p id="homeConfirmTxt">לצאת למשחק ולחזור להתחלה?</p>
+    <p id="homeConfirmTxt">לצאת מהמשחק ולחזור להתחלה?</p>
     <div class="confirm-acts">
       <button class="btn pri" id="homeYes" type="button">כן, לצאת</button>
       <button class="btn" id="homeNo" type="button">להמשיך לשחק</button>
@@ -861,10 +861,9 @@ function askConfirm(text,yesLabel,onYes){
 }
 function inGame(){return $("#sc-play").classList.contains("on");}
 function askHome(){
-  // Only confirm if mid-game
+  if($("#sc-start").classList.contains("on")) return;
   if($("#sc-play").classList.contains("on") || $("#sc-done").classList.contains("on") || $("#sc-levels").classList.contains("on")){
-    if($("#sc-start").classList.contains("on")) return;
-    $("#homeConfirm").classList.add("on");
+    askConfirm("לצאת מהמשחק ולחזור להתחלה?","כן, לצאת",()=>{stopSpeak();inputLocked=false;awaitingNext=false;hideReveal();show("sc-start");});
   } else {
     stopSpeak();inputLocked=false;awaitingNext=false;hideReveal();show("sc-start");
   }
