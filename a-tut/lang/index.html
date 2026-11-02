@@ -240,7 +240,8 @@ body:not(.script-cursive) .stoast .smp{font-weight:800;font-size:22px}
     <h1>שפה · א׳ תות</h1>
     <div class="hbts">
       <button class="scriptb" id="btnScript" type="button" title="דפוס או כתב יד" aria-label="מעבר בין אותיות דפוס לכתב יד" aria-pressed="false"><span class="seg st-print" aria-hidden="true">אבג</span><span class="seg st-cursive" aria-hidden="true">אבג</span></button>
-      <button class="iconb" id="btnMenu" type="button" title="תפריט" aria-label="חזרה לתפריט">☰</button>
+      <button class="iconb" id="btnMenu" type="button" title="תפריט שפה" aria-label="חזרה לתפריט השפה">☰</button>
+      <button class="iconb" id="btnSubjects" type="button" title="מקצועות" aria-label="חזרה לבחירת מקצוע">⌂</button>
       <button class="iconb" id="btnSpeak" type="button" title="השמעה" aria-label="השמעה" hidden>🔊</button>
       <button class="iconb" id="btnMute" type="button" title="השתקה" aria-label="השתקת הקול" aria-pressed="false">🔊</button>
     </div>
@@ -1084,6 +1085,10 @@ const Stats=(()=>{const q=[];let ready=false;
  // openGame: event + pageview path for inline hub games (findall/nameletter)
  function openGame(k){if(!k)return;ev('a-tut/open/'+k);page('/a-tut/lang/'+k+'/')}
  return {init,ev,page,openGame}})();
+(function(){
+  const b=document.getElementById("btnSubjects");
+  if(b) b.onclick=()=>{ try{stopSpeak()}catch(e){} location.href=withScript("../"); };
+})();
 Stats.init();
 
 buildMenu();

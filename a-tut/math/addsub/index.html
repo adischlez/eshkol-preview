@@ -1,0 +1,1000 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>חיבור וחיסור · א׳ תות</title>
+<style>
+@font-face{font-family:"Gveret Levin";src:url("../fonts/GveretLevin-Regular.woff2") format("woff2");font-weight:400;font-display:swap}
+:root{--letter-print:"Segoe UI","Arial Hebrew","Noto Sans Hebrew","Heebo",Arial,sans-serif;--letter-cursive:"Gveret Levin","Segoe UI",cursive;--letter:var(--letter-print)}
+body.script-cursive{--letter:var(--letter-cursive)}
+body.script-cursive .prompt{font-weight:400;font-size:24px}
+.scriptb{border:1px solid rgba(255,255,255,.55);background:rgba(255,255,255,.08);color:#fff;border-radius:12px;min-height:44px;padding:3px;cursor:pointer;display:inline-flex;align-items:stretch;gap:2px;touch-action:manipulation;line-height:1;flex:none}
+.scriptb .seg{display:inline-flex;align-items:center;justify-content:center;min-width:40px;padding:0 6px;border-radius:9px;color:#fff;opacity:.7;transition:background .2s,color .2s,opacity .2s}
+.scriptb .st-print{font:800 15px/1 var(--letter-print)}
+.scriptb .st-cursive{font:400 19px/1 var(--letter-cursive)}
+body:not(.script-cursive) .scriptb .st-print,body.script-cursive .scriptb .st-cursive{background:#fff;color:var(--navy);opacity:1}
+@media(max-width:400px){
+  .scriptb .seg{min-width:36px;padding:0 4px}
+  .scriptb .st-print{font-size:13px}
+  .scriptb .st-cursive{font-size:17px}
+}
+:root{--bg:#f5f4f0;--card:#fff;--ink:#1c2230;--navy:#1f3b5c;--mute:#667085;--line:#d9d6cc;--blue:#3a78c2;--org:#e8862a;--good:#2f8f4e;--warn:#d98a1c;--bad:#d9534f;--hl:#fff4dc;--r:14px;--dotA:#3a78c2;--dotB:#e8862a}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Arial,sans-serif;-webkit-text-size-adjust:100%}
+body{padding-bottom:28px;min-height:100dvh}
+header{background:var(--navy);color:#fff;position:sticky;top:0;z-index:20}
+.hw{max-width:980px;margin:0 auto;padding:8px 12px}
+.hrow{display:flex;align-items:center;gap:8px;justify-content:space-between}
+header h1{margin:0;font-size:17px;font-weight:750;flex:1;line-height:1.2}
+.iconb{border:1px solid rgba(255,255,255,.55);background:transparent;color:#fff;border-radius:10px;min-width:44px;min-height:44px;font-size:18px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;padding:4px 8px;touch-action:manipulation}
+.iconb[aria-pressed=true]{background:#fff;color:var(--navy);border-color:#fff}
+.hbts{display:flex;gap:6px}
+main{max-width:560px;margin:0 auto;padding:8px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:12px;margin:0 0 10px}
+.screen{display:none}.screen.on{display:block}
+.startwrap{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:28px 16px 20px;min-height:50dvh}
+.startwrap h2{margin:0 0 6px;font-size:22px;font-weight:800;color:var(--navy)}
+.startsub{margin:0 0 18px;font-size:15px;color:var(--mute);font-weight:600}
+.btn{border:1px solid var(--ink);background:#fff;color:var(--ink);border-radius:12px;padding:7px 14px;min-height:44px;font:700 15px system-ui;cursor:pointer;touch-action:manipulation}
+.btn.startbig{display:flex;align-items:center;justify-content:center;width:100%;max-width:300px;margin:0 auto;min-height:76px;font-size:30px;font-weight:800;border-radius:18px;background:var(--good);border:2px solid var(--good);color:#fff;box-shadow:0 6px 18px rgba(47,143,78,.38)}
+.btn.startbig:active{transform:scale(.97)}
+.btn.pri{background:var(--good);border-color:var(--good);color:#fff}
+.btn.sm{min-height:44px;font-size:15px;padding:8px 12px}
+.priv{font-size:13px;color:var(--mute);text-align:center;margin:10px 0 0;line-height:1.35}
+.foot{max-width:560px;margin:6px auto 0;padding:6px 12px;font-size:12px;color:var(--mute);text-align:center;line-height:1.45}
+.lv-pick{display:flex;flex-direction:column;gap:12px;width:100%;max-width:340px;margin:0 auto}
+.lv-card{display:flex;align-items:center;gap:12px;text-align:right;border:2px solid var(--navy);background:#fff;border-radius:16px;padding:14px;min-height:68px;cursor:pointer;touch-action:manipulation;font:inherit;color:var(--navy);width:100%}
+.lv-card:active{transform:scale(.98);background:#f0f5fb}
+.lv-stars{font-size:22px;letter-spacing:1px;min-width:7.5em;text-align:center;flex:none}
+.lv-meta{flex:1;display:flex;flex-direction:column;align-items:flex-start;gap:3px}
+.lv-name{font:800 17px system-ui;color:var(--navy)}
+.lv-desc{font:600 12.5px system-ui;color:var(--mute);line-height:1.3}
+.lv-back{margin:16px auto 0;display:block}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0 0 8px;flex-wrap:wrap}
+.lv-tag{font:700 13px system-ui;color:var(--navy);background:#eef0f3;border:1px solid #d3d9e2;border-radius:999px;padding:4px 12px;min-height:44px;cursor:pointer;touch-action:manipulation}
+.dots{display:flex;gap:5px;align-items:center;justify-content:center;direction:rtl}
+.dots span{width:20px;height:20px;border-radius:50%;background:#e8eef5;border:2px solid #d3d9e2;display:inline-flex;align-items:center;justify-content:center;font-size:12px;line-height:1}
+.dots span.cur{border-color:var(--org);background:#fff4e6}
+.dots span.done{background:#fff4c9;border-color:#f2c94c}
+.dots span.done.just{animation:popin .45s cubic-bezier(.2,.9,.3,1.3)}
+.prompt{font:800 19px/1.3 var(--letter);color:var(--navy);text-align:center;margin:2px 0 10px;min-height:1.3em}
+/* ten-frames */
+.frames{display:flex;flex-direction:column;align-items:center;gap:10px;margin:0 auto 10px;position:relative}
+.tfrow{display:flex;align-items:center;gap:10px;width:100%;max-width:400px;direction:rtl}
+.tfwrap{position:relative;flex:1;min-width:0}
+.cnt{flex:none;width:60px;height:60px;border-radius:16px;border:3px solid var(--navy);background:#fff;color:var(--navy);display:flex;align-items:center;justify-content:center;font:800 32px/1 system-ui;font-variant-numeric:tabular-nums;box-shadow:0 2px 6px rgba(31,59,92,.12)}
+.cnt.hide{color:#b8c2cf;border-color:#c9d3df;border-style:dashed}
+.cnt.ten{background:#eef8f1;border-color:var(--good);color:var(--good)}
+.cnt.zero{color:#b8c2cf;border-color:#c9d3df}
+.cnt.bump{animation:cntbump .32s cubic-bezier(.2,.9,.3,1.4)}
+@keyframes cntbump{0%{transform:scale(1)}45%{transform:scale(1.28)}100%{transform:scale(1)}}
+.tf{display:grid;grid-template-columns:repeat(5,1fr);gap:0;border:3px solid var(--navy);border-radius:12px;overflow:hidden;background:#fff;direction:rtl;width:100%}
+.tf .cell{aspect-ratio:1/1;border-left:2px solid #c9d3df;border-bottom:2px solid #c9d3df;display:flex;align-items:center;justify-content:center;position:relative}
+.tf .cell:nth-child(5n){border-left:0}
+.tf .cell:nth-child(n+6){border-bottom:0}
+.tf .cell.q{background:repeating-linear-gradient(45deg,#fff8ec,#fff8ec 6px,#fdebd3 6px,#fdebd3 12px)}
+.dot{width:72%;height:72%;border-radius:50%;display:block;box-shadow:inset 0 -3px 0 rgba(0,0,0,.14)}
+.dot.a{background:var(--dotA)}
+.dot.b{background:var(--dotB)}
+.dot.n{background:#5d6b7e}
+.dot.grp{animation:grpPop .45s cubic-bezier(.2,.9,.3,1.4)}
+@keyframes grpPop{0%{transform:scale(1)}45%{transform:scale(1.22)}100%{transform:scale(1)}}
+.dot.new{animation:dotin .3s cubic-bezier(.2,.9,.3,1.3)}
+.dot.g{background:transparent;border:3px dashed #b8c2cf;box-shadow:none;animation:dotout .35s ease}
+.dot.g::after{content:"";position:absolute;inset:22% 22%;background:linear-gradient(45deg,transparent 45%,#b8c2cf 45%,#b8c2cf 55%,transparent 55%)}
+@keyframes dotin{0%{transform:scale(.2)}100%{transform:scale(1)}}
+@keyframes dotout{0%{transform:scale(1.1);background:var(--dotA)}100%{transform:scale(1)}}
+.tf.tap{cursor:pointer;box-shadow:0 0 0 4px rgba(232,134,42,.35)}
+.tf.tap .dot.b,.tf.tap .dot.a{animation:wig 1.2s ease-in-out infinite}
+@keyframes wig{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+.cover{position:absolute;inset:0;border-radius:12px;background:linear-gradient(160deg,#e9f1fb,#dbe7f5);border:3px solid var(--navy);display:none;align-items:center;justify-content:center;flex-direction:column;gap:2px;font:800 17px system-ui;color:var(--navy);cursor:pointer}
+.cover .eye{font-size:34px;line-height:1}
+.tfwrap.covered .cover{display:flex}
+.eq{font:800 34px/1.2 system-ui;color:var(--navy);text-align:center;margin:4px 0 6px;letter-spacing:.04em;min-height:1.2em;font-variant-numeric:tabular-nums}
+.eq .q{display:inline-block;min-width:1.3em;border-bottom:4px solid var(--org);color:var(--org)}
+.eq .ans{color:var(--good)}
+.eq .na{color:var(--dotA)}.eq .nb{color:var(--dotB)}
+.step{font:700 16px/1.4 system-ui;color:var(--mute);text-align:center;margin:0 0 6px;min-height:1.4em}
+.step b{color:var(--navy)}
+.tools{display:flex;justify-content:center;gap:8px;margin:0 0 8px;flex-wrap:wrap}
+.tool{border:1px solid var(--navy);background:#fff;color:var(--navy);border-radius:999px;min-height:44px;padding:6px 14px;font:700 15px system-ui;cursor:pointer;touch-action:manipulation}
+.tool[hidden]{display:none}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;width:100%;max-width:330px;margin:6px auto 0}
+.tile{border:2px solid var(--ink);background:#fff;border-radius:16px;min-height:76px;font:800 40px/1 system-ui;color:var(--ink);cursor:pointer;touch-action:manipulation;padding:8px 4px;font-variant-numeric:tabular-nums}
+.tile:active{transform:scale(.96)}
+.tile.ok{background:#eef8f1;border-color:var(--good);color:var(--good);animation:popin .3s ease}
+.tile.bad{animation:nudge .35s;background:#fff6e8;border-color:var(--warn)}
+.tile.hint{animation:blinkHint .7s ease-in-out 3;background:#e8f5e9;border-color:var(--good);box-shadow:0 0 0 3px rgba(47,143,78,.35)}
+.tile:disabled{cursor:default}
+.tiles.wait{opacity:.35;pointer-events:none}
+@keyframes nudge{0%,100%{transform:none}30%{transform:translateX(-5px)}70%{transform:translateX(5px)}}
+@keyframes blinkHint{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+.fb{border-radius:8px;padding:8px 12px;font-weight:700;text-align:center;font-size:15px;display:none;margin:10px 0 0}
+.fb.on{display:block}.fb.ok{background:#eef8f1;color:#1f6b38}.fb.bad{background:#fff6e8;color:#8a5200}
+.celeb{text-align:center;padding:12px 8px}.celeb .stars{font-size:34px;margin:6px 0;letter-spacing:1px}
+.celeb h3{margin:6px 0 8px;color:var(--good);font-size:24px}
+.celeb .celeb-sub{color:var(--mute);font-weight:600;font-size:16px;margin:0 0 6px}
+.celeb .celeb-extra{font-size:28px;margin:8px 0}
+.endbtns{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;justify-content:center}
+.endbtns .btn{min-height:48px;font-size:16px;min-width:140px}
+.explain{position:fixed;inset:0;z-index:50;background:var(--bg);overflow-y:auto;display:none}
+.explain.on{display:block}
+.xbar{position:sticky;top:0;background:rgba(245,244,240,.96);border-bottom:1px solid var(--line);padding:8px 12px;z-index:2;display:flex;gap:8px;align-items:center}
+.xin{max-width:560px;margin:0 auto;padding:14px 16px 28px}
+.xin h2{font-size:20px;color:var(--navy);margin:0 0 10px}
+.xin h3{font-size:17px;color:var(--navy);margin:16px 0 8px}
+.idea{background:#eef4fb;border-radius:10px;padding:12px 14px;font-size:16px;font-weight:600;color:var(--navy);margin:0 0 10px}
+.idea.t{background:#f4f1ea;color:#4a4f5c;font-weight:500;font-size:15px}
+.confirm-mask{position:fixed;inset:0;z-index:60;background:rgba(28,34,48,.45);display:none;align-items:center;justify-content:center;padding:16px}
+.confirm-mask.on{display:flex}
+.confirm-box{background:#fff;border-radius:16px;padding:18px 16px;max-width:320px;width:100%;text-align:center;box-shadow:0 12px 40px rgba(0,0,0,.2)}
+.confirm-box p{margin:0 0 14px;font:700 16px system-ui;color:var(--navy);line-height:1.4}
+.confirm-acts{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+@media(max-width:400px){
+  .startwrap{padding:20px 12px;min-height:46dvh}
+  .btn.startbig{min-height:68px;font-size:26px;max-width:100%}
+  .lv-stars{font-size:18px;min-width:6.5em}
+  .lv-name{font-size:15px}
+  .tfrow{gap:6px}
+  .cnt{width:50px;height:50px;font-size:27px;border-radius:13px}
+  .eq{font-size:30px}
+  .tile{min-height:68px;font-size:36px}
+  .prompt{font-size:17px}
+  .dots{gap:3px}.dots span{width:17px;height:17px;font-size:10px}
+  .lv-tag{padding:4px 10px;font-size:12px}
+}
+@media(min-width:600px){.tfrow{max-width:460px}.cnt{width:72px;height:72px;font-size:38px}.tiles{max-width:380px}.tile{min-height:84px;font-size:44px}}
+@media(prefers-reduced-motion:reduce){.dot,.dot.grp,.tile,.tf.tap .dot,.cnt{animation:none!important}}
+/* —— shared: iPhone touch + clarity —— */
+[hidden]{display:none!important}
+button{touch-action:manipulation;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none}
+button,img{-webkit-touch-callout:none}
+img{-webkit-user-drag:none}
+header .hw{padding-top:max(6px,env(safe-area-inset-top));padding-left:max(10px,env(safe-area-inset-left));padding-right:max(10px,env(safe-area-inset-right))}
+.iconb{min-width:44px;min-height:44px}
+:focus-visible{outline:3px solid var(--org);outline-offset:2px}
+.stoast{position:fixed;left:50%;top:calc(env(safe-area-inset-top) + 72px);z-index:80;transform:translate(-50%,-8px);background:#fff;color:var(--navy);border:2px solid var(--navy);border-radius:999px;padding:8px 18px;font:700 16px/1.2 system-ui;box-shadow:0 6px 18px rgba(31,59,92,.22);display:flex;align-items:center;gap:10px;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;white-space:nowrap}
+.stoast.on{opacity:1;transform:translate(-50%,0)}
+.stoast .smp{font:400 26px/1 var(--letter)}
+body:not(.script-cursive) .stoast .smp{font-weight:800;font-size:22px}
+/* gentle confetti (original shapes) */
+.confetti{position:fixed;inset:0;pointer-events:none;z-index:90;overflow:hidden}
+.confetti i{position:absolute;top:-14px;width:10px;height:14px;border-radius:3px;opacity:.95;animation:cfall 1.7s cubic-bezier(.25,.6,.4,1) forwards}
+.confetti i.c{border-radius:50%;width:11px;height:11px}
+@keyframes cfall{0%{transform:translate(0,0) rotate(0)}100%{transform:translate(var(--dx),78vh) rotate(var(--rot));opacity:0}}
+.popin{animation:popin .5s cubic-bezier(.2,.9,.3,1.3) both}
+@keyframes popin{0%{transform:scale(.3);opacity:0}100%{transform:scale(1);opacity:1}}
+@media(prefers-reduced-motion:reduce){.confetti{display:none}.popin{animation:none}.stoast{transition:none}}
+</style>
+</head>
+<body>
+<header><div class="hw">
+  <div class="hrow">
+    <h1>חיבור וחיסור</h1>
+    <div class="hbts">
+      <button class="scriptb" id="btnScript" type="button" title="דפוס או כתב יד" aria-label="מעבר בין אותיות דפוס לכתב יד" aria-pressed="false"><span class="seg st-print" aria-hidden="true">אבג</span><span class="seg st-cursive" aria-hidden="true">אבג</span></button>
+      <button class="iconb" id="btnHelp" type="button" title="עזרה" aria-label="עזרה">?</button>
+      <button class="iconb" id="btnHub" type="button" title="תפריט מתמטיקה" aria-label="חזרה לתפריט המתמטיקה">☰</button>
+      <button class="iconb" id="btnMute" type="button" title="השתקה" aria-label="השתקת הקול" aria-pressed="false">🔊</button>
+    </div>
+  </div>
+</div></header>
+<main>
+  <section class="screen on" id="sc-start">
+    <div class="card">
+      <div class="startwrap">
+        <h2>חיבור וחיסור</h2>
+        <p class="startsub">רואים נקודות בלי לספור · ממלאים עשר · עד 20</p>
+        <button class="btn startbig" id="btnStart" type="button">התחל</button>
+      </div>
+      <p class="priv">🔒 אין שמירת נתונים · אין עוגיות · בלי שמות ילדים</p>
+    </div>
+  </section>
+  <section class="screen" id="sc-levels">
+    <div class="card">
+      <div class="startwrap" style="min-height:auto;padding:18px 12px 12px">
+        <h2>בחרו רמה</h2>
+        <p class="startsub" style="margin-bottom:14px">⭐ קל ← ⭐⭐⭐⭐ קשה · מומלץ להתחיל ברמה 1</p>
+        <div class="lv-pick" role="group" aria-label="רמת קושי">
+          <button class="lv-card" type="button" data-lv="1">
+            <span class="lv-stars">⭐</span>
+            <span class="lv-meta"><span class="lv-name">רמה 1 · רואים בלי לספור</span><span class="lv-desc">כמה נקודות במסגרת? עד 10</span></span>
+          </button>
+          <button class="lv-card" type="button" data-lv="2">
+            <span class="lv-stars">⭐⭐</span>
+            <span class="lv-meta"><span class="lv-name">רמה 2 · חברים של 10</span><span class="lv-desc">כמה חסר כדי להגיע ל־10?</span></span>
+          </button>
+          <button class="lv-card" type="button" data-lv="3">
+            <span class="lv-stars">⭐⭐⭐</span>
+            <span class="lv-meta"><span class="lv-name">רמה 3 · חיבור וחיסור עד 10</span><span class="lv-desc">רואים את התרגיל בנקודות</span></span>
+          </button>
+          <button class="lv-card" type="button" data-lv="4">
+            <span class="lv-stars">⭐⭐⭐⭐</span>
+            <span class="lv-meta"><span class="lv-name">רמה 4 · עוברים את ה־10</span><span class="lv-desc">קודם ממלאים עשר · עד 20</span></span>
+          </button>
+        </div>
+        <button class="btn lv-back" id="btnBackStart" type="button">→ חזרה</button>
+      </div>
+    </div>
+  </section>
+  <section class="screen" id="sc-play">
+    <div class="card">
+      <div class="bar">
+        <span class="dots" id="prog" role="img" aria-label="תרגיל 1 מתוך 8"></span>
+        <button class="lv-tag" id="lvTag" type="button" aria-label="החלפת רמה">רמה 1</button>
+      </div>
+      <p class="prompt" id="qPrompt"></p>
+      <div class="eq" id="eq" dir="ltr" aria-live="polite"></div>
+      <div class="frames" id="frames"></div>
+      <p class="step" id="step"></p>
+      <div class="tools">
+        <button class="tool" id="btnPeek" type="button" hidden>👀 להציץ שוב</button>
+        <button class="tool" id="btnSay" type="button" hidden aria-label="להשמיע שוב את השאלה">🔊 שוב</button>
+        <button class="tool" id="btnShow" type="button" hidden>🪄 הראו לי</button>
+      </div>
+      <div class="tiles" id="tiles" role="group" aria-label="תשובות לבחירה"></div>
+      <div class="fb" id="fb"></div>
+    </div>
+  </section>
+  <section class="screen" id="sc-done">
+    <div class="card">
+      <div class="celeb">
+        <div class="celeb-extra">🎉✨🎉</div>
+        <div class="stars popin" id="doneStars">⭐⭐⭐⭐⭐⭐⭐⭐</div>
+        <h3>כל הכבוד!</h3>
+        <p class="celeb-sub" id="doneSub">פתרתם את כל התרגילים</p>
+        <div class="endbtns">
+          <button class="btn pri" id="btnAgain" type="button">עוד פעם</button>
+          <button class="btn" id="btnNextLevel" type="button" hidden>לרמה הבאה ←</button>
+          <button class="btn" id="btnPickLevel" type="button">בחירת רמה</button>
+          <button class="btn" id="btnToStart" type="button">לתפריט</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+<div class="explain" id="helpPanel" role="dialog" aria-modal="true">
+  <div class="xbar">
+    <button class="btn sm" id="helpClose" type="button">→ חזרה</button>
+    <strong style="flex:1;color:var(--navy)">עזרה</strong>
+  </div>
+  <div class="xin">
+    <h2>איך משחקים?</h2>
+    <div class="idea">מסתכלים על הנקודות ובוחרים את המספר הנכון. לא צריך למהר, ואין שעון.</div>
+    <div class="idea">⭐ רמה 1 — רואים כמה נקודות יש במסגרת. המסגרת נסגרת אחרי רגע, ואפשר ללחוץ 👀 כדי להציץ שוב. אחרי תשובה נכונה החמש נצבעות בכחול והשאר בכתום: ״חמש ועוד שתיים״.</div>
+    <div class="idea">⭐⭐ רמה 2 — כמה חסר כדי למלא את המסגרת? (חברים של 10)</div>
+    <div class="idea">⭐⭐⭐ רמה 3 — חיבור וחיסור עד 10. כחול ועוד כתום, או נקודות שיוצאות.</div>
+    <div class="idea">⭐⭐⭐⭐ רמה 4 — עוברים את ה־10: קודם ממלאים עשר בלחיצות על הנקודות, ואז ממשיכים.</div>
+    <div class="idea">🔊 שוב — שומעים שוב את השאלה. הקול הוא הקול העברי של המכשיר.</div>
+    <div class="idea t" id="voiceInfo"></div>
+    <div class="idea">כפתור הרמה מחליף רמה. ☰ חוזר לתפריט המתמטיקה.</div>
+    <h3>למורה ולהורים</h3>
+    <div class="idea t">הרעיון: לראות כמויות בקבוצות ולא לספור אחד־אחד. מסגרת העשר בנויה משתי שורות של 5, וכך 7 נראה כמו ״5 ועוד 2״.</div>
+    <div class="idea t">חברים של 10 (7 ו־3, 6 ו־4…) הם הבסיס לחשבון עד 20: 8 + 5 = 8 + 2 + 3 = 10 + 3.</div>
+    <div class="idea t">בחיסור עד 20 חוזרים קודם ל־10: 13 − 5 → מורידים 3 ומגיעים ל־10, ואז מורידים עוד 2 ומקבלים 8.</div>
+    <div class="idea t">כדאי לשאול את הילד: ״איך ראית את זה?״ — זה חשוב יותר מהמהירות.</div>
+  </div>
+</div>
+<div class="confirm-mask" id="homeConfirm" role="dialog" aria-modal="true" aria-labelledby="homeConfirmTxt">
+  <div class="confirm-box">
+    <p id="homeConfirmTxt">לצאת?</p>
+    <div class="confirm-acts">
+      <button class="btn pri" id="homeYes" type="button">כן</button>
+      <button class="btn" id="homeNo" type="button">להמשיך לשחק</button>
+    </div>
+  </div>
+</div>
+<label id="hapticLab" aria-hidden="true" style="position:fixed;left:-9999px;top:0;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none">
+  <input type="checkbox" id="hapticSwitch" switch>
+</label>
+<div class="foot">A-TUT-MATH-01 · חיבור וחיסור · א׳ תות<br>נבנה ע״י אשכול-בוט</div>
+<!-- Voice clip keys (optional local audio/). Device Hebrew TTS is the default. -->
+<script type="application/json" id="voiceClips">
+{
+  "plus": "וְעוֹד",
+  "minus": "פָּחוֹת",
+  "is": "זֶה",
+  "q_see": "כַּמָּה נְקֻדּוֹת?",
+  "q_to_ten": "וְעוֹד כַּמָּה, זֶה עֶשֶׂר?",
+  "q_together": "כַּמָּה זֶה בְּיַחַד?",
+  "q_left": "כַּמָּה נִשְׁאָר?",
+  "q_fill": "קֹדֶם מְמַלְּאִים אֶת הָעֶשֶׂר.",
+  "q_take": "מוֹרִידִים",
+  "howmuch": "כַּמָּה זֶה?",
+  "ten_excl": "עֶשֶׂר!",
+  "ten_and": "עֶשֶׂר וְעוֹד",
+  "five_and": "חָמֵשׁ וְעוֹד",
+  "is_ten": "זֶה עֶשֶׂר.",
+  "left_ten": "נִשְׁאַר עֶשֶׂר.",
+  "done": "כָּל הַכָּבוֹד! פְּתַרְתֶּם שְׁמוֹנָה תַּרְגִּילִים."
+}
+</script>
+<script>
+/* —— shared helpers: script toast + confetti —— */
+function showScriptToast(cursive){
+  let t=document.getElementById("scriptToast");
+  if(!t){t=document.createElement("div");t.id="scriptToast";t.className="stoast";t.setAttribute("role","status");t.setAttribute("aria-live","polite");document.body.appendChild(t);}
+  t.innerHTML=cursive?'<span>עכשיו: כתב יד</span><span class="smp">אבג</span>':'<span>עכשיו: דפוס</span><span class="smp">אבג</span>';
+  t.classList.add("on");
+  clearTimeout(showScriptToast._t);
+  showScriptToast._t=setTimeout(()=>t.classList.remove("on"),1500);
+}
+function confetti(){
+  try{
+    if(window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+    const box=document.createElement("div");box.className="confetti";box.setAttribute("aria-hidden","true");
+    const cols=["#2f8f4e","#e8862a","#3a78c2","#f2c94c","#d96a8a","#7bc5a4"];
+    for(let i=0;i<22;i++){
+      const p=document.createElement("i");
+      if(i%3===0)p.className="c";
+      p.style.left=(5+Math.random()*90)+"%";
+      p.style.background=cols[i%cols.length];
+      p.style.setProperty("--dx",(Math.random()*80-40)+"px");
+      p.style.setProperty("--rot",(Math.random()*540-270)+"deg");
+      p.style.animationDelay=(Math.random()*0.35)+"s";
+      box.appendChild(p);
+    }
+    document.body.appendChild(box);
+    setTimeout(()=>box.remove(),2400);
+  }catch(e){}
+}
+(function(){
+/* ---------- Anonymous aggregate counts (a-tut) ----------
+   GoatCounter account mipui-eshkol (same as mipui worksheet; a-tut/ paths keep them apart).
+   localStorage key atut_anon_v1 holds a random UUID + visit-day count; the UUID is never sent.
+   Device events a-tut/new-device | a-tut/returning-device | a-tut/visit-n/<bucket> fire at most
+   once per calendar day (local) per device across hub + all games. Per-game opens: a-tut/open/<k>.
+   Pageviews use path /a-tut/lang/math/. Inline hub games also send /a-tut/lang/<k>/ on start.
+   No on-page notice (Adi 2026-10-31). */
+const GOATCOUNTER_URL = 'https://mipui-eshkol.goatcounter.com/count';
+const ATUT_PAGEPATH = '/a-tut/math/addsub/';
+window.goatcounter = window.goatcounter || {};
+window.goatcounter.path = function(){ return ATUT_PAGEPATH; };
+const Stats=(()=>{const q=[];let ready=false;
+ function init(){if(!GOATCOUNTER_URL)return;const s=document.createElement('script');s.async=true;s.src='https://gc.zgo.at/count.js';
+  s.setAttribute('data-goatcounter',GOATCOUNTER_URL);s.onload=()=>{ready=true;q.splice(0).forEach(fn=>fn())};document.head.appendChild(s);
+  try{trackReturn()}catch(e){} try{ev('a-tut/open/addsub')}catch(e){}}
+ function run(fn){if(!GOATCOUNTER_URL)return;ready?fn():q.push(fn)}
+ function send(n,isEvent){try{window.goatcounter&&window.goatcounter.count&&window.goatcounter.count({path:n,title:n,event:!!isEvent})}catch(e){}}
+ function ev(n){run(()=>send(n,true))}
+ function page(n){run(()=>send(n,false))}
+ function bucket(n){return n<=3?String(n):n<=5?'4-5':n<=10?'6-10':'11+'}
+ function today(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+ function trackReturn(){
+  const KEY='atut_anon_v1';
+  let raw=null;try{raw=localStorage.getItem(KEY)}catch(e){return}
+  let data=null;try{data=raw?JSON.parse(raw):null}catch(e){data=null}
+  const day=today();
+  const isNew=!data||typeof data!=='object'||!data.id;
+  if(isNew){
+   const id=(crypto.randomUUID?crypto.randomUUID():('x'+Math.random().toString(36).slice(2)+Date.now()));
+   data={id,n:1,first:day,lastDay:day};
+   ev('a-tut/new-device');ev('a-tut/visit-n/'+bucket(1));
+  }else if(data.lastDay!==day){
+   data.n=(Number(data.n)||0)+1;data.lastDay=day;if(!data.first)data.first=day;
+   ev('a-tut/returning-device');ev('a-tut/visit-n/'+bucket(data.n));
+  }
+  try{localStorage.setItem(KEY,JSON.stringify(data))}catch(e){}
+ }
+ // openGame: event + pageview path for inline hub games (findall/nameletter)
+ function openGame(k){if(!k)return;ev('a-tut/open/'+k);page('/a-tut/math/'+k+'/')}
+ return {init,ev,page,openGame}})();
+Stats.init();
+
+"use strict";
+/* Optional local clips via audio/manifest.json; otherwise device Hebrew TTS. Game flow never waits on audio. */
+const AUDIO="../audio/";
+const NUM_AUDIO=false, NUM_DIR="audio/";
+const RUN_SIZE=8;
+const LEVELS={
+  1:{stars:"⭐",       short:"רמה 1"},
+  2:{stars:"⭐⭐",     short:"רמה 2"},
+  3:{stars:"⭐⭐⭐",   short:"רמה 3"},
+  4:{stars:"⭐⭐⭐⭐", short:"רמה 4"}
+};
+const PEEK_MS=2600;
+let level=1, queue=[], idx=0, cur=null, locked=false, wrong=0, phase="answer", awaitingNext=false;
+let advTimer=null, coverTimer=null, showTimer=null, roundGen=0;
+let muted=false, currentAudio=null, audioCtx=null;
+const $=s=>document.querySelector(s);
+function shuffle(a){const x=a.slice();for(let i=x.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[x[i],x[j]]=[x[j],x[i]]}return x}
+function pick(a){return a[Math.floor(Math.random()*a.length)]}
+function rnd(a,b){return a+Math.floor(Math.random()*(b-a+1))}
+
+/* —— sound (fire-and-forget: the game flow never depends on audio finishing) —— */
+function unlockAudio(){
+  try{if(!audioCtx)audioCtx=new (window.AudioContext||window.webkitAudioContext)();if(audioCtx.state==="suspended")audioCtx.resume();}catch(e){}
+  try{const a=new Audio(AUDIO+"ok.mp3");a.volume=0;a.play().then(()=>{a.pause();a.src="";}).catch(()=>{});}catch(e){}
+  try{ if(window.speechSynthesis&&!unlockAudio.tts){ unlockAudio.tts=true; const u=new SpeechSynthesisUtterance(" "); u.volume=0; u.lang="he-IL"; speechSynthesis.speak(u); } }catch(e){}
+}
+function stopSpeak(){if(currentAudio){try{currentAudio.pause();currentAudio.src=""}catch(e){} currentAudio=null;}}
+function play(file){
+  if(muted)return;
+  stopSpeak();
+  try{const a=new Audio(file);currentAudio=a;a.play().catch(()=>{});}catch(e){}
+}
+function sayNum(n){ if(NUM_AUDIO) play(NUM_DIR+"n_"+n+".mp3"); }
+
+/* —— automatic voice: the device's own Hebrew text-to-speech (on iPhone: the built-in Hebrew voice).
+   Nothing is downloaded or stored. If the device has no Hebrew voice, the game stays silent-visual.
+   Numbers are written with niqqud so the voice reads them correctly (counting form). —— */
+const NW=["אֶפֶס","אַחַת","שְׁתַּיִם","שָׁלוֹשׁ","אַרְבַּע","חָמֵשׁ","שֵׁשׁ","שֶׁבַע","שְׁמוֹנֶה","תֵּשַׁע","עֶשֶׂר",
+  "אַחַת עֶשְׂרֵה","שְׁתֵּים עֶשְׂרֵה","שְׁלוֹשׁ עֶשְׂרֵה","אַרְבַּע עֶשְׂרֵה","חֲמֵשׁ עֶשְׂרֵה","שֵׁשׁ עֶשְׂרֵה","שְׁבַע עֶשְׂרֵה","שְׁמוֹנֶה עֶשְׂרֵה","תְּשַׁע עֶשְׂרֵה","עֶשְׂרִים"];
+function N(n){return NW[n]!==undefined?NW[n]:String(n)}
+const PLUS=" וְעוֹד ", MINUS=" פָּחוֹת ", IS=" זֶה ";
+let heVoice=null, voicesLoaded=false, ttsGen=0;
+function pickVoice(){
+  try{
+    const vs=speechSynthesis.getVoices()||[];
+    if(vs.length) voicesLoaded=true;
+    const he=vs.filter(v=>/^he|^iw/i.test(v.lang));
+    // best available Hebrew voice: premium > enhanced/neural/natural > regular > compact
+    const score=v=>{const id=(v.name+" "+(v.voiceURI||"")).toLowerCase();
+      return (/premium/.test(id)?40:0)+(/enhanced|neural|natural|online/.test(id)?30:0)+(/compact/.test(id)?-20:0)+(v.localService===false?5:0);};
+    heVoice=he.sort((a,b)=>score(b)-score(a))[0]||null;
+    if(heVoice) heVoice._q=score(heVoice);
+  }catch(e){}
+}
+if(window.speechSynthesis){ pickVoice(); try{speechSynthesis.addEventListener("voiceschanged",pickVoice)}catch(e){ speechSynthesis.onvoiceschanged=pickVoice; } }
+function ttsOK(){ return !!window.speechSynthesis && (heVoice || !voicesLoaded); }
+function ttsStop(){ ttsGen++; try{ if(window.speechSynthesis) speechSynthesis.cancel(); }catch(e){} try{ if(clipNow) clipNow.pause(); }catch(e){} }
+/* say(text, done): "|" splits the text into short phrases with a natural pause between them
+   (one long utterance sounds flat and rushed). done is always called once — on end, on error,
+   or by a safety timer — unless a newer say() replaced it. */
+const TTS_RATE=0.9, TTS_PITCH=1.0, PHRASE_GAP=230;
+function say(text,done){
+  const my=++ttsGen; let fired=false;
+  const fin=()=>{ if(fired)return; fired=true; if(my===ttsGen&&done) done(); };
+  if(Array.isArray(text)){
+    const spec=text;
+    if(!muted && spec.length && clipsFor(spec)){
+      try{ speechSynthesis.cancel(); }catch(e){}
+      if(clipNow){ try{clipNow.pause()}catch(e){} }
+      setTimeout(fin, 2500+spec.length*900);
+      playClips(spec,my,fin); return;
+    }
+    text=specText(spec);
+  }
+  if(muted||!ttsOK()||!text){ setTimeout(fin,0); return; }
+  const parts=String(text).split("|").map(x=>x.trim()).filter(Boolean);
+  const plain=text.replace(/[\u0591-\u05C7|]/g,"");
+  setTimeout(fin, 1300+plain.length*100+parts.length*PHRASE_GAP);
+  try{ speechSynthesis.cancel(); }catch(e){}
+  let i=0;
+  const next=()=>{
+    if(my!==ttsGen) return;
+    if(i>=parts.length){ fin(); return; }
+    try{
+      const u=new SpeechSynthesisUtterance(parts[i++]);
+      u.lang="he-IL"; if(heVoice) u.voice=heVoice; u.rate=TTS_RATE; u.pitch=TTS_PITCH;
+      let ended=false; const end=()=>{ if(ended)return; ended=true; setTimeout(next, i<parts.length?PHRASE_GAP:0); };
+      u.onend=end; u.onerror=end;
+      speechSynthesis.speak(u);
+    }catch(e){ fin(); }
+  };
+  // tiny delay after cancel(): iOS sometimes drops an utterance spoken in the same tick
+  setTimeout(next,40);
+}
+function voiceLabel(){
+  if(clips) return "הקול: קול עברי טבעי (קבצי קול בתיקייה).";
+  if(!window.speechSynthesis) return "במכשיר הזה אין קול אוטומטי.";
+  if(!heVoice) return voicesLoaded?"במכשיר הזה לא נמצא קול עברי — המשחק עובד גם בלי קול.":"הקול העברי של המכשיר.";
+  const good=heVoice._q>=30;
+  return "הקול שנבחר: "+heVoice.name+(good?" (איכות משופרת)":". באייפון אפשר להוריד גרסה משופרת של הקול העברי בהגדרות הנגישות, תחת ״תוכן מוקרא״ ← ״קולות״ ← עברית. הקול יישמע טבעי יותר.");
+}
+/* —— spoken sentences are "specs": arrays of tokens — a number, a clip key from #voiceClips, or "|" (short pause).
+   The same spec is played from natural-voice clips when they exist, or read by the device voice otherwise. —— */
+let VT={};
+try{ VT=JSON.parse(document.getElementById("voiceClips").textContent); }catch(e){ VT={}; }
+function specText(spec){
+  return spec.map(t=>t==="|"?"|":(typeof t==="number"?N(t):(VT[t]||""))).join(" ").replace(/\s+\|\s+/g," | ");
+}
+/* natural-voice clips (audio/manifest.json + audio/<key>.wav). Missing folder → device voice. */
+const CLIP_DIR="audio/";
+let clips=null;           // Set of available keys, or null
+let clipExt="wav";
+const clipCache={};
+function clipKey(t){ return typeof t==="number" ? "n_"+t : t; }
+function loadClips(){
+  try{
+    fetch(CLIP_DIR+"manifest.json",{cache:"no-cache"}).then(r=>r.ok?r.json():null).then(m=>{
+      if(!m||!Array.isArray(m.clips)||!m.clips.length) return;
+      clipExt=m.ext||"wav";
+      clips=new Set(m.clips);
+      // warm up the most frequent clips (numbers + joining words)
+      ["plus","minus","is"].concat([...Array(21).keys()].map(n=>"n_"+n)).forEach(k=>{ if(clips.has(k)) getClip(k); });
+      const sb=$("#btnSay"); if(sb && cur) sb.hidden=false;
+    }).catch(()=>{});
+  }catch(e){}
+}
+function getClip(k){
+  if(!clipCache[k]){ const a=new Audio(CLIP_DIR+k+"."+clipExt); a.preload="auto"; clipCache[k]=a; }
+  return clipCache[k];
+}
+function clipsFor(spec){ return !!clips && spec.every(t=>t==="|"||clips.has(clipKey(t))); }
+let clipNow=null;
+function playClips(spec,my,fin){
+  const seq=spec.slice(); let i=0;
+  const next=()=>{
+    if(my!==ttsGen) return;
+    if(i>=seq.length){ fin(); return; }
+    const t=seq[i++];
+    if(t==="|"){ setTimeout(next,PHRASE_GAP); return; }
+    const a=getClip(clipKey(t)); clipNow=a;
+    let ended=false; const end=()=>{ if(ended)return; ended=true; setTimeout(next,40); };
+    try{ a.onended=end; a.onerror=end; a.currentTime=0; const pr=a.play(); if(pr&&pr.catch) pr.catch(end); }catch(e){ end(); }
+    setTimeout(end,4000);
+  };
+  next();
+}
+function voiceOK(){ return !!clips || ttsOK(); }
+/* the question of the current round, spoken */
+function promptText(r){
+  if(!r) return [];
+  if(r.t==="see") return ["q_see"];
+  if(r.t==="ten") return [r.n,"q_to_ten"];
+  if(r.t==="add") return [r.a,"plus",r.b,"|","q_together"];
+  if(r.t==="sub") return [r.a,"minus",r.b,"|","q_left"];
+  if(r.t==="add20") return phase==="answer" ? ["ten_and",r.ans-10,"|","howmuch"] : [r.a,"plus",r.b,"|","q_fill"];
+  if(r.t==="sub20") return phase==="answer" ? ["q_left"] : [r.a,"minus",r.b,"|","q_take",r.b];
+  return [];
+}
+/* the full sentence after a correct answer */
+function answerText(r){
+  if(r.t==="see") return r.n>5 ? [r.n,"|","five_and",r.n-5] : [r.n];
+  if(r.t==="ten") return [r.n,"plus",r.ans,"|","is_ten"];
+  if(r.t==="add"||r.t==="add20") return [r.a,"plus",r.b,"|","is",r.ans];
+  return [r.a,"minus",r.b,"|","is",r.ans];
+}
+/* play a short human clip, then call next (with a safety timer) */
+function playThen(file,next){
+  if(muted){ setTimeout(next,0); return; }
+  let done=false; const go=()=>{ if(done)return; done=true; next(); };
+  try{ stopSpeak(); const a=new Audio(file); currentAudio=a; a.onended=go; a.onerror=go; a.play().catch(go); }catch(e){ go(); }
+  setTimeout(go,1600);
+}
+function tone(freq,dur,type,gain){
+  if(muted)return;
+  try{unlockAudio();if(!audioCtx)return;const t0=audioCtx.currentTime;const o=audioCtx.createOscillator();const g=audioCtx.createGain();
+    o.type=type||"sine";o.frequency.setValueAtTime(freq,t0);g.gain.setValueAtTime(0.0001,t0);
+    g.gain.exponentialRampToValueAtTime(gain||0.12,t0+0.01);g.gain.exponentialRampToValueAtTime(0.0001,t0+dur);
+    o.connect(g);g.connect(audioCtx.destination);o.start(t0);o.stop(t0+dur+0.02);}catch(e){}
+}
+function sfxOk(){tone(523.25,0.09,"sine",0.11);setTimeout(()=>tone(659.25,0.10,"sine",0.10),55);setTimeout(()=>tone(783.99,0.14,"triangle",0.09),110);}
+function sfxBadGentle(){tone(260,0.10,"sine",0.05);setTimeout(()=>tone(220,0.12,"triangle",0.04),60);}
+/* a soft rising "plink" per moved dot; reaching 10 gets a small chord */
+function sfxDot(k){tone(392+k*42,0.07,"sine",0.06);}
+function sfxTen(){tone(523.25,0.12,"triangle",0.08);setTimeout(()=>tone(659.25,0.12,"triangle",0.08),70);setTimeout(()=>tone(1046.5,0.18,"sine",0.07),140);}
+function vibrateOk(){try{if(navigator.vibrate){navigator.vibrate([12,40,18]);return;}}catch(e){} iosHaptic();}
+function vibrateBad(){try{if(navigator.vibrate){navigator.vibrate(20);return;}}catch(e){} iosHaptic();}
+function iosHaptic(){try{const sw=$("#hapticSwitch"),lab=$("#hapticLab");if(!sw||!lab)return;sw.checked=!sw.checked;lab.click();}catch(e){}}
+function show(id){document.querySelectorAll(".screen").forEach(s=>s.classList.remove("on"));$("#"+id).classList.add("on");}
+
+/* —— rounds: random, no repeats inside a run —— */
+function makeQueue(){
+  const out=[], seen=new Set();
+  let guard=0;
+  while(out.length<RUN_SIZE && guard++<500){
+    const r=makeRound();
+    if(seen.has(r.key))continue;
+    seen.add(r.key); out.push(r);
+  }
+  return out;
+}
+function makeRound(){
+  if(level===1){ const n=rnd(1,10); return {t:"see",n,ans:n,key:"s"+n,lo:1,hi:10}; }
+  if(level===2){ const n=rnd(1,9); return {t:"ten",n,ans:10-n,key:"t"+n,lo:1,hi:9}; }
+  if(level===3){
+    if(Math.random()<0.5){ const a=rnd(1,9), b=rnd(1,10-a); return {t:"add",a,b,ans:a+b,key:a+"+"+b,lo:2,hi:10}; }
+    const a=rnd(2,10), b=rnd(1,a-1); return {t:"sub",a,b,ans:a-b,key:a+"-"+b,lo:1,hi:9};
+  }
+  if(Math.random()<0.55){ const a=rnd(6,9), b=rnd(11-a,9); return {t:"add20",a,b,ans:a+b,key:a+"+"+b,lo:10,hi:18}; }
+  const a=rnd(11,18), b=rnd(a-9,9); return {t:"sub20",a,b,ans:a-b,key:a+"-"+b,lo:2,hi:9};
+}
+function choicesFor(r){
+  const opts=new Set([r.ans]);
+  // distractors stay close (±1, ±2) and never 0 — counting dots, 0 is confusing at this age
+  const near=shuffle([r.ans-1,r.ans+1,r.ans-2,r.ans+2]).filter(x=>x>=1&&x>=r.lo-1&&x<=r.hi+1);
+  for(const x of near){ if(opts.size>=3)break; opts.add(x); }
+  let k=3; while(opts.size<3){ opts.add(r.ans+k); k++; }
+  return shuffle([...opts]);
+}
+
+/* —— ten-frame rendering —— */
+let frameA=[], frameB=[];
+let showCounts=true, lastCnt={A:null,B:null};   // count box next to each frame, updated on every change   // arrays of 10: "" | "a" | "b" | "g" (gone) | "q" (missing, level 2)
+function cellsHTML(arr,newIdx){
+  return arr.map((v,i)=>{
+    if(v==="q") return `<div class="cell q"></div>`;
+    if(!v) return `<div class="cell"></div>`;
+    return `<div class="cell"><span class="dot ${v}${i===newIdx?" new":""}"></span></div>`;
+  }).join("");
+}
+function countOf(arr,v){return arr.filter(x=>x===v).length}
+function liveCount(arr){return arr.filter(x=>x==="a"||x==="b"||x==="n").length}
+function cntHTML(which,arr){
+  const n=liveCount(arr);
+  if(!showCounts) return `<div class="cnt hide" id="cnt${which}" aria-label="כמה? עוד לא">?</div>`;
+  const bump=lastCnt[which]!==null&&lastCnt[which]!==n;
+  lastCnt[which]=n;
+  const cls=(n===10?" ten":"")+(n===0?" zero":"")+(bump?" bump":"");
+  return `<div class="cnt${cls}" id="cnt${which}" aria-live="polite" aria-label="${n}">${n}</div>`;
+}
+function renderFrames(opts){
+  opts=opts||{};
+  const box=$("#frames");
+  const showB=frameB.length>0;
+  box.innerHTML=
+    `<div class="tfrow"><div class="tfwrap" id="wrapA"><div class="tf${opts.tapA?" tap":""}" id="tfA" role="img" aria-label="מסגרת עשר">${cellsHTML(frameA,opts.newA)}</div>`+
+    `<div class="cover" id="cover" role="button" aria-label="להציץ שוב"><span class="eye">👀</span>להציץ שוב</div></div>${cntHTML("A",frameA)}</div>`+
+    (showB?`<div class="tfrow"><div class="tfwrap" id="wrapB"><div class="tf${opts.tapB?" tap":""}" id="tfB" role="img" aria-label="מסגרת עשר שנייה">${cellsHTML(frameB,opts.newB)}</div></div>${cntHTML("B",frameB)}</div>`:"");
+  const cv=$("#cover"); if(cv) cv.onclick=peek;
+  const ta=$("#tfA"), tb=$("#tfB");
+  if(ta) ta.onclick=()=>onFrameTap("A");
+  if(tb) tb.onclick=()=>onFrameTap("B");
+}
+function fill(n,v){const a=Array(10).fill("");for(let i=0;i<n&&i<10;i++)a[i]=v;return a}
+
+/* —— equation line (always written left→right, as in Israeli classrooms) —— */
+function setEq(html){$("#eq").innerHTML=html}
+const Q='<span class="q">?</span>';
+function eqFor(r,withAns){
+  const A=withAns?`<span class="ans">${r.ans}</span>`:Q;
+  if(r.t==="see") return withAns?`<span class="ans">${r.n}</span>`:"";
+  if(r.t==="ten") return `<span class="na">${r.n}</span> + ${withAns?`<span class="ans">${r.ans}</span>`:Q} = 10`;
+  if(r.t==="add"||r.t==="add20") return `<span class="na">${r.a}</span> + <span class="nb">${r.b}</span> = ${A}`;
+  return `<span class="na">${r.a}</span> − ${r.b} = ${A}`;
+}
+
+/* —— game flow —— */
+function startGame(){
+  unlockAudio();
+  queue=makeQueue(); idx=0;
+  $("#lvTag").textContent=LEVELS[level].short+" "+LEVELS[level].stars;
+  show("sc-play");
+  loadRound();
+}
+function clearTimers(){
+  clearTimeout(advTimer);clearTimeout(coverTimer);clearInterval(showTimer);
+  advTimer=coverTimer=showTimer=null;
+}
+function renderDots(justDone){
+  const el=$("#prog");if(!el)return;
+  let h="";
+  for(let i=0;i<queue.length;i++){
+    const cls=i<idx?"done":(i===idx?"cur":"");
+    h+=`<span class="${cls}${justDone&&i===idx-1?" just":""}">${i<idx?"⭐":""}</span>`;
+  }
+  el.innerHTML=h;
+  el.setAttribute("aria-label","תרגיל "+Math.min(idx+1,queue.length)+" מתוך "+queue.length);
+}
+function loadRound(){
+  clearTimers(); roundGen++;
+  locked=false; wrong=0; awaitingNext=false;
+  cur=queue[idx];
+  renderDots(idx>0);
+  $("#fb").className="fb";$("#fb").textContent="";
+  $("#step").innerHTML="";
+  $("#btnPeek").hidden=true; $("#btnShow").hidden=true;
+  frameB=[];
+  const r=cur;
+  lastCnt={A:null,B:null};
+  showCounts = !(r.t==="see"||r.t==="add"||r.t==="sub");
+  if(r.t==="see"){
+    frameA=fill(r.n,"n");
+    $("#qPrompt").textContent="כמה נקודות? 👀";
+    setEq("");
+    renderFrames();
+    phase="answer"; renderTiles();
+    $("#btnPeek").hidden=false;
+    scheduleCover();
+  } else if(r.t==="ten"){
+    frameA=fill(r.n,"a").map(v=>v||"q");
+    $("#qPrompt").textContent="כמה חסר כדי להגיע ל־10?";
+    setEq(eqFor(r,false));
+    renderFrames();
+    phase="answer"; renderTiles();
+  } else if(r.t==="add"){
+    frameA=fill(r.a,"a"); for(let i=r.a;i<r.a+r.b;i++)frameA[i]="b";
+    $("#qPrompt").textContent="כמה יוצא ביחד?";
+    setEq(eqFor(r,false));
+    renderFrames();
+    phase="answer"; renderTiles();
+  } else if(r.t==="sub"){
+    frameA=fill(r.a,"a");
+    $("#qPrompt").textContent="כמה נשאר?";
+    setEq(eqFor(r,false));
+    renderFrames();
+    phase="answer"; renderTiles();
+    const my=roundGen;
+    // the taken-away dots fade out one after another, from the end
+    let k=0;
+    showTimer=setInterval(()=>{
+      if(my!==roundGen){clearInterval(showTimer);return}
+      if(k>=r.b){clearInterval(showTimer);showTimer=null;return}
+      frameA[r.a-1-k]="g"; k++; renderFrames();
+    },280);
+  } else if(r.t==="add20"){
+    frameA=fill(r.a,"a"); frameB=fill(r.b,"b");
+    $("#qPrompt").textContent="קודם ממלאים את העשר!";
+    $("#step").innerHTML="לחצו על הנקודות הכתומות 👆";
+    setEq(eqFor(r,false));
+    phase="fill";
+    renderFrames({tapB:true});
+    renderTiles(); $("#tiles").classList.add("wait");
+    $("#btnShow").hidden=false;
+  } else if(r.t==="sub20"){
+    frameA=fill(10,"a"); frameB=fill(r.a-10,"a");
+    cur.left=r.b;
+    $("#qPrompt").textContent="מורידים "+r.b+". לחצו על הנקודות 👆";
+    $("#step").innerHTML="קודם מורידים מהמסגרת למטה";
+    setEq(eqFor(r,false));
+    phase="take";
+    renderFrames({tapB:true});
+    renderTiles(); $("#tiles").classList.add("wait");
+    $("#btnShow").hidden=false;
+  }
+  $("#btnSay").hidden=!voiceOK();
+  speakPrompt();
+}
+function speakPrompt(){ const my=roundGen; say(promptText(cur), null); }
+function scheduleCover(){
+  const my=roundGen;
+  clearTimeout(coverTimer);
+  coverTimer=setTimeout(()=>{ if(my!==roundGen||awaitingNext) return; const w=$("#wrapA"); if(w) w.classList.add("covered"); }, PEEK_MS);
+}
+function peek(){
+  if(!cur||cur.t!=="see")return;
+  const w=$("#wrapA"); if(w) w.classList.remove("covered");
+  scheduleCover();
+}
+
+/* level 4 interactions: every tap moves (or removes) exactly one dot, in the strategic order */
+function onFrameTap(which){
+  if(awaitingNext)return;
+  if(phase==="fill") moveOne();
+  else if(phase==="take") takeOne();
+}
+function moveOne(){
+  const r=cur;
+  const iB=frameB.lastIndexOf("b"); if(iB<0)return;
+  const iA=frameA.indexOf(""); if(iA<0)return;
+  frameB[iB]=""; frameA[iA]="b";
+  const moved=countOf(frameA,"b");
+  sfxDot(moved);
+  const full=frameA.indexOf("")<0;
+  if(full){
+    const rest=countOf(frameB,"b");
+    phase="answer";
+    renderFrames({newA:iA});
+    sfxTen();
+    say(["ten_excl","|","ten_and",rest,"|","howmuch"]);
+    const need=10-r.a;
+    $("#qPrompt").textContent="יש 10 ועוד "+rest+". כמה זה?";
+    $("#step").innerHTML=`<span dir="ltr">${r.a} + ${need} = <b>10</b></span> · ועוד ${rest}`;
+    setEq(`<b>10</b> + <span class="nb">${rest}</span> = ${Q}`);
+    $("#tiles").classList.remove("wait"); $("#btnShow").hidden=true;
+  } else {
+    renderFrames({tapB:true,newA:iA});
+    say([liveCount(frameA)]);
+    $("#step").innerHTML="עוד "+(frameA.indexOf("")<0?0:countOf(frameA,"")) +" עד 10";
+  }
+}
+function takeOne(){
+  const r=cur;
+  let i=frameB.lastIndexOf("a"), inB=true;
+  if(i<0){ i=frameA.lastIndexOf("a"); inB=false; }
+  if(i<0||cur.left<=0)return;
+  if(inB) frameB[i]="g"; else frameA[i]="g";
+  cur.left--;
+  sfxDot(r.b-cur.left);
+  const loose=r.a-10;
+  const bEmpty=frameB.lastIndexOf("a")<0;
+  const changed=liveCount(inB?frameB:frameA);
+  if(cur.left<=0){
+    phase="answer";
+    renderFrames();
+    say([changed,"|","q_left"]);
+    $("#qPrompt").textContent="כמה נשאר?";
+    $("#step").innerHTML=`<span dir="ltr">${r.a} − ${loose} = <b>10</b></span> · ואז <span dir="ltr">10 − ${r.b-loose}</span>`;
+    $("#tiles").classList.remove("wait"); $("#btnShow").hidden=true;
+  } else {
+    renderFrames({tapA:bEmpty,tapB:!bEmpty});
+    if(bEmpty && r.b-cur.left===loose){ sfxTen(); say([0,"|","left_ten"]); }
+    else say([changed]);
+    $("#step").innerHTML = bEmpty
+      ? `<span dir="ltr">${r.a} − ${loose} = <b>10</b></span> · מורידים עוד ${cur.left} מהעשר`
+      : "נשאר להוריד: "+cur.left;
+  }
+}
+function showMe(){
+  // "show me": animates the same steps slowly, so the strategy is visible
+  if(phase!=="fill"&&phase!=="take")return;
+  $("#btnShow").hidden=true;
+  const my=roundGen;
+  clearInterval(showTimer);
+  showTimer=setInterval(()=>{
+    if(my!==roundGen||(phase!=="fill"&&phase!=="take")){clearInterval(showTimer);showTimer=null;return}
+    if(phase==="fill") moveOne(); else takeOne();
+  },420);
+}
+
+function renderTiles(){
+  const box=$("#tiles");
+  box.classList.remove("wait");
+  box.innerHTML=choicesFor(cur).map(v=>`<button class="tile" type="button" data-v="${v}" aria-label="${v}">${v}</button>`).join("");
+  box.onclick=onTile;
+}
+function onTile(e){
+  const btn=e.target.closest(".tile"); if(!btn||locked||awaitingNext||phase!=="answer") return;
+  const v=+btn.dataset.v;
+  if(v===cur.ans) onCorrect(btn); else onWrong(btn);
+}
+/* Level 1 after a correct answer: "seven" → the first five light up blue ("five") →
+   the rest light up orange ("and two"), with 5 + 2 = 7 written as it is said.
+   Each step waits for its words (or a minimum time when muted), so colour and voice stay together. */
+function popGroup(cls){ document.querySelectorAll("#tfA .dot."+cls).forEach(d=>{ d.classList.remove("grp"); void d.offsetWidth; d.classList.add("grp"); }); }
+function revealFive(my,done){
+  const n=cur.n, k=Math.min(5,n), rest=n-k;
+  const later=(ms,f)=>setTimeout(()=>{ if(my===roundGen) f(); },ms);
+  const step=(spec,minMs,next)=>{ const t=Date.now(); say(spec,()=>later(Math.max(0,minMs-(Date.now()-t)),next)); };
+  $("#step").innerHTML="";
+  step([n], 650, ()=>{
+    for(let i=0;i<k;i++) frameA[i]="a";
+    renderFrames(); popGroup("a");
+    if(rest<=0){
+      setEq(`<span class="na">${n}</span>`);
+      $("#step").innerHTML = n===5 ? "שורה מלאה = <b>5</b>" : "";
+      later(700,done); return;
+    }
+    setEq(`<span class="na">5</span>`);
+    $("#step").innerHTML="<b>5</b>";
+    step([5], 750, ()=>{
+      for(let i=k;i<n;i++) frameA[i]="b";
+      renderFrames(); popGroup("b");
+      setEq(`<span class="na">5</span> + <span class="nb">${rest}</span> = <span class="ans">${n}</span>`);
+      $("#step").innerHTML=`<b>5</b> ועוד <b>${rest}</b> זה <b>${n}</b>`;
+      step(["plus",rest], 900, done);
+    });
+  });
+}
+function onCorrect(btn){
+  locked=true; awaitingNext=true;
+  clearTimeout(coverTimer);
+  const w=$("#wrapA"); if(w) w.classList.remove("covered");
+  btn.classList.add("ok");
+  document.querySelectorAll(".tile").forEach(b=>{ if(b!==btn) b.disabled=true; });
+  sfxOk(); vibrateOk();
+  setEq(eqFor(cur,true));
+  if(!showCounts){ showCounts=true; lastCnt={A:-1,B:-1}; renderFrames(); }
+  if(cur.t==="ten"){
+    for(let i=0;i<10;i++) if(frameA[i]==="q") frameA[i]="b";
+    renderFrames();
+    $("#step").innerHTML=`<b>${cur.n}</b> ו־<b>${cur.ans}</b> הם חברים של 10`;
+  }
+  $("#fb").className="fb on ok"; $("#fb").textContent=pick(["נכון! 🌟","יפה מאוד! 🌟","כל הכבוד! 🌟"]);
+  const my=roundGen;
+  const minWait=cur.t==="see"||cur.t==="ten"?1900:1600;
+  const t0=Date.now();
+  const advance=()=>{ if(my!==roundGen) return; clearTimeout(advTimer); advTimer=setTimeout(()=>{ if(my===roundGen) goNext(); }, Math.max(450, minWait-(Date.now()-t0))); };
+  // safety: the game always moves on, even if the voice never reports that it finished
+  advTimer=setTimeout(()=>{ if(my===roundGen) goNext(); }, cur.t==="see"?10000:7000);
+  if(cur.t==="see"){ playThen(AUDIO+pick(["ok","ok2","ok3"])+".mp3", ()=>{ if(my===roundGen) revealFive(my, advance); }); }
+  else if(voiceOK()&&!muted) playThen(AUDIO+pick(["ok","ok2","ok3"])+".mp3", ()=>{ if(my===roundGen) say(answerText(cur), advance); });
+  else { play(AUDIO+pick(["ok","ok2","ok3"])+".mp3"); advance(); }
+}
+function onWrong(btn){
+  wrong++;
+  vibrateBad(); sfxBadGentle();
+  btn.classList.remove("bad"); void btn.offsetWidth; btn.classList.add("bad");
+  setTimeout(()=>btn.classList.remove("bad"),400);
+  $("#fb").className="fb on bad";
+  $("#fb").textContent = cur.t==="see" ? "נסו שוב 🙂 אפשר להציץ" : "נסו שוב 🙂";
+  play(AUDIO+"try_again.mp3");
+  if(cur.t==="see") peek();
+  if(wrong>=2){
+    // gentle help: show the structure, then point at the answer
+    if(cur.t==="see"&&cur.n>5){
+      for(let i=0;i<5;i++) frameA[i]="a";
+      renderFrames(); popGroup("a");
+      $("#step").innerHTML=`השורה הכחולה זה <b>5</b>… ועוד כמה?`;
+    }
+    if(cur.t==="ten") $("#step").innerHTML=`סופרים את המשבצות הריקות`;
+    const c=[...document.querySelectorAll(".tile")].find(b=>+b.dataset.v===cur.ans);
+    if(c){ c.classList.remove("hint"); void c.offsetWidth; c.classList.add("hint"); setTimeout(()=>c.classList.remove("hint"),2200); }
+  }
+}
+function goNext(){
+  if(!awaitingNext) return;
+  awaitingNext=false;
+  idx++;
+  if(idx>=queue.length){
+    clearTimers(); roundGen++;
+    renderDots(true);
+    $("#doneStars").textContent="⭐".repeat(RUN_SIZE);
+    $("#doneSub").textContent="פתרתם "+RUN_SIZE+" תרגילים · "+LEVELS[level].short+" "+LEVELS[level].stars;
+    const nl=$("#btnNextLevel");
+    if(level<4){nl.hidden=false;nl.textContent="לרמה "+(level+1)+" "+LEVELS[level+1].stars+" ←";} else nl.hidden=true;
+    show("sc-done");
+    const ds=$("#doneStars");ds.classList.remove("popin");void ds.offsetWidth;ds.classList.add("popin");
+    confetti();
+    playThen(AUDIO+"ok3.mp3", ()=>say(["done"]));
+  } else loadRound();
+}
+
+/* —— navigation + dialogs —— */
+let confirmYes=null;
+function askConfirm(text,yesLabel,onYes){
+  $("#homeConfirmTxt").textContent=text; $("#homeYes").textContent=yesLabel; confirmYes=onYes;
+  $("#homeConfirm").classList.add("on");
+}
+function inGame(){return $("#sc-play").classList.contains("on");}
+function goLevels(){ clearTimers(); roundGen++; stopSpeak(); ttsStop(); awaitingNext=false; show("sc-levels"); }
+$("#btnStart").onclick=()=>{unlockAudio(); goLevels();};
+$("#btnBackStart").onclick=()=>show("sc-start");
+document.querySelectorAll(".lv-card").forEach(b=>{ b.onclick=()=>{ level=+b.dataset.lv; startGame(); }; });
+$("#btnAgain").onclick=()=>startGame();
+$("#btnNextLevel").onclick=()=>{ if(level<4){ level++; startGame(); } };
+$("#btnPickLevel").onclick=()=>goLevels();
+$("#btnToStart").onclick=()=>{ location.href=withScript("../"); };
+$("#btnPeek").onclick=peek;
+$("#btnShow").onclick=showMe;
+$("#btnSay").onclick=()=>{ if(!awaitingNext) say(promptText(cur)); };
+$("#lvTag").onclick=()=>askConfirm("לבחור רמה אחרת?","כן, לבחירת רמה",()=>goLevels());
+$("#homeYes").onclick=()=>{ $("#homeConfirm").classList.remove("on"); const fn=confirmYes; confirmYes=null; if(fn) fn(); };
+$("#homeNo").onclick=()=>$("#homeConfirm").classList.remove("on");
+$("#btnHub").onclick=()=>{
+  const go=()=>{ stopSpeak(); ttsStop(); location.href=withScript("../"); };
+  if(inGame()) askConfirm("לצאת לתפריט המשחקים?","כן, לתפריט",go); else go();
+};
+$("#btnMute").onclick=()=>{
+  muted=!muted;
+  $("#btnMute").setAttribute("aria-pressed", muted?"true":"false");
+  $("#btnMute").textContent=muted?"🔇":"🔊";
+  $("#btnMute").setAttribute("aria-label",muted?"הפעלת הקול":"השתקת הקול");
+  if(muted){ stopSpeak(); ttsStop();
+    if(awaitingNext){ const my=roundGen; clearTimeout(advTimer); advTimer=setTimeout(()=>{ if(my===roundGen) goNext(); }, 900); } }
+};
+$("#btnHelp").onclick=()=>{ pickVoice(); const vi=$("#voiceInfo"); if(vi) vi.textContent=voiceLabel(); $("#helpPanel").classList.add("on"); };
+$("#helpClose").onclick=()=>{ $("#helpPanel").classList.remove("on"); if(cur&&cur.t==="see"&&!awaitingNext) peek(); };
+loadClips();
+window.__math={getCur:()=>cur&&Object.assign({},cur),getPhase:()=>phase,getIdx:()=>idx};
+})();
+
+/* Script toggle: print ↔ handwriting. Memory + optional ?script= URL (no storage). */
+function isCursive(){return document.body.classList.contains("script-cursive")}
+function applyScript(cursive){
+  document.body.classList.toggle("script-cursive", !!cursive);
+  const b=document.getElementById("btnScript");
+  if(b){
+    b.setAttribute("aria-pressed", cursive?"true":"false");
+    b.title = cursive ? "כתב יד פעיל · לחצו לדפוס" : "דפוס פעיל · לחצו לכתב יד";
+  }
+}
+function withScript(href){
+  if(!isCursive()) return href;
+  if(!href) return href;
+  if(href.indexOf("script=")>=0) return href;
+  return href + (href.indexOf("?")>=0 ? "&" : "?") + "script=cursive";
+}
+(function initScriptToggle(){
+  const params=new URLSearchParams(location.search);
+  applyScript(params.get("script")==="cursive");
+  const b=document.getElementById("btnScript");
+  if(b) b.onclick=()=>{
+    const next=!isCursive();
+    applyScript(next);
+    showScriptToast(next);
+    // Keep URL in sync without reload (so hub↔game share works on refresh too)
+    try{
+      const u=new URL(location.href);
+      if(next) u.searchParams.set("script","cursive"); else u.searchParams.delete("script");
+      history.replaceState(null,"",u.pathname+u.search+u.hash);
+    }catch(e){}
+  };
+})();
+</script>
+</body>
+</html>
